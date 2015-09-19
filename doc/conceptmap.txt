@@ -1,0 +1,30 @@
+map
+  walls
+  doors
+  blocks
+    stairs
+    holes
+    stone
+    terrain
+      water
+      sand
+      fog
+      smoke
+characters
+  monsters
+  players
+    race
+    alignment
+    inventory
+    equips
+    levels
+      factions
+    stats
+    status
+      hp
+      mana
+      conditions
+events
+  trade
+  fight
+  loot
