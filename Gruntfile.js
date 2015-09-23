@@ -1,78 +1,61 @@
-
 module.exports = function(grunt) {
   var environment = grunt.file.exists('environment.json') ? grunt.file.readJSON('environment.json') : {};
   var node_dir = '../node_modules/';
 
+  var webpack = require('webpack');
+  var merge = require('merge');
+
+  var webpackConfig = require('./webpack.config.js');
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     webpack: {
-      options: {
-        entry: './src/app.js',
-        output: {
-          filename: 'app.js',
-          path: './prod/',
-          publicPath: './prod/',
-        },
-        resolve: {
-          alias: {
-            'jquery':  node_dir+'jquery/dist/jquery.min.js',
-            'angular': node_dir+'angular/angular.min.js',
-          }
-        },
-        module: {
-          noParse: [
-            node_dir+'angular/angular.min.js',
-            node_dir+'jquery/dist/jquery.min.js',
-            node_dir+'angular/angular.js',
-            node_dir+'jquery/dist/jquery.js',
-          ],
-          loaders: [
-            {
-              test: /\.html$/,
-              loader: 'html-loader',
-            },
-            {
-              test: /\.scss$/,
-              loader: 'sass-loader',
-            },
-          ],
-        },
+      options: webpackConfig,
+      build: {
+        plugins: webpackConfig.plugins.concat(
+          new webpack.DefinePlugin({
+            'process.env': {
+              'NODE_ENV': JSON.stringify('production')
+            }
+          }),
+          new webpack.optimize.DedupePlugin(),
+          new webpack.optimize.UglifyJsPlugin()
+        )
+      },
+      'build-dev': {
+        devtool: 'sourcemap',
+        debug: true,
       }
     },
     'webpack-dev-server': {
+      options: {
+        webpack: webpackConfig,
+        publicPath: '/dist/'
+      },
       start: {
+        keepalive: true,
+        watch: true,
         webpack: {
-          resolve: {
-            alias: {
-              'jquery':  node_dir+'jquery/dist/jquery.js',
-              'angular': node_dir+'angular/angular.js',
-            }
-          },
-          output: {
-            path: './dev/',
-            publicPath: './dev/',
-          },
-          watch: true,
-          keepalive: true,
-          inline: true,
-        }
-      }
+          devtool: 'source-map',
+          debug: true,
+        },
+      },
     },
     'http-server': {
-      dev: {
-        root: 'prod',
+      serve: {
+        root: './',
         port: 8080,
         host: '0.0.0.0',
-      }
-    }
+      },
+    },
   });
 
   grunt.loadNpmTasks('grunt-webpack');
   grunt.loadNpmTasks('grunt-http-server');
 
   grunt.registerTask('dev', ['webpack-dev-server']);
-  grunt.registerTask('build', ['webpack']);
-  grunt.registerTask('prod', ['build', 'http-server']);
+  grunt.registerTask('dev-build', ['webpack:build-dev', 'http-server']);
+  grunt.registerTask('prod', ['webpack', 'http-server']);
 
   // use the default task for development
   if (environment.production) {

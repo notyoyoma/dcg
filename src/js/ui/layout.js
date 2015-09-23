@@ -1,6 +1,8 @@
 //layout.js
 
-var pageLayout = new GoldenLayout({
+let GoldenLayout = require('golden-layout/dist/goldenlayout.js');
+
+let pageLayout = new GoldenLayout({
   content: [{
     type: 'row',
     content: [
