@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         keepalive: true,
         watch: true,
         webpack: {
-          devtool: 'source-map',
+          devtool: 'sourcemap',
           debug: true,
         },
       },

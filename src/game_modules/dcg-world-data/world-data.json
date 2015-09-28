@@ -1,0 +1,16 @@
+{
+  "map": {
+    "size": 5,
+    "defaultTile": {
+    },
+    "floors": [
+      {
+        "tiles": [
+        ],
+        "walls": [
+        ]
+      }
+    ],
+    "currentFloor": 0
+  }
+}

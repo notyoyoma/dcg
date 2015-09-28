@@ -18,16 +18,15 @@ module.exports = {
 			{ test: /\.css$/,   loader: 'style!css' },
       { test: /\.scss$/,  loader: 'style!css!sass?sourceMap' },
       { test: /\.jsx?$/,  loader: 'babel', exclude: /(node_modules|test.jsx?$)/ },
+      { test: /\.json$/,  loader: 'json', exclude: /node_modules/ },
+      { test: /\.html/,  loader: 'html', exclude: /node_modules/ },
     ],
   },
   resolve: {
     modulesDirectories: [
       'node_modules',
-      'src/js',
-      'src/js/objects',
-      'src/js/logic',
-      'src/js/data',
-      'src/js/ui',
+      'src/game_modules',
+      'src/ui_modules',
     ],
   },
 	plugins: [

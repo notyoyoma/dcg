@@ -1,0 +1,11 @@
+{
+  "name": "dcg-golden-layout",
+  "version": "1.0.0",
+  "description": "Executes the layout for Dungeon Crawler Game. Uses GoldenLayout.js and Angular.js.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

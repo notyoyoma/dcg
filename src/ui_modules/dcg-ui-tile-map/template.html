@@ -1,0 +1,12 @@
+<div class="tile-map-display" ng-controller="tileMapController">
+  {{msg}}
+  <table>
+    <tbody>
+      <tr ng-repeat="row in world.map.getFloorMatrix()">
+        <td ng-repeat="tile in row">
+          <div style="{{ world.skin.getTileStyle( world.map.getTile(tile[0], tile[1]) ) }}"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

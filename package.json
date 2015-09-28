@@ -10,6 +10,8 @@
   "author": "Marty Naselli",
   "license": "ISC",
   "dependencies": {
+    "angular": "^1.5.0-beta.0",
+    "angular-ui-router": "^0.2.15",
     "golden-layout": "*",
     "grunt-http-server": "*",
     "jquery": "^3.0.0-alpha1",
@@ -25,6 +27,7 @@
     "grunt": "*",
     "grunt-webpack": "*",
     "html-loader": "*",
+    "json-loader": "^0.5.3",
     "mocha": "^2.3.3",
     "mocha-loader": "^0.7.1",
     "node-sass": "*",
