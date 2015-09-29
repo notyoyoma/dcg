@@ -1,10 +1,10 @@
 <div class="tile-map-display" ng-controller="tileMapController">
   {{msg}}
-  <table>
+  <table class="tile-map" cellspacing="0" cellpadding="0">
     <tbody>
       <tr ng-repeat="row in world.map.getFloorMatrix()">
-        <td ng-repeat="tile in row">
-          <div style="{{ world.skin.getTileStyle( world.map.getTile(tile[0], tile[1]) ) }}"></div>
+        <td ng-repeat="tile in row" style="{{ world.skin.getWallStyle( world.map.getTileWalls(tile[0], tile[1]) ) }}">
+          <div class="tile" style="{{ world.skin.getTileStyle( world.map.getTile(tile[0], tile[1]) ) }}"></div>
         </td>
       </tr>
     </tbody>

@@ -30,7 +30,7 @@ Data Storage Formats:
       0 => normal floor
       1 => shallow water
       2 => pit
-      3 => floating platform
+      3 => floating floor
       4 => no floor
     ]
     air: [

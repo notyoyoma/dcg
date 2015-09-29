@@ -39,6 +39,11 @@ class Map {
     return this.floors[ z || this.currentFloor ].getTile(x,y);
   }
 
+  getTileWalls(x,y,z) {
+    // If z is not passed, use the current floor
+    return this.floors[ z || this.currentFloor ].getTileWalls(x,y);
+  }
+
 }
 
 class Floor {
@@ -49,9 +54,19 @@ class Floor {
   }
 
   getTile(x,y) {
-    if (typeof this.tiles[y]    == "undefined") return this.defaultTile;
-    if (typeof this.tiles[y][x] == "undefined") return this.defaultTile;
+    if (typeof this.tiles[y]    == "undefined"
+    ||  typeof this.tiles[y][x] == "undefined") {
+      return this.defaultTile;
+    }
     return merge(this.tiles[y][x], defaultTile);
+  }
+
+  getTileWalls(x,y) {
+    if (typeof this.walls[y]    == "undefined"
+    ||  typeof this.walls[y][x] == "undefined") {
+      return [0,0];
+    }
+    return this.walls[y][x];
   }
 
 }

@@ -1,5 +1,5 @@
 import angular from 'angular';
-require('./tile-map-style.scss');
+require('./style.scss');
 
 // Layout Object for Golden Layout
 export const layoutObj = {

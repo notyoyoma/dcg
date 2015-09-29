@@ -3,7 +3,7 @@ console.log('Running app.js');
 // Load world data
 import worldData from "dcg-world-data";
 
-// Load and initialize the Game Object
+// Load and initialize the Game logic
 import GameWorld from "dcg-game-loader";
 
 let game = new GameWorld( worldData );
