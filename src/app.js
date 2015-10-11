@@ -13,4 +13,6 @@ import GameUi from "dcg-ui-loader";
 
 let ui = new GameUi(game);
 
+window.game = game;
+
 console.log('Finished app.js');

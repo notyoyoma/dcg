@@ -3,14 +3,13 @@ import merge from "merge";
 
 class Map {
   constructor(data) {
-    this.size         =  data.size;
-    this.defaultTile  =  data.defaultTile;
-    this.floors       =  [];
-    this.loadFloors(data.floors);
-    this.currentFloor =  data.currentFloor || 0;
+    this.size           =  data.size;
+    this.defaultTile    =  data.defaultTile;
 
-    // Initialize Static Objects
-    this.initFloorMatrix();
+    this.floors         =  [];
+    this.loadFloors(data.floors);
+    this.currentFloorId =  data.currentFloorId || 0;
+    this.currentFloor   =  this.floors[this.currentFloorId];
   }
 
   loadFloors(floors) {
@@ -20,28 +19,14 @@ class Map {
     }
   }
 
-  initFloorMatrix() {
-    this.floorMatrix = [];
-    for (let y = 0; y < this.size; y += 1) {
-      this.floorMatrix.push( new Array(this.size) );
-      for (let x = 0; x < this.size; x += 1) {
-        this.floorMatrix[y][x] = [x,y]
-      }
-    }
-  }
-
-  getFloorMatrix(index) {
-    return this.floorMatrix;
-  }
-
   getTile(x,y,z) {
     // If z is not passed, use the current floor
-    return this.floors[ z || this.currentFloor ].getTile(x,y);
+    return this.floors[ z || this.currentFloorId ].getTile(x,y);
   }
 
   getTileWalls(x,y,z) {
     // If z is not passed, use the current floor
-    return this.floors[ z || this.currentFloor ].getTileWalls(x,y);
+    return this.floors[ z || this.currentFloorId ].getTileWalls(x,y);
   }
 
 }
@@ -51,6 +36,20 @@ class Floor {
     this.tiles        =  data.tiles;
     this.walls        =  data.walls;
     this.defaultTile  =  merge(mapRef.defaultTile, data.defaultTile);
+    this.initTiles(mapRef.size);
+  }
+
+  initTiles(size) {
+    for (let i=0; i<size; i+=1) {
+      if (typeof this.tiles[i] == "undefined") this.tiles[i] = [];
+      for (let j=0; j<size; j+=1) {
+        this.tiles[i][j] = merge(this.tiles[i][j], this.defaultTile);
+        this.tiles[i][j].walls = {
+          right: this.walls[i][j][0],
+          bottom: this.walls[i][j][1],
+        }
+      }
+    }
   }
 
   getTile(x,y) {

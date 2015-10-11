@@ -1,12 +1,20 @@
-<div class="tile-map-display" ng-controller="tileMapController">
-  {{msg}}
-  <table class="tile-map" cellspacing="0" cellpadding="0">
-    <tbody>
-      <tr ng-repeat="row in world.map.getFloorMatrix()">
-        <td ng-repeat="tile in row" style="{{ world.skin.getWallStyle( world.map.getTileWalls(tile[0], tile[1]) ) }}">
-          <div class="tile" style="{{ world.skin.getTileStyle( world.map.getTile(tile[0], tile[1]) ) }}"></div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="tile-map-display">
+  <div class="centerer">
+    <div class="tile-map" {{bindStyle party.location left="calc(-{x}em - 0.5em)" top="calc(-{y}em - 0.5em)"}}>
+      {{#bindDeep map.currentFloor}}
+      <table class="tile-map" cellspacing="0" cellpadding="0">
+        {{#each tiles}}
+        <tr>
+          {{#each this}}
+          <td data-wall-right="{{walls.right}}" data-wall-bottom="{{walls.bottom}}">
+            <div class="tile" data-floor="floor"></div>
+          </td>
+          {{/each}}
+        </tr>
+        {{/each}}
+      </table>
+      {{/bindDeep}}
+    </div>
+  </div>
+  <div class="party-marker" {{bindAttr party data-facing="facing"}} ></div>
 </div>

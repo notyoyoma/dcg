@@ -1,36 +1,37 @@
+// Layout Engine Requirements
+import  GoldenLayout       from  'golden-layout/dist/goldenlayout.js';
+import  Skin               from  'dcg-ui-skin';
+import  Controls           from  'dcg-ui-controls';
+let uiModuleComponent = require('./golden-ui-component.js');
+
 // Layout Engine
-import  GoldenLayout  from  'golden-layout/dist/goldenlayout.js';
-import  Skin          from  'dcg-ui-skin';
-
-// Avaliable Windows
-let modules = {
-    tileMap: require('dcg-ui-tile-map'),
-  },
-  ui_initializers  =  [],
-  windows          =  {};
-
-for ( let key in modules) {
-  ui_initializers.push( modules[key].init );
-  windows[key] = modules[key].layoutObj;
-}
-
-// Default Layout
-let myLayout = new GoldenLayout({
-  "content": [{
-    "type": "row",
-    "content": [
-      windows.tileMap,
-    ],
-  }]
-});
-let angularModuleComponent = require('./golden-angular-component.js');
-myLayout.registerComponent( 'angularModule', angularModuleComponent );
-
 export default function gameUi(game) {
-  game.setSkin(new Skin());
-  for (let initializer of ui_initializers) {
-    initializer(game);
+
+  // List all avaliable UI Modules here
+  let modules = {
+      tileMap: require('dcg-ui-tile-map'),
+    },
+    windows   = {};
+
+  // Get the template from each module
+  for ( let key in modules) {
+    windows[key] = uiModuleComponent.getLayoutObj( modules[key], game );
   }
+
+  // Setup default layout
+  let myLayout = new GoldenLayout({
+    "content": [{
+      "type": "row",
+      "content": [
+        windows.tileMap,
+      ],
+    }]
+  });
+
+  myLayout.registerComponent( 'uiModule', uiModuleComponent.register );
+
+  game.setSkin(new Skin());
+  game.bindControls(new Controls(game));
   myLayout.init();
 };
 

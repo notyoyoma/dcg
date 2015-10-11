@@ -1,4 +1,17 @@
+.tile-map-display {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+
+  .centerer {
+    position:absolute;
+    top:50%;
+    left:50%;
+  }
+}
+
 .tile-map {
+  position:relative;
   line-height:0;
   td {
     border-color: initial;
@@ -18,4 +31,40 @@
   tr:last-child > td {
     border-bottom: 1px solid !important;
   }
+}
+
+.party-marker {
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:1em;
+  height:1em;
+  margin-left:-0.5em;
+  margin-top:-0.5em;
+
+  &:before, &:after {
+    position:absolute;
+    content: "";
+    display:block;
+  }
+  &:before {
+    top:0.4em;
+    left:0.3em;
+    height: 0.5em;
+    width:0.4em;
+  }
+  &:after {
+    top:0.1em;
+    left:0.1em;
+    height:0;
+    width:0;
+    border-width:0 0.4em 0.4em 0.4em;
+    border-color:transparent;
+    border-style:solid;
+  }
+
+  &[data-facing="0"] {}
+  &[data-facing="1"] {transform: rotate(90deg);}
+  &[data-facing="2"] {transform: rotate(180deg);}
+  &[data-facing="3"] {transform: rotate(270deg);}
 }

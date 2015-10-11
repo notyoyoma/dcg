@@ -1,10 +1,47 @@
+.tile-map-display {
+  font-size:20px; // Needs to be a multiple of 10.
+
+  .party-marker {
+    $party-marker-color: #fff;
+    &:before {
+      background: $party-marker-color;
+    }
+    &:after {
+      border-bottom-color: $party-marker-color;
+    }
+  }
+}
 .tile-map {
-  border: 5px solid #666;
   background: #000;
   color: #eee;
   .tile {
     background:#000;
-    width:15px;
-    height:15px;
+    width:100%;
+    height:100%;
+  }
+
+  td {
+    width:1em;
+    height:1em;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    $wall-dir: "right" "bottom";
+    @each $dir in $wall-dir {
+      &[data-wall-#{$dir}="0"],
+      &[data-wall-#{$dir}="1"] {
+        border-#{$dir}-style: hidden;
+      }
+      &[data-wall-#{$dir}="2"],
+      &[data-wall-#{$dir}="3"],
+      &[data-wall-#{$dir}="4"] {
+        border-#{$dir}-color: initial;
+      }
+      &[data-wall-#{$dir}="2"] {
+        border-#{$dir}-style: dotted;
+      }
+      &[data-wall-#{$dir}="3"] {
+        border-#{$dir}-style: dashed;
+      }
+    }
   }
 }

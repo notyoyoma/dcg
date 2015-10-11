@@ -17,9 +17,13 @@ module.exports = {
     loaders: [
 			{ test: /\.css$/,   loader: 'style!css' },
       { test: /\.scss$/,  loader: 'style!css!sass?sourceMap' },
-      { test: /\.jsx?$/,  loader: 'babel', exclude: /(node_modules|test.jsx?$)/ },
-      { test: /\.json$/,  loader: 'json', exclude: /node_modules/ },
-      { test: /\.html/,  loader: 'html', exclude: /node_modules/ },
+      { test: /\.jsx?$/,  loader: 'babel',                      exclude: /(node_modules|test.jsx?$)/ },
+      { test: /\.json$/,  loader: 'json',                       exclude: /node_modules/ },
+      {
+        test: /\.html$/,
+        loader: `handlebars-loader?helperDirs[]=${__dirname}/src/handlebars-helpers`,
+        exclude: /node_modules/
+      },
     ],
   },
   resolve: {
@@ -35,7 +39,7 @@ module.exports = {
 			// and inject the jquery library
 			// This is required by many jquery plugins
 			jQuery: 'jquery',
-			$: 'jquery'
+			$: 'jquery',
 		}),
     new Clean(['dist'])
 	],
