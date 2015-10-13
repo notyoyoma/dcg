@@ -2,7 +2,7 @@
   "name": "dcg-ui-tile-map",
   "version": "1.0.0",
   "description": "2D tile map for dcg.",
-  "main": "main.js",
+  "main": "tile-map.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

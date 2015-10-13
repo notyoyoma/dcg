@@ -2,7 +2,7 @@
   "name": "dcg-map",
   "version": "1.0.0",
   "description": "Map objects for Dungeon Crawler Game.",
-  "main": "main.js",
+  "main": "map.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,7 +1,7 @@
 {
   "name": "dcg-log",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "log.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
