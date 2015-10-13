@@ -1,5 +1,3 @@
-import log from "dcg-log"
-
 export default class Party {
   constructor(data, world) {
     this.members     = data.members || [];
@@ -35,9 +33,9 @@ export default class Party {
   moveForward() {
     let resultObj = this.world.map.tryMove(this.location, this.facing);
     if (resultObj.success) {
-      this.location = resultObj.location;
-      this.facing   = resultObj.location;
-    } else {
+      //this.processEffects(resultObj.effects);
+    }
+    if (resultObj.message) {
       log.message({
         type: 'party',
         message: resultObj.message

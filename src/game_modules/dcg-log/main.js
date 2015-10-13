@@ -1,4 +1,4 @@
-export class Logger {
+class Logger {
   constructor() {
     this.types = [
       'player',
@@ -11,7 +11,7 @@ export class Logger {
     this.maxStreamLength = 100;
     this.modal = alert;
 
-    for (let type in this.types) {
+    for (let type of this.types) {
       this.streams[type] = [];
     }
   }
@@ -19,7 +19,7 @@ export class Logger {
   message(data) {
     let stream = this.streams[ data.type || 'general' ];
     stream.push( data.text || "");
-    while (stream.length > maxStreamLength) {
+    while (stream.length > this.maxStreamLength) {
       stream.pop();
     }
   }
@@ -33,4 +33,6 @@ export class Logger {
   }
 }
 
-export const log = new Logger();
+global.log = new Logger();
+
+export default global.log;

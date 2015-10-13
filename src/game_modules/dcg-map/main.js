@@ -29,6 +29,36 @@ class Map {
     return this.floors[ z || this.currentFloorId ].getTileWalls(x,y);
   }
 
+  tryMove(location, direction) {
+    let tileWalls = this.currentFloor.getTileWalls(location.x, location.y),
+        directions = ["top", "right", "bottom", "left"],
+        result = { success: tileWalls[directions[direction]] < 4 };
+
+    if (result.success) {
+      this.move(location, direction);
+      result.message = this.currentFloor.getTile(location);
+    } else {
+      result.message = "You can't go that way";
+    }
+    return result;
+  }
+
+  move(location, direction) {
+    switch (direction) {
+      case 0:
+        location.y -= 1;
+        break;
+      case 1:
+        location.x += 1;
+        break;
+      case 2:
+        location.y += 1;
+        break;
+      case 3:
+        location.x -= 1;
+        break;
+    }
+  }
 }
 
 class Floor {
@@ -36,13 +66,14 @@ class Floor {
     this.tiles        =  data.tiles;
     this.walls        =  data.walls;
     this.defaultTile  =  merge(mapRef.defaultTile, data.defaultTile);
-    this.initTiles(mapRef.size);
+    this.floorSize    =  mapRef.size;
+    this.initTiles();
   }
 
-  initTiles(size) {
-    for (let i=0; i<size; i+=1) {
+  initTiles() {
+    for (let i=0; i<this.floorSize; i+=1) {
       if (typeof this.tiles[i] == "undefined") this.tiles[i] = [];
-      for (let j=0; j<size; j+=1) {
+      for (let j=0; j<this.floorSize; j+=1) {
         this.tiles[i][j] = merge(this.tiles[i][j], this.defaultTile);
         this.tiles[i][j].walls = {
           right: this.walls[i][j][0],
@@ -65,9 +96,13 @@ class Floor {
     ||  typeof this.walls[y][x] == "undefined") {
       return [0,0];
     }
-    return this.walls[y][x];
+    return {
+      right:   (x+1 < this.floorSize) ? this.walls[y][x][0]   : 4,
+      bottom:  (y+1 < this.floorSize) ? this.walls[y][x][1]   : 4,
+      top:     (y-1 >= 0)             ? this.walls[y-1][x][1] : 4,
+      left:    (x-1 >= 0)             ? this.walls[y][x-1][0] : 4,
+    };
   }
-
 }
 
 export default Map;

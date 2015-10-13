@@ -1,6 +1,8 @@
 // Import Modules
 import mapObj from "dcg-map";
 import Party from "dcg-party";
+import log from "dcg-log"
+
 
 export default class GameWorld {
   constructor(data) {
