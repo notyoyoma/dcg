@@ -4,13 +4,13 @@ For game documentation see [ Dungeon Crawler Game Documentation ]( http://notyoy
 
 ## Table of Contents
 
-1. About DCG
-  1. Methodology
-  2. Technology Stack
-    1. Languages
-    2. Software Dependencies
-    2. How it works
-  3. Contributors
+1. [ About DCG ]( ./about.md )
+  1. [ Methodology ]( ./about.md#methodology )
+  2. [ Technology Stack ]( ./about.md#technology-stack )
+    1. [ Languages ]( ./about.md#languages )
+    2. [ Software Dependencies ]( ./about.md#software-dependencies )
+    2. [ How it works ]( ./about.md#how-it-works )
+  3. [ Contributors ]( ./about.md#contributors )
 2. [ Getting Started ]( ./getting-started.md )
   1. [ Installing Dependencies ]( ./getting-started.md#installing-dependencies )
   2. [ Understanding Code Structure ]( ./getting-started.md#understanding-code-structure )

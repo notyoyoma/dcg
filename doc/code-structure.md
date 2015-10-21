@@ -16,9 +16,33 @@ The [ modular design pattern ]( https://en.wikipedia.org/wiki/Module_pattern#Con
 + **Scalability** - It will allow the game to grow in size and complexity, while (hopefully) remaining managable.
 + **Portability** - The various modules in DCG will be very dependant, so this isn't a huge concern. However, if a module is simple and usefull enough, it could easily be used in other projects.
 
+Using this approach, I've created this architecture:
+![ application architecture ]( ./application-architecture.jpg )
+
 #### Webpack and ES6
+
+Webpack has a Babel.js loader, so we can write ES6 code, and Babel.js takes care of the rest. This is great, because it means we can write gorgeous Javascript. There is one caveat though. Both ES6 and Babel use the import keyword to import other modules. Webpack takes care of this for normal module management. However, when you want to load a file, and run it in the context of the current file, import won't do that for you.
+
+To simply include another file in the current context (for example, to load a CSS or JSON file) simply use webpack's require method. Here's an example:
+
+```Javascript
+var data = require('./data.json');
+```
+
+Webpack will load data.json during compilation and store it in the js file, which reduces runtime complexity significantly.
+
 #### Modular Code Structure
+
+The goal of a modular structure is to create small, conceptually simple packages. Each module should be as independent as possible. This makes testing and debugging simpler, and more focussed.
+
 ###### Separation of Concerns
+
+For DCG, we're separating the modules we write into two categories. Game modules, and UI modules.
+
+Game Modules add functionality to the game. Timers, Combat, Party actions, Maps, NPCs are all examples of code that runs the game. This code can be executed, tested and debugged without ever displaying anything to the user.
+
+UI modules simply display the data from the Game Modules to the user.
+
 #### Tests
 ## Storage of running game state
 ## Storage of saved game state
