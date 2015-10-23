@@ -21,15 +21,9 @@ Using this approach, I've created this architecture:
 
 #### Webpack and ES6
 
-Webpack has a Babel.js loader, so we can write ES6 code, and Babel.js takes care of the rest. This is great, because it means we can write gorgeous Javascript. There is one caveat though. Both ES6 and Babel use the import keyword to import other modules. Webpack takes care of this for normal module management. However, when you want to load a file, and run it in the context of the current file, import won't do that for you.
+Webpack has a Babel.js loader, so we can write ES6 code, and Babel.js takes care of the rest. This is great, because it means we can write gorgeous Javascript.
 
-To simply include another file in the current context (for example, to load a CSS or JSON file) simply use webpack's require method. Here's an example:
-
-```Javascript
-var data = require('./data.json');
-```
-
-Webpack will load data.json during compilation and store it in the js file, which reduces runtime complexity significantly.
+Webpack will load all of the modules (using the ES6 `import` or webpack's `require()` interchangably). However, when you're importing a non-JS object (eg. importing css, or json files) you should use webpack's `require()` method ([ example ]( ../src/game_modules/dcg-world-data/world-data.js )). This will clarify that you're importing a simple file, not importing a JS module.
 
 #### Modular Code Structure
 
