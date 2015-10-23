@@ -18,7 +18,7 @@ export default class Character {
   updateStats() {
     // TODO - update stats from race and equips
     this.attack       = this.stats.strength     + this.getModifiedStats("strength,attack");
-    this.accuracy     = this.stats.desterity    + this.getModifiedStats("dexterity,accuracy");
+    this.accuracy     = this.stats.dexterity    + this.getModifiedStats("dexterity,accuracy");
     this.defence      = this.stats.constitution + this.getModifiedStats("defence,constitution");
     this.magicAttack  = this.stats.intelligence + this.getModifiedStats("intelligence,magicAttack");
     this.magicDefence = this.stats.intelligence + this.getModifiedStats("intelligence,magicDefence");
