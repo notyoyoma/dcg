@@ -1,4 +1,4 @@
-import races from "./character-races.js";
+import races from "./character-races.json";
 
 export default class Character {
   constructor(data) {

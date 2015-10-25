@@ -1,0 +1,68 @@
+{
+  "firebolt": {
+    "requirements": {
+      "intelligence": 12,
+      "wisdom": 10,
+    },
+    "type": "fire",
+    "spell-level": 1,
+    "spellpoint-cost": 4,
+    "effects": {
+      "damage": {
+        "groups": 2,
+        "monsters": 4,
+        "average-damage": 5
+      }
+    }
+  },
+  "blue-flame": {
+    "requirements": {
+      "intelligence": 14,
+      "wisdom": 10,
+    },
+    "type": "fire",
+    "spell-level": 3,
+    "spellpoint-cost": 8,
+    "effects": {
+      "damage": {
+        "groups": 1,
+        "monsters": 2,
+        "average-damage": 15
+      }
+    }
+  },
+  "flamesheet": {
+    "requirements": {
+      "intelligence": 15,
+      "wisdom": 13,
+      "dexterity": 12
+    },
+    "type": "fire",
+    "spell-level": 5,
+    "spellpoint-cost": 8,
+    "effects": {
+      "damage": {
+        "groups": 3,
+        "monsters": 6,
+        "average-damage": 20
+      }
+    }
+  },
+  "cold-blast": {
+    "requirements": {
+      "intelligence": 12,
+      "wisdom": 9,
+      "dexterity": 9
+    },
+    "type": "cold",
+    "spell-level": 2,
+    "spellpoint-cost": 4,
+    "effects": {
+      "damage": {
+        "groups": 1,
+        "monsters": 2,
+        "average-damage": 15
+      }
+    }
+  },
+}

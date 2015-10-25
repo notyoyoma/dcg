@@ -1,0 +1,38 @@
+{
+  "artisan": {
+    "on-lvl": {
+      "average-hitpoints": 5,
+      "average-spellpoints": false,
+      "average-spellpower": false,
+    },
+    "experience-factor": 8,
+    "quest-probability": 0.2,
+    "requirements": {
+      "strength": 1,
+      "intelligence": 1,
+      "wisdom": 1,
+      "constitution": 1,
+      "charisma": 1,
+      "dexterity": 1
+    },
+    "alignments": {
+      "good": true,
+      "neutral": true,
+      "evil": true
+    },
+    "spells": {
+      "5": "town-portal",
+      "9": "identify-trap",
+      "12": "magical-entry",
+    },
+    "abilities": {
+      "thief": 5,
+      "backstab": 0,
+      "critical-hit": 0,
+      "multiple-swings": 0,
+      "fighting": 7,
+      "perception": 3,
+      "language": 1
+    }
+  },
+}
