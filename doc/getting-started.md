@@ -42,12 +42,12 @@ $ grunt
 
 DCG code is organized into two separate folders.
 
-1. `/src/game_modules` contains all of the logic for loading, and running the game.
-2. `/src/ui_modules` contains all of the code for displaying the code to the user and allowing the user to interact with the game.
+1. `/src/game_modules` contains the logic for loading, and running the game.
+2. `/src/ui_modules` contains the code for display and user interaction.
 
-All modules use a single variable to run and observe the state of the world. In a development environment, you can access this object by typing `window.game` into the javascript console of your browser. You can use that object to test how your code reacts to various inputs.
+All game modules run on the core game object. The UI modules observe the core game object, and update whenever changes are made. In a development environment, you can access the core game object by typing `game` in the javascript console of your browser. Using that object, you can directly run individual module's functions to test results.
 
-You can read more about the code structure [ here ]( ./code-structure.md# )
+You can read more about the code structure [ here ]( ./code-structure.md )
 
 ## Debugging
 
