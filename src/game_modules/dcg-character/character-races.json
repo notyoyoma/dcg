@@ -37,5 +37,44 @@
       "sight": 1,
     },
     "allowed-guilds": []
+  },
+  "elf": {
+    "min-stats": {
+      "strength": 2,
+      "intelligence": 7,
+      "wisdom": 7,
+      "constitution": 2,
+      "charisma": 4,
+      "dexterity": 4
+    },
+    "max-stats": {
+      "strength": 14,
+      "intelligence": 21,
+      "wisdom": 20,
+      "constitution": 15,
+      "charisma": 18,
+      "dexterity": 19
+    },
+    "start-stats": {
+      "strength": 7,
+      "intelligence": 12,
+      "wisdom": 12,
+      "constitution": 7,
+      "charisma": 9,
+      "dexterity": 9
+    },
+    "free-points": 7,
+    "frailty-age": 450,
+    "experience-factor": 7,
+    "alignments": {
+      "good": true,
+      "neutral": true,
+      "evil": true
+    },
+    "modifiers": {
+      "breathing": 1,
+      "sight": 4,
+    },
+    "allowed-guilds": []
   }
 }
