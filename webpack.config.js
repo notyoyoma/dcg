@@ -6,6 +6,7 @@ module.exports = {
   cache: true,
   entry: {
     bundle: ['./src/app'],
+    // TODO - setup testing suite
     tests: 'mocha!./src/app',
   },
   output: {

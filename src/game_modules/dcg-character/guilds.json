@@ -1,12 +1,12 @@
 {
   "artisan": {
-    "on-lvl": {
-      "average-hitpoints": 5,
-      "average-spellpoints": false,
-      "average-spellpower": false,
+    "onLvl": {
+      "averageHitpoints": 5,
+      "averageSpellpoints": false,
+      "averageSpellpower": false
     },
-    "experience-factor": 8,
-    "quest-probability": 0.2,
+    "experienceFactor": 8,
+    "questProbability": 0.2,
     "requirements": {
       "strength": 1,
       "intelligence": 1,
@@ -21,18 +21,51 @@
       "evil": true
     },
     "spells": {
-      "5": "town-portal",
-      "9": "identify-trap",
-      "12": "magical-entry",
+      "5": "townPortal",
+      "9": "identifyTrap",
+      "12": "magicalEntry"
     },
     "abilities": {
       "thief": 5,
       "backstab": 0,
-      "critical-hit": 0,
-      "multiple-swings": 0,
+      "criticalHit": 0,
+      "multipleSwings": 0,
       "fighting": 7,
       "perception": 3,
       "language": 1
     }
   },
+  "warrior": {
+    "onLvl": {
+      "averageHitpoints": 8,
+      "averageSpellpoints": false,
+      "averageSpellpower": false
+    },
+    "experienceFactor": 12,
+    "questProbability": 0.5,
+    "requirements": {
+      "strength": 15,
+      "intelligence": 10,
+      "wisdom": 8,
+      "constitution": 14,
+      "charisma": 4,
+      "dexterity": 12
+    },
+    "alignments": {
+      "good": true,
+      "neutral": false,
+      "evil": true
+    },
+    "spells": {
+    },
+    "abilities": {
+      "thief": 2,
+      "backstab": 0,
+      "criticalHit": 7,
+      "multipleSwings": 1,
+      "fighting": 12,
+      "perception": 1,
+      "language": 0
+    }
+  }
 }

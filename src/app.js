@@ -1,4 +1,6 @@
-console.log('Running app.js');
+// A couple global modules
+// Humanize is for turning camelCase, hyphen-case, or snake_case to "Human case"
+global.humanize = require('humanize-string/index.js');
 
 // Load world data
 import worldData from "dcg-world-data";
@@ -14,5 +16,3 @@ import GameUi from "dcg-ui-loader";
 let ui = new GameUi(game);
 
 window.game = game;
-
-console.log('Finished app.js');
