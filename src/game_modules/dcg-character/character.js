@@ -32,7 +32,6 @@ export default class Character {
     for (let apendage in this.equipped) {
       // Loop through each effect that the item has
       for (let mod in this.equipped[apendage]) {
-        if (typeof(equipment[mod]))
         this.equippedStats[mod] += equipment[mod];
       }
     }
