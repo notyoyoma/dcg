@@ -7,7 +7,7 @@ module.exports = {
   entry: {
     bundle: ['./src/app'],
     // TODO - setup testing suite
-    tests: 'mocha!./src/app',
+    tests: 'mocha!./src/tests',
   },
   output: {
     path: path.join(__dirname, 'dist'),

@@ -4,48 +4,37 @@ import spells from "./guilds.json";
 
 export default class Character {
   constructor(data) {
-    this.maxHP         =  data.maxHP        ||  15;
-    this.currentHP     =  data.currentHP    ||  15;
-    this.maxMana       =  data.maxMana      ||  30;
-    this.currentMana   =  data.currentMana  ||  this.maxMana;
-    this.guilds        =  data.guilds       ||  {artisan:{xp:0, lvl:1}};
-    this.currentGuild  =  data.currentGuild ||  "artisan";
-    this.statuses      =  data.statuses     ||  {};
-    this.race          =  data.race         ||  races["human"];
-    this.stats         =  data.stats        ||  this.race.defaultStats;
-    this.equipped      =  data.equipped     ||  {};
-    this.name          =  data.name         ||  "no name";
+    this.maxHP         =  data.maxHP          ||  15;
+    this.currentHP     =  data.currentHP      ||  15;
+    this.maxMana       =  data.maxMana        ||  30;
+    this.currentMana   =  data.currentMana    ||  this.maxMana;
+    this.guilds        =  data.guilds         ||  {artisan:{xp:0, lvl:1}};
+    this.currentGuild  =  data.currentGuild   ||  "artisan";
+    this.statuses      =  data.statuses       ||  {};
+    this.race          =  data.race           ||  races["human"];
+    this.stats         =  data.stats          ||  this.race.defaultStats;
+    this.appendage     =  data.appendage      ||  {};
+    this.name          =  data.name           ||  "no name";
 
-    this.updateStats();
+    this.updateEquippedStats();
   }
 
-  updateStats() {
+  updateEquippedStats() {
     // TODO - update stats from race and equips
-    this.attack       = this.stats.strength     + this.getModifiedStats("strength,attack");
-    this.accuracy     = this.stats.desterity    + this.getModifiedStats("dexterity,accuracy");
-    this.defence      = this.stats.constitution + this.getModifiedStats("defence,constitution");
-    this.magicAttack  = this.stats.intelligence + this.getModifiedStats("intelligence,magicAttack");
-    this.magicDefence = this.stats.intelligence + this.getModifiedStats("intelligence,magicDefence");
-  }
+    this.equippedStats = this.stats;
 
-  getModifiedStats(stat) {
-    let mod = 0;
-    for (let equipped of this.equipped) {
-      if (equipped.modifies[stat]) {
-        mod += equipped.modifies[stat];
-      }
-    }
-    for (let status of this.statuses) {
-      if (status.modifies[stat]) {
-        mod += equipped.modifies[stat];
-      }
-    }
-    return mod;
-  }
+    this.equippedStats.attack      = this.stats.strength;
+    this.equippedStats.accuracy    = this.stats.dexterity;
+    this.equippedStats.defence     = this.stats.constitution;
+    this.equippedStats.magicAttack = this.intelligence;
 
-  modifyAttributes(obj) {
-    for (let key in obj) {
-      this.stats[key] = eval(`${this.stats[key]}${obj[key]}`);
+    // Loop through each item the character has equipped
+    for (let apendage in this.equipped) {
+      // Loop through each effect that the item has
+      for (let mod in this.equipped[apendage]) {
+        if (typeof(equipment[mod]))
+        this.equippedStats[mod] += equipment[mod];
+      }
     }
   }
 
@@ -105,20 +94,5 @@ export default class Character {
       // TODO - add new spells from guild lvl
       // TODO - add new abilities from guild lvl
     }
-  }
-}
-
-class Requirements {
-  constructor(data) {
-    this.stats = data;
-  }
-
-  check(charStats) {
-    for (let req in this.stats) {
-      if (charStats[req] < this.stats[req]) {
-        return false;
-      }
-    }
-    return true;
   }
 }
