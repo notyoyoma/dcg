@@ -26,12 +26,12 @@
       "12": "magicalEntry"
     },
     "abilities": {
-      "thief": 5,
+      "thief": 3,
       "backstab": 0,
       "criticalHit": 0,
       "multipleSwings": 0,
-      "fighting": 7,
-      "perception": 3,
+      "fighting": 5,
+      "perception": 2,
       "language": 1
     }
   },

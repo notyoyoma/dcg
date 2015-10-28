@@ -1,6 +1,6 @@
 import races from "./races.json";
 import guilds from "./guilds.json";
-import spells from "./guilds.json";
+import spells from "./spells.json";
 
 export default class Character {
   constructor(data) {
@@ -13,26 +13,27 @@ export default class Character {
     this.statuses      =  data.statuses       ||  {};
     this.race          =  data.race           ||  races["human"];
     this.stats         =  data.stats          ||  this.race.defaultStats;
+    this.abilities     =  data.abilities      ||  this.race.abilities;
     this.appendage     =  data.appendage      ||  {};
     this.name          =  data.name           ||  "no name";
 
-    this.updateEquippedStats();
+    this.updateActiveStats();
   }
 
-  updateEquippedStats() {
+  updateActiveStats() {
     // TODO - update stats from race and equips
-    this.equippedStats = this.stats;
+    this.activeStats = this.stats;
 
-    this.equippedStats.attack      = this.stats.strength;
-    this.equippedStats.accuracy    = this.stats.dexterity;
-    this.equippedStats.defence     = this.stats.constitution;
-    this.equippedStats.magicAttack = this.intelligence;
+    this.activeStats.attack      = this.stats.strength;
+    this.activeStats.accuracy    = this.stats.dexterity;
+    this.activeStats.defence     = this.stats.constitution;
+    this.activeStats.magicAttack = this.intelligence;
 
     // Loop through each item the character has equipped
     for (let apendage in this.equipped) {
       // Loop through each effect that the item has
       for (let mod in this.equipped[apendage]) {
-        this.equippedStats[mod] += equipment[mod];
+        this.activeStats[mod] += equipment[mod];
       }
     }
   }
@@ -90,8 +91,8 @@ export default class Character {
       // TODO - increase maxHP based on guild settings
       // TODO - increase spellPoints based on guild settings
       // TODO - increase spellPower based on guild settings
+      // TODO - increase abilities based on guild settings
       // TODO - add new spells from guild lvl
-      // TODO - add new abilities from guild lvl
     }
   }
 }

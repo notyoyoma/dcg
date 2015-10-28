@@ -44,7 +44,16 @@
       "breathing": 1,
       "sight": 1
     },
-    "allowedGuilds": []
+    "allowedGuilds": [],
+    "abilities": {
+      "thief": 2,
+      "backstab": 0,
+      "criticalHit": 2,
+      "multipleSwings": 0,
+      "fighting": 5,
+      "perception": 1,
+      "language": 0
+    }
   },
   "elf": {
     "minStats": {
@@ -91,6 +100,15 @@
       "breathing": 1,
       "sight": 4
     },
-    "allowedGuilds": []
+    "allowedGuilds": [],
+    "abilities": {
+      "thief": 2,
+      "backstab": 0,
+      "criticalHit": 7,
+      "multipleSwings": 1,
+      "fighting": 12,
+      "perception": 1,
+      "language": 0
+    }
   }
 }
