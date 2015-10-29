@@ -13,7 +13,7 @@ export default class Character {
     this.statuses      =  data.statuses       ||  {};
     this.race          =  data.race           ||  races["human"];
     this.stats         =  data.stats          ||  this.race.defaultStats;
-    this.abilities     =  data.abilities      ||  this.race.abilities;
+    this.abilities     =  data.abilities      ||  {};
     this.appendage     =  data.appendage      ||  {};
     this.name          =  data.name           ||  "no name";
 
@@ -89,7 +89,7 @@ export default class Character {
       // TODO - if guild quest for lvl, assign
       // TODO - else probability asign random quest
       // TODO - increase maxHP based on guild settings
-      // TODO - increase spellPoints based on guild settings
+      // TODO - increase maxMana based on guild settings
       // TODO - increase spellPower based on guild settings
       // TODO - increase abilities based on guild settings
       // TODO - add new spells from guild lvl
