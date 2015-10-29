@@ -17,7 +17,7 @@ var baseXP = 50,   // Amount of XP for level 1 of an easy guild
     rExF;          // Race experience factor
 
 var xp  = (baseXP * cgExF) * ( 1 + ( cgLvl * cgLvl / 20 ) );
-    xp *= ogExF * ( 1 + ogLvl / 40 );
+    xp *= ogExF * ( 1 + ogLvl / 20 );
     xp *= rExF;
 ```
 ###### notes
