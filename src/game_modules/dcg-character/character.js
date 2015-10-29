@@ -65,20 +65,26 @@ export default class Character {
    * Factors in the levels in other guilds.
    */
   calculateExp() {
-    let otherGuildsModifier = 1,
-        guild = guilds[this.currentGuild],
-        guildObj = this.guilds[this.currentGuild];
+    let curGuild     = guilds[this.currentGuild],
+        curGuildStat = this.guilds[this.currentGuild];
+
+    let baseXP = 50,                              // Amount of XP for level 1 of an easy guild
+        cgExF  = curGuild.experienceFactor,       // Current guild experience factor
+        cgLvl  = curGuildStat["lvl"],             // Current guild level
+        ogExF  = 1,                               // Multiplication of other guild experience factors
+        ogLvl  = 1,                               // Sum of ther guild levels
+        rExF;                                     // Race experience factor
+
     for (let otherGuild in this.guilds) {
       if (otherGuild != this.currentGuild) {
-        // Scale lvlAdjust for other guilds by 1/10, for a gentler xp curve
-        let lvlAdjust = Math.ceil(1, this.guilds[otherGuild].lvl / 10);
-        otherGuildsModifier += guilds[otherGuild].experienceFactor * lvlAdjust * lvlAdjust
+        ogExF *= guilds[otherGuild].experienceFactor;
+        ogLvl += this.guilds[otherGuild].level;
       }
     }
 
-    // Scale lvlAdjust for active guild by 1/5, for a steeper xp curve
-    let lvlAdjust = Math.ceil(1, guildObj.lvl / 5);
-    guildObj[expNextLvl] = (50 + otherGuildsModifier) * guild.experienceFactor * lvlAdjust * lvlAdjust;
+    let xp  = (baseXP * cgExF) * ( 1 + ( cgLvl * cgLvl / 20 ) );
+        xp *= ogExF * ( 1 + ogLvl / 20 );
+        xp *= rExF;
   }
 
   makeLevel() {

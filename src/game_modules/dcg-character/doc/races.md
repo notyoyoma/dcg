@@ -1,5 +1,7 @@
 #Race
 
+To see all of the races that have been setup, simply [ view races.json ]( ../races.json )
+
 | Property         | Effect 
 | ---              | --- 
 | minStats         | The minimum of each statistic possible for this race.
@@ -8,7 +10,7 @@
 | defaultStats     | Values to assign if a character is created without setting stats. (total of all stats should be 65)
 | freePoints       | Number of free points avaliable at the start of the character creation screen.
 | frailtyAge       | Age at which the race becomes frail (chance of perma-death)
-| experienceFactor | Adjusts experience required per level <ul><li>1 - Race does not adjust XP requirements</li><li>2 - Race doubles XP requirements</li><li>0.5 - Race halves XP requirements</li></ul>
+| experienceFactor | Adjusts experience required per level [ see experience.md ]( ./experience.md#race )
 | alignments       | Possible race alignments
 | allowedGuilds    | Possible guild memberships
 | aptitude         | All aptitude numbers affect the quantity (if any) of the skill gained per level (see below)
