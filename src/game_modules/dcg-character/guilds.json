@@ -5,7 +5,7 @@
       "averageSpellpoints": false,
       "averageSpellpower": false
     },
-    "experienceFactor": 8,
+    "experienceFactor": 1,
     "questProbability": 0.2,
     "requirements": {
       "strength": 1,
@@ -41,7 +41,7 @@
       "averageSpellpoints": false,
       "averageSpellpower": false
     },
-    "experienceFactor": 12,
+    "experienceFactor": 2,
     "questProbability": 0.5,
     "requirements": {
       "strength": 15,
