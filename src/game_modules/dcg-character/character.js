@@ -60,17 +60,32 @@ export default class Character {
     }
   }
 
+  makeLevel() {
+    let curGuild = this.guilds[this.currentGuild];
+    if (curGuild.exp >= curGuild.expNextLvl) {
+      curGuild.lvl += 1;
+      curGuild.expNextLvl = this.calculateExp(curGuild.lvl);
+      curGuild.expPin = thiscalculateExp(curGuild.lvl + 1);
+      // TODO - if guild quest for lvl, assign
+      // TODO - else probability asign random quest
+      // TODO - increase maxHP based on guild settings
+      // TODO - increase maxMana based on guild settings
+      // TODO - increase spellPower based on guild settings
+      // TODO - increase abilities based on guild settings
+      // TODO - add new spells from guild lvl
+    }
+  }
+
   /*
    * Calculate the exp needed to advance to the next level in the current guild.
    * Factors in the levels in other guilds.
    */
-  calculateExp() {
+  calculateExp(cgLvl) {                           // Desired guild level
     let curGuild     = guilds[this.currentGuild],
         curGuildStat = this.guilds[this.currentGuild];
 
     let baseXP = 50,                              // Amount of XP for level 1 of an easy guild
         cgExF  = curGuild.experienceFactor,       // Current guild experience factor
-        cgLvl  = curGuildStat["lvl"],             // Current guild level
         ogExF  = 1,                               // Multiplication of other guild experience factors
         ogLvl  = 1,                               // Sum of ther guild levels
         rExF;                                     // Race experience factor
@@ -85,20 +100,7 @@ export default class Character {
     let xp  = (baseXP * cgExF) * ( 1 + ( cgLvl * cgLvl / 20 ) );
         xp *= ogExF * ( 1 + ogLvl / 20 );
         xp *= rExF;
-  }
 
-  makeLevel() {
-    let curGuild = this.guilds[this.currentGuild];
-    if (curGuild.exp >= curGuild.expNextLvl) {
-      curGuild.lvl += 1;
-      this.calculateExp();
-      // TODO - if guild quest for lvl, assign
-      // TODO - else probability asign random quest
-      // TODO - increase maxHP based on guild settings
-      // TODO - increase maxMana based on guild settings
-      // TODO - increase spellPower based on guild settings
-      // TODO - increase abilities based on guild settings
-      // TODO - add new spells from guild lvl
-    }
+    return Math.trunc(xp);
   }
 }
