@@ -14,7 +14,7 @@ export default class Character {
     this.race          =  data.race           ||  races["human"];
     this.stats         =  data.stats          ||  this.race.defaultStats;
     this.abilities     =  data.abilities      ||  {};
-    this.appendage     =  data.appendage      ||  {};
+    this.equipped      =  data.equipped       ||  {};
     this.name          =  data.name           ||  "no name";
 
     this.updateActiveStats();
@@ -27,13 +27,13 @@ export default class Character {
     this.activeStats.attack      = this.stats.strength;
     this.activeStats.accuracy    = this.stats.dexterity;
     this.activeStats.defence     = this.stats.constitution;
-    this.activeStats.magicAttack = this.intelligence;
+    this.activeStats.magicAttack = this.stats.intelligence;
 
     // Loop through each item the character has equipped
-    for (let apendage in this.equipped) {
+    for (let appendage in this.equipped) {
       // Loop through each effect that the item has
-      for (let mod in this.equipped[apendage]) {
-        this.activeStats[mod] += equipment[mod];
+      for (let mod in this.equipped[appendage]) {
+        this.activeStats[mod] += this.equipped[appendage][mod];
       }
     }
   }
