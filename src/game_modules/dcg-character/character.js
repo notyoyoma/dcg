@@ -1,6 +1,13 @@
-import races from "./races.json";
-import guilds from "./guilds.json";
-import spells from "./spells.json";
+// Required Modules
+import  log        from  "dcg-log";
+
+// Character Data
+import  races      from  "./races.json";
+import  guilds     from  "./guilds.json";
+import  spells     from  "./spells.json";
+
+// Sub Modules
+import  Inventory  from  "./inventory.js";
 
 export default class Character {
   constructor(data) {
@@ -11,12 +18,14 @@ export default class Character {
     this.guilds        =  data.guilds         ||  {artisan:{xp:0, lvl:1}};
     this.currentGuild  =  data.currentGuild   ||  "artisan";
     this.statuses      =  data.statuses       ||  {};
+    this.gender        =  data.gender         ||  'm';
     this.race          =  data.race           ||  races["human"];
     this.stats         =  data.stats          ||  this.race.defaultStats;
     this.learnedStats  =  data.learnedStats   ||  {};
     this.abilities     =  data.abilities      ||  {};
     this.equipped      =  data.equipped       ||  {};
     this.name          =  data.name           ||  "no name";
+    this.inventory     =  new Inventory( data.inventory || false );
 
     this.updateActiveStats();
   }
@@ -28,9 +37,9 @@ export default class Character {
    *    this.equipped
    */
   updateActiveStats() {
-    this.activeStats = this.stats;
+    this.activeStats = JSON.parse(JSON.stringify(this.stats));
 
-    // Core stats
+    // Core stats => core activeStats
     this.activeStats.attack      = this.stats.strength;
     this.activeStats.accuracy    = this.stats.dexterity;
     this.activeStats.defence     = this.stats.constitution;
@@ -38,7 +47,11 @@ export default class Character {
 
     // Learned stats (acquired from guilds)
     for (let learnedStat in this.learnedStats) {
-      this.activeStats[learnedStat] = this.learnedStats[learnedStat]
+      if (this.activeStats[learnedStat]) {
+        this.activeStats[learnedStat] += this.learnedStats[learnedStat]
+      } else {
+        this.activeStats[learnedStat] = this.learnedStats[learnedStat]
+      }
     }
 
     // Equipment stats
@@ -62,6 +75,69 @@ export default class Character {
     }
   }
 
+  /*
+   * attempt to equip an item
+   */
+  equip(item) {
+    let appendage = item.appendage;
+
+    // failure cases
+    if (!this.meetsRequirements(item.requirements)) {
+      log.message({
+        type: 'party',
+        message: `${this.name} can't equip ${item.name} because one or more stats are too low.`
+      });
+      return false;
+    }
+    if (this.equipped[appendage] && !this.unequip(appendage)) {
+      log.message({
+        type: 'party',
+        message: `${this.name} can't equip ${item.name} because he can't unequip the previous item.`
+      });
+      return false;
+    }
+
+    // success case
+    this.equipped[appendage] = item;
+    this.updateActiveStats();
+    return true;
+  }
+
+  /*
+   * attempt to equip an item
+   */
+  unequip(appendage) {
+    let item = this.equipped[appendage];
+
+    // failure cases
+    if ( item.cursed ) {
+      log.message({
+        type: 'party',
+        message: `${this.name} can't unequip ${item.name} because it is cursed.`
+      });
+      return false;
+    }
+    if ( this.inventory.isFull() ) {
+      log.message({
+        type: 'party',
+        message: `${this.name} can't unequip ${item.name} because his inventory is full.`
+      });
+      return false;
+    }
+
+    // success case
+    this.inventory.addItem(item);
+    delete this.equipped[appendage];
+    this.updateActiveStats();
+    return true;
+  }
+
+  /*
+   * modifies this.stats (core stats)
+   * will not allow stats above this.race.maxStats
+   * will not allow stats below this.race.minStats
+   * triggers updateActiveStats();
+   */
   modifyCoreStat(mods) {
     for (let mod in mods) {
       this.stats[mod] = Math.max(
@@ -75,7 +151,14 @@ export default class Character {
     this.updateActiveStats();
   }
 
-  // Call when a character attemps to change current guild
+  /*
+   * Attempts to join this character to a guild.
+   *
+   * If this is the first time joining the guild, will check
+   * guild requirements. If the character does not meet them,
+   * will print a message to the character log
+   *
+   */
   joinGuild(guildName) {
     let guild = guilds[guildName];
     if (this.guilds.hasOwnProperty(guildName)) {
@@ -90,12 +173,17 @@ export default class Character {
     } else {
       // Otherwise, log the message.
       log.message({
-        type: 'character',
+        type: 'party',
         message: `${this.name}'s stats are too low to join ${humanize(guildName)}.`
       });
     }
   }
 
+  /*
+   * Attempt to level up in the current guild
+   * 
+   * TODO - finish comment
+   */
   makeLevel() {
     let curGuild = this.guilds[this.currentGuild];
     if (curGuild.exp >= curGuild.expNextLvl) {
