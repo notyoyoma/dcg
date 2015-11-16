@@ -10,19 +10,22 @@ import  spells     from  "./spells.json";
 import  Inventory  from  "./inventory.js";
 
 export default class Character {
+  /*
+   * Create the character from saved <data>.
+   * Structure of data in ./doc/character-data.md
+   */
   constructor(data) {
     this.maxHP         =  data.maxHP          ||  15;
-    this.currentHP     =  data.currentHP      ||  15;
+    this.currentHP     =  data.currentHP      ||  this.maxHP;
     this.maxMana       =  data.maxMana        ||  30;
     this.currentMana   =  data.currentMana    ||  this.maxMana;
     this.guilds        =  data.guilds         ||  {artisan:{xp:0, lvl:1}};
     this.currentGuild  =  data.currentGuild   ||  "artisan";
     this.statuses      =  data.statuses       ||  {};
     this.gender        =  data.gender         ||  'm';
-    this.race          =  data.race           ||  races["human"];
+    this.race          =  races[data.race]    ||  races["human"];
     this.stats         =  data.stats          ||  this.race.defaultStats;
     this.learnedStats  =  data.learnedStats   ||  {};
-    this.abilities     =  data.abilities      ||  {};
     this.equipped      =  data.equipped       ||  {};
     this.name          =  data.name           ||  "no name";
     this.inventory     =  new Inventory( data.inventory || false );
@@ -42,8 +45,9 @@ export default class Character {
     // Core stats => core activeStats
     this.activeStats.attack      = this.stats.strength;
     this.activeStats.accuracy    = this.stats.dexterity;
+    this.activeStats.dodge       = this.stats.dexterity;
     this.activeStats.defence     = this.stats.constitution;
-    this.activeStats.magicAttack = this.stats.intelligence;
+    this.activeStats.spellPower  = this.stats.intelligence;
 
     // Learned stats (acquired from guilds)
     for (let learnedStat in this.learnedStats) {
@@ -133,6 +137,19 @@ export default class Character {
   }
 
   /*
+   * Test Character's Stats against requirements. Return true if the character
+   * meets the requirements. Else return false.
+   */
+  meetsRequirements(requirements) {
+    for (let requirement in requirements) {
+      if (this.activeStats[requirement] < requirements[requirement]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /*
    * modifies this.stats (core stats)
    * will not allow stats above this.race.maxStats
    * will not allow stats below this.race.minStats
@@ -156,20 +173,19 @@ export default class Character {
    *
    * If this is the first time joining the guild, will check
    * guild requirements. If the character does not meet them,
-   * will print a message to the character log
-   *
+   * will print a message to the party log
    */
   joinGuild(guildName) {
     let guild = guilds[guildName];
     if (this.guilds.hasOwnProperty(guildName)) {
       // Only checks requirements if joining the first time
       this.currentGuild = guildName
-      this.calculateExp();
+      this.setExp();
     } else if (this.meetsRequirements(guild.requirements)) {
       // If the character's core stats meet the requirements, join the guild
       this.guilds[guildName] = {xp:0};
       this.currentGuild = guildName;
-      this.calculateExp();
+      this.setExp();
     } else {
       // Otherwise, log the message.
       log.message({
@@ -181,36 +197,28 @@ export default class Character {
 
   /*
    * Attempt to level up in the current guild
-   * 
-   * TODO - finish comment
    */
   makeLevel() {
     let curGuild = this.guilds[this.currentGuild];
     if (curGuild.exp >= curGuild.expNextLvl) {
       curGuild.lvl += 1;
-      curGuild.expNextLvl = this.calculateExp(curGuild.lvl);
-      curGuild.expPin = thiscalculateExp(curGuild.lvl + 1);
+      this.setExp();
       // TODO - if guild quest for lvl, assign
       // TODO - else probability asign random quest
       // TODO - increase maxHP based on guild settings
       // TODO - increase maxMana based on guild settings
-      // TODO - increase spellPower based on guild settings
-      // TODO - increase abilities based on guild settings
+      // TODO - increase learnedStats based on guild settings
       // TODO - add new spells from guild lvl
     }
   }
 
   /*
-   * Test Character's Stats against requirements. Return true if the character
-   * meets the requirements. Else return false.
+   * Set the current guild's exp requirements
    */
-  meetsRequirements(requirements) {
-    for (let requirement in requirements) {
-      if (this.stats[requirement] < requirements[requirement]) {
-        return false;
-      }
-    }
-    return true;
+  setExp() {
+    let curGuild = this.guilds[this.currentGuild];
+    curGuild.expNextLvl = this.calculateExp(curGuild.lvl);
+    curGuild.expToPin = this.calculateExp(curGuild.lvl + 1);
   }
 
   /*

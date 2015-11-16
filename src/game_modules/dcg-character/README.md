@@ -27,3 +27,9 @@ Read more (coming soon)
 | language       | language score
 
 Read more (coming soon)
+
+## Equipment
+
+Equipment directly modifies stats. Unequipping items removes these modifications.
+
+Cursed equipment lowers stats, and is imposible to remove without breaking the curse. To break the curse, go to the store and pay to have the curse broken.
