@@ -1,0 +1,112 @@
+{
+  "maxHP": 30,
+  "currentHP": 28,
+  "maxMana": 30,
+  "currentMana": 10,
+  "guilds": {
+    "artisan": {
+      "xp": 500,
+      "lvl": 3,
+      "expNextLvl": 800,
+      "expToPin": 1100
+    },
+    "barbarian": {
+      "xp": 200,
+      "lvl": 2,
+      "expNextLvl": 450,
+      "expToPin": 800
+    }
+  },
+  "currentGuild": "artisan",
+  "statuses": {
+    "flying": true
+  },
+  "gender": "m",
+  "race": "human",
+  "stats": {
+    "strength": 11,
+    "intelligence": 12,
+    "wisdom": 12,
+    "constitution": 8,
+    "charisma": 9,
+    "dexterity": 11
+  },
+  "learnedStats": {
+    "attack": 10,
+    "accuracy": 2,
+    "dodge": 0,
+    "defence": 0,
+    "spellPower": 0,
+    "perception": 4,
+    "multipleSwings": 0,
+    "thief": 3,
+    "criticalHit": 0,
+    "backstab": 0,
+    "breathing": 0,
+    "language": 1
+  },
+  "equipped": {
+    "hand": {
+      "appendage": "hand",
+      "name": "Sword of self-stabbing",
+      "modifies": {
+        "attack": -10
+      },
+      "cursed": true
+    },
+    "offHand": {
+      "appendage": "offHand",
+      "name": "Shield of stab me",
+      "modifies": {
+        "defence": -10
+      },
+      "cursed": true
+    }
+  },
+  "name": ,
+  "inventory": [
+    {
+      "appendage": "hand",
+      "name": "Iron Sword",
+      "modifies": {
+        "attack": 3
+      }
+    },
+    {
+      "appendage": "feet",
+      "name": "Lead Boots",
+      "modifies": {
+        "defence": 5,
+        "dodge": -10
+      }
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ]
+}

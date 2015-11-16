@@ -1,6 +1,6 @@
 ## Character Data
 
-When you save the game, each character's information will be written to a JSON object with the following properites:
+When you save the game, the following information about each character will be saved:
 
 | Property     | Type | Explanation 
 | ---          | ---  | ---
@@ -18,6 +18,8 @@ When you save the game, each character's information will be written to a JSON o
 | equipped     | obj  | Character's equipment. [ More detail below. ]( #equipped-data )
 | name         | str  | Character's name.
 | inventory    | obj  | Character's inventory. [ More detail below. ]( #inventory-data )
+
+To see an example of this data, see [ example-character-data.json ]( ./example-character-data.json )
 
 ### Guilds data
 
