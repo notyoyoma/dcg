@@ -1,33 +1,49 @@
 export default class Party {
   constructor(data, world) {
-    this.members     = data.members || [];
-    this.location    = data.location || { x:0, y:0, z:0 };
-    this.currentZone = data.currentZone || 0;
-    this.facing      = data.facing || 0;
-    this.maxSize     = 4;
-    this.world       = world;
-    this.updaters    = [];
+    this.location          = data.location || { x:0, y:0, z:0 };
+    this.currentZone       = data.currentZone || 0;
+    this.facing            = data.facing || 0;
+    this.maxSize           = 4;
+    this.world             = world;
+
+    this.initCharacters(data);
+  }
+
+  initCharacters(data) {
+    if (data.characters && data.characters.length) {
+      this.characters = [];
+      for (let charName of data.characters) {
+        this.characters.push(
+          this.world.characters.find(function(c) {
+            return charName == c.name;
+          })
+        );
+      }
+      this.currentCharacter = this.characters[0];
+    } else {
+      //TODO - create character modal
+    }
   }
 
   addMember(character) {
-    if (this.members.length + 1 > this.maxSize) {
+    if (this.characters.length + 1 > this.maxSize) {
       log.error({
         type: 'party',
         text: 'Cannot have more than 4 characters in a party.'
       });
     } else {
-      this.members.push(character);
+      this.characters.push(character);
     }
   }
 
   kickMember(index) {
-    let character = this.members[index].pop();
+    let character = this.characters[index].pop();
     character.currentZone = this.currentZone;
   }
 
   reorderMember(newindex,oldIndex) {
-    let character = this.members[oldIndex].pop();
-    this.members.splice(newIndex, 0, character);
+    let character = this.characters[oldIndex].pop();
+    this.characters.splice(newIndex, 0, character);
   }
 
   moveForward() {
@@ -52,7 +68,6 @@ export default class Party {
     } else {
       this.facing = newFace;
     }
-    this.update();
   }
   turnLeft() {
     this.turn(-1);
@@ -62,14 +77,5 @@ export default class Party {
   }
   turnAround() {
     this.turn(-2);
-  }
-
-  addUpdater(func) {
-    this.updaters.push(func);
-  }
-  update() {
-    for (let i in this.updaters) {
-      this.updaters[i]();
-    }
   }
 }

@@ -1,0 +1,52 @@
+{{#bindDeep party.currentCharacter}}
+  <section class="character stats">
+    <h3>Stats</h3>
+    {{#with stats}}
+      <table>
+        <tr>
+          <td>Strength</td>
+          <td>{{strength}}</td>
+        </tr>
+        <tr>
+          <td>Intelligence</td>
+          <td>{{intelligence}}</td>
+        </tr>
+        <tr>
+          <td>Wisdom</td>
+          <td>{{wisdom}}</td>
+        </tr>
+        <tr>
+          <td>Constitution</td>
+          <td>{{constitution}}</td>
+        </tr>
+        <tr>
+          <td>Charisma</td>
+          <td>{{charisma}}</td>
+        </tr>
+        <tr>
+          <td>Dexterity</td>
+          <td>{{dexterity}}</td>
+        </tr>
+      </table>
+    {{/with}}
+  </section>
+  <section>
+    <h3>Status</h3>
+    <table>
+      <tr>
+        <td>Health</td>
+        <td>{{currentHP}} / {{maxHP}}</td>
+      </tr>
+      <tr>
+        <td>Mana</td>
+        <td>{{currentMana}} / {{maxMana}}</td>
+      </tr>
+      {{#each statuses as |info status|}}
+        <tr>
+          <td>{{status}}</td>
+          <td>{{info}}</td>
+        </tr>
+      {{/each}}
+    </table>
+  </section>
+{{/bindDeep}}

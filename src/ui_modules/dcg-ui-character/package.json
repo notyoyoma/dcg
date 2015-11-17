@@ -1,0 +1,11 @@
+{
+  "name": "dcg-ui-character",
+  "version": "1.0.0",
+  "description": "View Character Information",
+  "main": "character-view.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

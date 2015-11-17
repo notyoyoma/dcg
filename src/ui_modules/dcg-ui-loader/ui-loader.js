@@ -9,7 +9,9 @@ export default function gameUi(game) {
 
   // List all avaliable UI Modules here
   let modules = {
-      tileMap: require('dcg-ui-tile-map'),
+      tileMap:   require('dcg-ui-tile-map'),
+      party:     require('dcg-ui-party'),
+      character: require('dcg-ui-character'),
     },
     windows   = {};
 
@@ -24,6 +26,8 @@ export default function gameUi(game) {
       "type": "row",
       "content": [
         windows.tileMap,
+        windows.party,
+        windows.character,
       ],
     }]
   });

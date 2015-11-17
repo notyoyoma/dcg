@@ -24,8 +24,14 @@
       }
     ]
   },
+  "characters": [
+    { "name": "Bjarne" },
+    { "name": "Guido" }
+  ],
   "party": {
-    "members": [],
+    "characters": [
+      "Bjarne"
+    ],
     "location": {
       "x":0,
       "y":0,
