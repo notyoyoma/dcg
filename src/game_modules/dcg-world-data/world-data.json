@@ -2,24 +2,73 @@
   "map": {
     "size": 5,
     "defaultTile": {
+      "walls": { "right":0, "bottom":0 }
     },
     "floors": [
       {
-        "tiles": [
-          [[{
-            "message": "Welcome to DCG"
-          }]],
-          [[]],
-          [[]],
-          [[]],
-          [[]]
+        "zones": [
+          {
+            "message": "Welcome to DCG",
+            "monsters": []
+          },
+          {
+            "monsters": ["tyke"]
+          },
+          {
+            "monsters": ["kobold"]
+          },
+          {
+            "monsters": ["giantSpider"]
+          },
+          {
+            "monsters": ["tyke","kobold","giantSpider"]
+          },
+          {
+            "monsters": ["tyke","kobold","giantSpider"]
+          },
+          {
+            "monsters": ["tyke","kobold","giantSpider"]
+          },
+          {
+            "monsters": ["aboleth"]
+          }
         ],
-        "walls": [
-          [[4,0], [0,0], [3,4], [0,3], [0,0]],
-          [[4,0], [4,4], [0,0], [4,0], [0,3]],
-          [[4,0], [4,0], [0,4], [4,3], [0,0]],
-          [[3,0], [0,4], [0,4], [4,3], [0,2]],
-          [[4,0], [0,0], [0,0], [4,0], [0,0]]
+        "tiles": [
+          [
+            { "zone": 0, "walls": {"right":4,"bottom":0} },
+            { "zone": 5, "walls": {"right":0,"bottom":0} },
+            { "zone": 5, "walls": {"right":3,"bottom":4} },
+            { "zone": 4, "walls": {"right":0,"bottom":3} },
+            { "zone": 4, "walls": {"right":0,"bottom":0} }
+          ],
+          [
+            { "zone": 0, "walls": {"right":4,"bottom":0} },
+            { "zone": 5, "walls": {"right":4,"bottom":4} },
+            { "zone": 3, "walls": {"right":0,"bottom":0} },
+            { "zone": 3, "walls": {"right":4,"bottom":0} },
+            { "zone": 4, "walls": {"right":0,"bottom":3} }
+          ],
+          [
+            { "zone": 0, "walls": {"right":4,"bottom":0} },
+            { "zone": 1, "walls": {"right":4,"bottom":0} },
+            { "zone": 3, "walls": {"right":0,"bottom":4} },
+            { "zone": 3, "walls": {"right":4,"bottom":3} },
+            { "zone": 6, "walls": {"right":0,"bottom":0} }
+          ],
+          [
+            { "zone": 0, "walls": {"right":3,"bottom":0} },
+            { "zone": 1, "walls": {"right":0,"bottom":4} },
+            { "zone": 1, "walls": {"right":0,"bottom":4} },
+            { "zone": 1, "walls": {"right":4,"bottom":3} },
+            { "zone": 6, "walls": {"right":0,"bottom":2} }
+          ],
+          [
+            { "zone": 0, "walls": {"right":4,"bottom":0} },
+            { "zone": 2, "walls": {"right":0,"bottom":0} },
+            { "zone": 2, "walls": {"right":0,"bottom":0} },
+            { "zone": 2, "walls": {"right":4,"bottom":0} },
+            { "zone": 7, "walls": {"right":1,"bottom":0} }
+          ]
         ]
       }
     ]

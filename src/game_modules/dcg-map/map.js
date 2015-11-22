@@ -64,23 +64,8 @@ class Map {
 class Floor {
   constructor(data, mapRef) {
     this.tiles        =  data.tiles;
-    this.walls        =  data.walls;
     this.defaultTile  =  merge(mapRef.defaultTile, data.defaultTile);
     this.floorSize    =  mapRef.size;
-    this.initTiles();
-  }
-
-  initTiles() {
-    for (let i=0; i<this.floorSize; i+=1) {
-      if (typeof this.tiles[i] == "undefined") this.tiles[i] = [];
-      for (let j=0; j<this.floorSize; j+=1) {
-        this.tiles[i][j] = merge(this.tiles[i][j], this.defaultTile);
-        this.tiles[i][j].walls = {
-          right: this.walls[i][j][0],
-          bottom: this.walls[i][j][1],
-        }
-      }
-    }
   }
 
   getTile(x,y) {
@@ -88,19 +73,20 @@ class Floor {
     ||  typeof this.tiles[y][x] == "undefined") {
       return this.defaultTile;
     }
-    return merge(this.tiles[y][x], defaultTile);
+    return merge(this.tiles[y][x]);
   }
 
   getTileWalls(x,y) {
-    if (typeof this.walls[y]    == "undefined"
-    ||  typeof this.walls[y][x] == "undefined") {
-      return [0,0];
+    if (typeof this.tiles[y]             == "undefined"
+    ||  typeof this.tiles[y][x]          == "undefined"
+    ||  typeof this.tiles[y][x]['walls'] == "undefined" ) {
+      return {right:0,bottom:0,top:0,left:0};
     }
     return {
-      right:   (x+1 < this.floorSize) ? this.walls[y][x][0]   : 4,
-      bottom:  (y+1 < this.floorSize) ? this.walls[y][x][1]   : 4,
-      top:     (y-1 >= 0)             ? this.walls[y-1][x][1] : 4,
-      left:    (x-1 >= 0)             ? this.walls[y][x-1][0] : 4,
+      right:  (x+1 < this.floorSize) ? this.tiles[y][x]['walls']['right']    : 4,
+      bottom: (y+1 < this.floorSize) ? this.tiles[y][x]['walls']['bottom']   : 4,
+      top:    (y-1 >= 0)             ? this.tiles[y-1][x]['walls']['bottom'] : 4,
+      left:   (x-1 >= 0)             ? this.tiles[y][x-1]['walls']['right']  : 4,
     };
   }
 }
