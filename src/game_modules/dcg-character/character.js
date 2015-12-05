@@ -261,7 +261,7 @@ export default class Character {
       this.activeStats.spellPower
     );
     let effect;
-    switch (Math.abs(alignments[this.alignment] - alignments[character.alignment])) {
+    switch (Math.abs(alignments[this.alignment] - alignments[withAlignment])) {
       case 0:
         // if the [monster, npm, item] is the same alignment as the character
         // influence = magnitutde

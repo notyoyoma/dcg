@@ -3,14 +3,15 @@ import monsters from './monsters.json';
 // TODO - write tests
 export default class Monster {
   constructor(id) {
-    this.race = monsters[id];
+    this.race = id;
     this.initStats();
   }
 
   initStats() {
+    let race = monsters[this.race];
     this.stats = {};
-    for (propKey in this.race.stats) {
-      let prop = this.race[propKey];
+    for (let propKey in race.stats) {
+      let prop = race.stats[propKey];
       if (typeof prop == "number") {
         let min = prop / 2,
             max = prop + min;
@@ -24,7 +25,7 @@ export default class Monster {
   initHostility(party) {
     if (this.hostility) return;
     this.hostility = 10; // attack by default
-    for (character of party.characters) {
+    for (let character of party.characters) {
       this.hostility -= character.getInfluence(this.alignment);
     }
   }
