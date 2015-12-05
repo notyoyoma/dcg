@@ -1,3 +1,5 @@
+import Encounter from 'dcg-encounter'
+
 export default class Party {
   constructor(data, world) {
     this.location          = data.location || { x:0, y:0, z:0 };
@@ -7,6 +9,7 @@ export default class Party {
     this.world             = world;
 
     this.initCharacters(data);
+    this.doEncounter();
   }
 
   initCharacters(data) {
@@ -23,6 +26,11 @@ export default class Party {
     } else {
       //TODO - create character modal
     }
+  }
+
+  doEncounter() {
+    delete this.encounter;
+    this.encounter = new Encounter(this.world.map.zones[this.currentZone], this)
   }
 
   addMember(character) {
@@ -46,10 +54,14 @@ export default class Party {
     this.characters.splice(newIndex, 0, character);
   }
 
+  // Movement Methods
   moveForward() {
     let resultObj = this.world.map.tryMove(this.location, this.facing);
     if (resultObj.success) {
-      //this.processEffects(resultObj.effects);
+      if ( this.currentZone != resultObj.newTile.zone ) {
+        this.currentZone = resultObj.newTile.zone
+        this.doEncounter();
+      }
     }
     if (resultObj.message) {
       log.message({

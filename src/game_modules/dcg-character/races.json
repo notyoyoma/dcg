@@ -40,6 +40,7 @@
       "neutral": true,
       "evil": true
     },
+    "defaultAlignment": "neutral",
     "allowedGuilds": [],
     "aptitude": {
       "attack": 1,
@@ -97,6 +98,7 @@
       "neutral": true,
       "evil": false
     },
+    "defaultAlignment": "neutral",
     "allowedGuilds": [],
     "aptitude": {
       "attack": 0.8,
@@ -154,6 +156,7 @@
       "neutral": true,
       "evil": false
     },
+    "defaultAlignment": "neutral",
     "allowedGuilds": [],
     "aptitude": {
       "attack": 0.8,

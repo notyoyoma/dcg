@@ -4,35 +4,35 @@
     "defaultTile": {
       "walls": { "right":0, "bottom":0 }
     },
+    "zones": [
+      {
+        "message": "Welcome to DCG",
+        "monsters": []
+      },
+      {
+        "monsters": ["tyke"]
+      },
+      {
+        "monsters": ["kobold"]
+      },
+      {
+        "monsters": ["giantSpider"]
+      },
+      {
+        "monsters": ["tyke","kobold","giantSpider"]
+      },
+      {
+        "monsters": ["tyke","kobold","giantSpider"]
+      },
+      {
+        "monsters": ["tyke","kobold","giantSpider"]
+      },
+      {
+        "monsters": ["aboleth"]
+      }
+    ],
     "floors": [
       {
-        "zones": [
-          {
-            "message": "Welcome to DCG",
-            "monsters": []
-          },
-          {
-            "monsters": ["tyke"]
-          },
-          {
-            "monsters": ["kobold"]
-          },
-          {
-            "monsters": ["giantSpider"]
-          },
-          {
-            "monsters": ["tyke","kobold","giantSpider"]
-          },
-          {
-            "monsters": ["tyke","kobold","giantSpider"]
-          },
-          {
-            "monsters": ["tyke","kobold","giantSpider"]
-          },
-          {
-            "monsters": ["aboleth"]
-          }
-        ],
         "tiles": [
           [
             { "zone": 0, "walls": {"right":4,"bottom":0} },

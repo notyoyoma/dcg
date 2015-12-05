@@ -2,9 +2,10 @@
 import  log        from  "dcg-log";
 
 // Character Data
-import  races      from  "./races.json";
-import  guilds     from  "./guilds.json";
-import  spells     from  "./spells.json";
+import  races       from  "./races.json";
+import  guilds      from  "./guilds.json";
+import  spells      from  "./spells.json";
+import  alignments  from  "./alignments.json";
 
 // Sub Modules
 import  Inventory  from  "./inventory.js";
@@ -24,6 +25,7 @@ export default class Character {
     this.statuses      =  data.statuses       ||  {};
     this.gender        =  data.gender         ||  'm';
     this.race          =  races[data.race]    ||  races["human"];
+    this.alignment     =  data.alignment      ||  this.race.defaultAlignment;
     this.stats         =  data.stats          ||  this.race.defaultStats;
     this.learnedStats  =  data.learnedStats   ||  {};
     this.equipped      =  data.equipped       ||  {};
@@ -247,5 +249,32 @@ export default class Character {
         xp *= rExF;
 
     return Math.trunc(xp);
+  }
+
+  // TODO - write tests
+  getInfluence(withAlignment) {
+    let magnitude = Math.max(
+      this.activeStats.attack,
+      this.activeStats.accuracy,
+      this.activeStats.dodge,
+      this.activeStats.defence,
+      this.activeStats.spellPower
+    );
+    let effect;
+    switch (Math.abs(alignments[this.alignment] - alignments[character.alignment])) {
+      case 0:
+        // if the [monster, npm, item] is the same alignment as the character
+        // influence = magnitutde
+        effect = 1
+      case 1:
+        // if the [monster, npm, item] is a different alignment, but not opposite
+        // influence = -magnitutde
+        effect = -1;
+      case 2:
+        // if the [monster, npm, item] is a opposite alignment
+        // influence = -magnitutde * 2
+        effect = -2;
+    }
+    return Math.min(50, magnitude * effect);
   }
 }

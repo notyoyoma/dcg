@@ -5,6 +5,7 @@ class Map {
   constructor(data) {
     this.size           =  data.size;
     this.defaultTile    =  data.defaultTile;
+    this.zones          =  data.zones;
 
     this.floors         =  [];
     this.loadFloors(data.floors);
@@ -36,7 +37,7 @@ class Map {
 
     if (result.success) {
       this.move(location, direction);
-      result.message = this.currentFloor.getTile(location);
+      result.newTile = this.currentFloor.getTile(location.x,location.y);
     } else {
       result.message = "You can't go that way";
     }

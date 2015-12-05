@@ -2,7 +2,7 @@
 import  mapObj     from  "dcg-map";
 import  Character  from  "dcg-character";
 import  Party      from  "dcg-party";
-import  log        from  "dcg-log"
+import  log        from  "dcg-log";
 
 
 export default class GameWorld {

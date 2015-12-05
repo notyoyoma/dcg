@@ -38,5 +38,9 @@ describe('Map', function() {
         assert.equal(mapObj.tryMove({x:i,y:mapObj.size-1}, 2).success, false);
       }
     });
+
+    it('if successfull, returns new tile object in property newTile', function() {
+      assert.equal(mapObj.tryMove({x:0,y:0}, 2).newTile, mapObj.getTile(0,1));
+    });
   });
 });
