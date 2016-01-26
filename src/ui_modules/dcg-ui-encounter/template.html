@@ -1,0 +1,26 @@
+{{#bind party}}
+  <ul>
+    {{#with encounter.zone.monster}}
+      <li class="monster">
+        <table>
+          <tr>
+            <td>Type:</td>
+            <td>{{this.race}}</td>
+          </tr>
+          <tr>
+            <td>HP:</td>
+            <td>{{this.hp}} / {{this.stats.maxHp}}</td>
+          </tr>
+          <tr>
+            <td>Alignment:</td>
+            <td>{{this.alignment}}</td>
+          </tr>
+          <tr>
+            <td>Mood:</td>
+            <td>{{this.hostility}}</td>
+          </tr>
+        </table>
+      </li>
+    {{/with}}
+  </ul>
+{{/bind}}

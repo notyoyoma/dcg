@@ -4,7 +4,18 @@ import monsters from './monsters.json';
 export default class Monster {
   constructor(id) {
     this.race = id;
+    this.initAlignment();
     this.initStats();
+    this.hp = this.stats.maxHp;
+  }
+
+  initAlignment() {
+    let race = monsters[this.race];
+    if (typeof race.alignments == "string") {
+      this.alignment = race.alignments;
+    } else {
+      this.alignment = race.alignments[ Math.floor( Math.random() * race.alignments.length) ];
+    }
   }
 
   initStats() {

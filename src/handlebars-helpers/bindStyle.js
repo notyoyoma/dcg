@@ -1,9 +1,9 @@
 import Handlebars from "handlebars/runtime";
 require("object.observe");
 
-export default function(data, options) {
+var uniq = uniq || 0;
 
-  var uniq = 0;
+export default function(data, options) {
 
   var parseDataProp = function(str) {
     // only grab the value in brackets. eg. {x}
@@ -12,7 +12,8 @@ export default function(data, options) {
   }
 
   return function (value) {
-    let id  = 'dataBindStyle_' + (++uniq),
+    uniq += 1;
+    let id  = 'dataBindStyle_' + (uniq),
         obj = {};
 
     // Setup an object for efficient access

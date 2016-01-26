@@ -6,7 +6,7 @@
       "defence": 0,
       "loot": 150
     },
-    "alignment": "neutral"
+    "alignments": ["neutral","good"]
   },
   "kobold":{
     "stats": {
@@ -15,7 +15,7 @@
       "defence": 2,
       "loot": 350
     },
-    "alignment": "neutral"
+    "alignments": ["neutral","good"]
   },
   "giantSpider":{
     "stats": {
@@ -28,7 +28,7 @@
       "potential": 0.5,
       "strength": 1
     },
-    "alignment": "evil"
+    "alignments": "evil"
   },
   "aboleth": {
     "stats": {
@@ -41,6 +41,6 @@
       "potential": 0.8,
       "strength": 5
     },
-    "alignment": "evil"
+    "alignments": "evil"
   }
 }

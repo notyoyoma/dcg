@@ -1,12 +1,13 @@
 import Handlebars from "handlebars/runtime";
 require("object.observe");
 
+var uniq = uniq || 0;
+
 module.exports = function(data, options) {
 
-  var uniq = 0;
-
   return function (value) {
-    var id = 'dataBind_' + (++uniq);
+    uniq += 1;
+    var id = 'dataBind_' + (uniq);
 
     Object.observe(data, function (changes) {
       // when the data variable changes, update the view

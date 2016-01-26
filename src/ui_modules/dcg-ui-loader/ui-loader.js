@@ -12,6 +12,7 @@ export default function gameUi(game) {
       tileMap:   require('dcg-ui-tile-map'),
       party:     require('dcg-ui-party'),
       character: require('dcg-ui-character'),
+      encounter: require('dcg-ui-encounter'),
     },
     windows   = {};
 
@@ -28,6 +29,7 @@ export default function gameUi(game) {
         windows.tileMap,
         windows.party,
         windows.character,
+        windows.encounter,
       ],
     }]
   });

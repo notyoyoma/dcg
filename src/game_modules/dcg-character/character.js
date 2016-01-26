@@ -277,4 +277,12 @@ export default class Character {
     }
     return Math.min(50, magnitude * effect);
   }
+
+  // TODO - write tests
+  getActionPriority() {
+    return Math.max(
+      this.stats.dexterity,
+      this.stats.intelligence
+    );
+  }
 }

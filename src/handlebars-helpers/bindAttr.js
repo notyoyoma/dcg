@@ -1,12 +1,13 @@
 import Handlebars from "handlebars/runtime";
 require("object.observe");
 
+var uniq = uniq || 0;
+
 export default function(data, options) {
 
-  var uniq = 0;
-
   return function (value) {
-    let id  = 'dataBindAttr_' + (++uniq),
+    uniq += 1;
+    let id  = 'dataBindAttr_' + (uniq),
         obj = {};
 
     // Setup an object for efficient access

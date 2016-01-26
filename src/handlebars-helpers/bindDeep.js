@@ -2,12 +2,13 @@ import Handlebars     from "handlebars/runtime";
 import DeepObserver   from "observed";
 require("object.observe");
 
+var uniq = uniq || 0;
+
 module.exports = function(data, options) {
 
-  var uniq = 0;
-
   return function (value) {
-    var id = 'dataBindDeep_' + (++uniq),
+    uniq += 1;
+    var id = 'dataBindDeep_' + (uniq),
         observer = DeepObserver(data);
 
     observer.on('change', function(change) {
