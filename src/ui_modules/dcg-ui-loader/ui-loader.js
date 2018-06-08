@@ -1,5 +1,5 @@
 // Layout Engine Requirements
-import  GoldenLayout       from  'golden-layout/dist/goldenlayout.js';
+import  GoldenLayout       from  'golden-layout';
 import  Skin               from  'dcg-ui-skin';
 import  Controls           from  'dcg-ui-controls';
 let uiModuleComponent = require('./golden-ui-component.js');

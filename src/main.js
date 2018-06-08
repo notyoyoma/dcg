@@ -1,7 +1,7 @@
-import App from './App'
-// this assumes App.vue template root element has `id="app"`
+import App from './App';
+
 new Vue({
   el: '#app',
-  components: {App},
   template: '<App/>',
-})
+  components: { App },
+});

@@ -1,4 +1,12 @@
 <template lang="pug">
-div
-  h1 hi
+  <Layout/>
 </template>
+
+<script>
+  import Layout from './Layout';
+  export default {
+    components: {
+      Layout
+    }
+  }
+</script>
