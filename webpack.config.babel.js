@@ -46,7 +46,7 @@ let conf = {
     ],
   },
   resolve: {
-    extensions: ['.vue', '.js', '.json'],
+    extensions: ['.vue', '.js', '.json', 'scss'],
     modules: ['src', 'node_modules'],
   },
   devServer: {

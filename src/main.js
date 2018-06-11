@@ -1,6 +1,8 @@
 import Layout from './Layout';
 import views from './views';
 
+require('./styles/index.scss');
+
 const gameData = {};
 
 Layout.on('initialised', ()=>{
