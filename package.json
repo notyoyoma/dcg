@@ -23,7 +23,6 @@
     "rpg-tools": "^0.1.4",
     "style-loader": "^0.21.0",
     "vue": "^2.5.16",
-    "vue-golden-layout": "^1.1.2",
     "vue-loader": "^15.2.4",
     "webpack": "^4.11.0"
   },
