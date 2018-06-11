@@ -1,5 +1,7 @@
-import Character from './Character';
+import CharacterViews from './Character/';
 
 export default {
-  Character
+  ...CharacterViews,
 }
+
+
