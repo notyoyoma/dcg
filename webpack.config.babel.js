@@ -58,7 +58,7 @@ let conf = {
 	plugins: [
 		new webpack.ProvidePlugin({
       _: 'lodash',
-      Vue: 'vue/dist/vue.common',
+      Vue: 'vue/dist/vue.js',
 		}),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
