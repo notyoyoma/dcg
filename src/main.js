@@ -3,7 +3,7 @@ import views from './views';
 
 require('./styles/index.scss');
 
-const gameData = {};
+Vue.prototype.$World = require('./World/data.json')
 
 Layout.on('initialised', ()=>{
   new Vue({
