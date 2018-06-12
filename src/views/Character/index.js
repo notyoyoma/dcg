@@ -1,5 +1,5 @@
-import Character from './Character';
+import CurrentCharacter from './CurrentCharacter';
 
 export default {
-  Character
+  CurrentCharacter
 }

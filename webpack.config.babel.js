@@ -26,7 +26,6 @@ let conf = {
       rule(/\.vue$/, 'vue-loader'),
 
       rule(/\.scss$/, ['vue-style-loader','css-loader','sass-loader']),
-      rule(/\.json$/, 'json'),
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
@@ -46,7 +45,7 @@ let conf = {
     ],
   },
   resolve: {
-    extensions: ['.vue', '.js', '.json', 'scss'],
+    extensions: ['.vue', '.js', 'scss'],
     modules: ['src', 'node_modules'],
   },
   devServer: {

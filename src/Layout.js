@@ -24,7 +24,7 @@ const layoutConfig = {
     showCloseIcon: false,
   },
   content: [
-    vueContent('Character'),
+    vueContent('CurrentCharacter'),
   ]
 }
 

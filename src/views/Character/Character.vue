@@ -1,5 +1,5 @@
 <template lang="pug">
-.p-2
+.p-1
   h1 {{name}}
 </template>
 
@@ -7,6 +7,8 @@
   export default {
     data: ()=>({
       name: 'Marty'
-    })
+    }),
+    components: {
+    }
   }
 </script>
