@@ -51,7 +51,20 @@ let conf = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    overlay: true
+    overlay: true,
+    setup: app => {
+      app.post('/data/*', (req, res) => {
+        console.log('WOO HOO');
+        console.log(JSON.stringify(req));
+        return res;
+      });
+    },
+    proxy: {
+      pathRewrite: {
+        '^/edit': '/edit',
+        '^/data': '/data',
+      }
+    }
   },
   devtool: 'eval-source-map',
 	plugins: [
