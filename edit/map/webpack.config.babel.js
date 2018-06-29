@@ -13,7 +13,7 @@ const rule = (test, use, ...args) => {
 let conf = {
   cache: true,
   entry: {
-    app: './src/main.js',
+    app: './src/app.js',
       // TODO - setup testing suite
       // tests: 'mocha!./src/tests',
   },
@@ -52,19 +52,6 @@ let conf = {
     historyApiFallback: true,
     noInfo: true,
     overlay: true,
-    setup: app => {
-      app.post('/data/*', (req, res) => {
-        console.log('WOO HOO');
-        console.log(JSON.stringify(req));
-        return res;
-      });
-    },
-    proxy: {
-      pathRewrite: {
-        '^/edit': '/edit',
-        '^/data': '/data',
-      }
-    }
   },
   devtool: 'eval-source-map',
 	plugins: [
