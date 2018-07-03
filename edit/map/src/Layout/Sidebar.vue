@@ -5,16 +5,21 @@
       ChangeFloor
     h2 Layers
     Layers
-    h2 Tools
+    .tools(v-if="toolComponent")
+      h2 Tools
+      component v-bind:is=toolComponent
 </template>
 
 <script>
 import ChangeFloor from '../UI/ChangeFloor';
-import Layers from '../Layers';
+import Layers from '../UI/Layers';
 export default {
-  data: ()=>({
-    floor: 0
-  }),
+  data (){
+    return {
+      floor: 0,
+      activeLayer: this.$activeLayer.toolComponent,
+    }
+  },
   components: {
     ChangeFloor,
     Layers

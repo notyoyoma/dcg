@@ -4,7 +4,8 @@ class Effects extends Layer {
   constructor() {
     super();
     this.title = "Effects"
+    this.id = "layer.effects"
   }
 }
 
-export default const effects = new Effects();
+export const effects = new Effects();
