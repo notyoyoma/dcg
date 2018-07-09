@@ -1,19 +1,35 @@
 <template lang="pug">
-  .ui-layer.d-flex.align-items-center.w-100(v-on:click="setActive" v-bind:class="{active: layer.active}")
+  .ui-layer.d-flex.align-items-center.w-100(v-on:click="setCurrentLayer(layer)" v-bind:class="{active: layer.id == currentLayer.id}")
     .layer__visibility.flex-no-grow.mr-2.btn(v-on:click="toggleVisible")
       i-fa(icon="eye" v-if="layer._isVisible")
       i-fa(icon="eye-slash" v-else)
     .layer__title.flex-grow {{ layer.title }}
-    .layer__menu.flex-no-grow.ml-2.btn(v-if="layer.menu()")
+    .layer__menu.flex-no-grow.ml-2.btn(v-if="hasMenu" v-on:click="toggleMenu")
       i-fa(icon='cog')
+      component(v-bind:is="layer.menuComponent" v-if="menuOpen")
 </template>
 
 <script>
+  import {mapState, mapMutations} from 'vuex';
   export default {
     props: ['layer'],
+    data(){return{
+      menuOpen: false,
+      hasMenu: !!this.layer.menuComponent,
+    }},
+    computed: mapState(['currentLayer']),
     methods: {
-      setActive (e) {
-        this.$setActiveLayer(this.layer);
+      ...mapMutations([
+        'setCurrentLayer'
+      ]),
+      toggleMenu(e) {
+        e.stopPropagation();
+        this.menuOpen = !this.menuOpen;
+        if (this.menuOpen) {
+          document.addEventListener('click', this.toggleMenu);
+        } else {
+          document.removeEventListener('click', this.toggleMenu);
+        }
       },
       toggleVisible(e) {
         e.stopPropagation();
@@ -43,6 +59,14 @@
     border-radius: 0;
     &:first-child {border-radius: 4px 0 0 4px;}
     &:last-child {border-radius: 0 4px 4px 0;}
+  }
+  .layer__menu {
+    position: relative;
+  }
+  .menu {
+    position: absolute;
+    right: 0;
+    top: 90%;
   }
 }
 </style>

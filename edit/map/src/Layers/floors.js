@@ -1,5 +1,6 @@
 import {Layer} from './Layer';
-import {toolFactory} from '../Tools'
+import {toolFactory} from '../Tools';
+import {menuFactory} from '../UI';
 
 class Floors extends Layer {
   constructor() {
@@ -8,6 +9,13 @@ class Floors extends Layer {
     this.id = "layer.floors"
 
     this.toolComponent = toolFactory({options: ['stairs-up', 'stairs-down', 'no-floor']})
+    this.menuComponent = menuFactory([
+      {label: 'Reset', fn: this.reset}
+    ]);
+  }
+
+  reset() {
+		// TODO - reset current layer
   }
 }
 

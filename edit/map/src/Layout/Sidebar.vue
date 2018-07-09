@@ -1,28 +1,34 @@
 <template lang="pug">
   #sidebar
     h6.d-flex.align-items-center
-      | Current Floor: {{ floor }}
+      | Current Floor: {{ currentFloor }}
       ChangeFloor
     h2 Layers
-    Layers
-    .tools(v-if="toolComponent")
-      h2 Tools
-      component v-bind:is=toolComponent
+    #layers.d-flex.flex-column
+      Layer(
+        v-for="layer in layers"
+        :key="layer.id"
+        v-bind:layer="layer"
+      )
+    .tools(v-if="currentLayer.toolComponent")
+      h2.mt-3 Tools
+      component(v-bind:is="currentLayer.toolComponent")
 </template>
 
 <script>
+import {mapState} from 'vuex';
 import ChangeFloor from '../UI/ChangeFloor';
-import Layers from '../UI/Layers';
+import Layer from '../UI/Layer';
 export default {
-  data (){
-    return {
-      floor: 0,
-      activeLayer: this.$activeLayer.toolComponent,
-    }
-  },
+  computed: mapState([
+    'floors',
+    'currentFloor',
+    'layers',
+    'currentLayer',
+  ]),
   components: {
     ChangeFloor,
-    Layers
+    Layer
   }
 }
 </script>
