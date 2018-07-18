@@ -7,16 +7,5 @@
   </div>
 </template>
 
-<script>
-import Sidebar from './Sidebar';
-import Canvas from './Canvas';
-export default {
-  name: 'Layout',
-  components: {
-    Sidebar, 
-    Canvas,
-  }
-}
-</script>
-
+<script src="./mapEditor.js" />
 <style src="./styles.scss" lang="scss" />

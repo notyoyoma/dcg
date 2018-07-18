@@ -1,6 +1,7 @@
 // vendors
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faEye, faEyeSlash, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faCog, faSave, faSyncAlt, faArrowLeft
+        } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Vuetify from 'vuetify';
 import Vuex from 'vuex'
@@ -8,12 +9,14 @@ import Vuex from 'vuex'
 // Setup Vendors
 Vue.use(Vuetify)
 Vue.use(Vuex)
-library.add([faEye, faEyeSlash, faCog]);
+library.add([faEye, faEyeSlash, faCog, faSave, faSyncAlt, faArrowLeft]);
 Vue.component('i-fa', FontAwesomeIcon);
 
 // app
-import Layout from './Layout';
 import {floors, effects} from "./Layers";
+import Sidebar from './Sidebar';
+import Canvas from './Canvas';
+import mapData from '../../World/data';
 require('./styles.scss');
 
 // Setup Vue filters
@@ -22,8 +25,8 @@ Vue.filter('humanize', _.startCase)
 // Bootstrap App
 const store = new Vuex.Store({
   state: {
-    floors: [],
-    currentFloor: 0,
+    floors: mapData,
+    currentFloor: mapData[0],
     layers: [
       floors,
       effects,
@@ -34,16 +37,19 @@ const store = new Vuex.Store({
     setCurrentLayer(state, layer) {
       _.each(state.layers, (layer)=>layer.active = false);
       state.currentLayer = layer;
+    },
+    changeFloor(state, delta) {
+      state.currentFloor = Math.max(0,
+        Math.min(state.floors.length-1, state.currentFloor));
     }
   }
+
 });
 
-// Initialize app
-new Vue({
-  el: "#app",
+export default {
   store,
   components: {
-    Layout
-  },
-  template: '<Layout />'
-});
+    Sidebar,
+    Canvas,
+  }
+}

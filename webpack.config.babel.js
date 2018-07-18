@@ -14,8 +14,7 @@ let conf = {
   cache: true,
   entry: {
     app: './src/main.js',
-      // TODO - setup testing suite
-      // tests: 'mocha!./src/tests',
+    admin: './src/admin/app.js',
   },
   output: {
     path: __dirname + '/dist',
@@ -49,7 +48,12 @@ let conf = {
     modules: ['src', 'node_modules'],
   },
   devServer: {
-    historyApiFallback: true,
+    historyApiFallback: {
+      rewrites: [
+        { from: /^\/$/, to: 'index.html' },
+        { from: /^\/admin.*/, to: '/admin/index.html' },
+      ]
+    },
     noInfo: true,
     overlay: true,
     setup: app => {
@@ -61,7 +65,6 @@ let conf = {
     },
     proxy: {
       pathRewrite: {
-        '^/edit': '/edit',
         '^/data': '/data',
       }
     }
@@ -74,8 +77,12 @@ let conf = {
 		}),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
-      template: './index.html',
-      alwaysWriteToDisk: true,
+      chunks: ['app'],
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['admin'],
+      filename: 'admin/index.html',
+      template: 'index.html',
     }),
     new ExtractTextPlugin('styles.css'),
     new HtmlWebpackHarddiskPlugin(),

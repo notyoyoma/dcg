@@ -1,0 +1,13 @@
+
+#canvas-container {
+  background: #555;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#canvas {
+  background: #000;
+  color: #fff;
+}
