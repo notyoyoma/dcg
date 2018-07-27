@@ -13,38 +13,57 @@ library.add([faEye, faEyeSlash, faCog, faSave, faSyncAlt, faArrowLeft]);
 Vue.component('i-fa', FontAwesomeIcon);
 
 // app
-import {floors, effects} from "./Layers";
+import {LayerManager} from "./Layers/LayerManager";
 import Sidebar from './Sidebar';
 import Canvas from './Canvas';
-import mapData from '../../World/data';
+import {getMapData} from '../../World/data'
 require('./styles.scss');
 
 // Setup Vue filters
-Vue.filter('humanize', _.startCase)
+Vue.filter('humanize', _.startCase);
 
 // Bootstrap App
 const store = new Vuex.Store({
   state: {
-    floors: mapData,
-    currentFloor: mapData[0],
-    layers: [
-      floors,
-      effects,
-    ],
-    currentLayer: floors,
+    floors: [],
+    currentFloorIndex: 0,
+    layers: false,
+    currentLayerIndex: 0,
+    currentTool: false,
+  },
+  getters: {
+    getCurrentFloor(state) {
+      return state.floors[state.currentFloorIndex];
+    }
   },
   mutations: {
-    setCurrentLayer(state, layer) {
-      _.each(state.layers, (layer)=>layer.active = false);
-      state.currentLayer = layer;
+    setMapData(state, mapData) {
+      state.floors = mapData;
+      state.layers = new LayerManager(this);
+    },
+    setCurrentLayer(state, layerIndex) {
+      state.currentLayerIndex = layerIndex;
+    },
+    setCurrentTool(state, tool) {
+      state.currentTool = tool;
+    },
+    setFloor(state, floorIndex) {
+      state.currentFloorIndex = floorIndex;
     },
     changeFloor(state, delta) {
-      state.currentFloor = Math.max(0,
-        Math.min(state.floors.length-1, state.currentFloor));
+      this.setFloor(
+        Math.max(0, // don't go below 0
+        Math.min(state.floors.length-1, // don't go above max floors
+          state.currentFloorIndex + delta))); // adjust by delta;
     }
   }
 
 });
+
+getMapData()
+  .then(({data})=>{
+    store.commit('setMapData', data);
+  });
 
 export default {
   store,

@@ -1,5 +1,14 @@
 [
-  [
-    1
-  ]
+  {
+    "floors": [[]],
+    "effects": [[]]
+  },
+  {
+    "floors": [[]],
+    "effects": [[]]
+  },
+  {
+    "floors": [[]],
+    "effects": [[]]
+  }
 ]

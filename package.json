@@ -40,6 +40,7 @@
     "bootstrap": "^4.1.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-harddisk-plugin": "^0.2.0",
+    "jquery": "^3.3.1",
     "node-sass": "^4.9.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",

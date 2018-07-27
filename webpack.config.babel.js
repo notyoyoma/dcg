@@ -74,6 +74,7 @@ let conf = {
 		new webpack.ProvidePlugin({
       _: 'lodash',
       Vue: 'vue/dist/vue.js',
+      "$": 'jquery',
 		}),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({

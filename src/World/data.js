@@ -1,3 +1,5 @@
 import axios from 'axios';
 
-export default axios.get('/data/map.json');
+export function getMapData() {
+  return axios.get('/data/map.json');
+}

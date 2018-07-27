@@ -1,6 +1,7 @@
 export class Layer {
-  constructor() {
-    this._data = [];
+  constructor(data, setter) {
+    this.data = data;
+    this.setter = setter;
     this._isVisible = true;
     this.toolComponent = false;
     this.menuComponent = false;
@@ -15,15 +16,20 @@ export class Layer {
   }
 
   get data() {
-    return this._data;
+    return this.data;
   }
 
-  renderCanvas() {
+  set data(newData) {
+    this.setter(newData)
   }
 
-  mousedown() {
-  }
+  renderCanvas() {}
 
-  mouseup() {
-  }
+  mousedown() {}
+
+  mousemove() {}
+
+  mouseup() {}
+
+  interact() {}
 }
