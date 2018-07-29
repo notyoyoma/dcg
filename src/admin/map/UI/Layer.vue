@@ -1,7 +1,7 @@
 <template lang="pug">
   .ui-layer.d-flex.align-items-center.w-100(
-    v-on:click="setCurrentLayer(index)"
-    v-bind:class="{active: layer.id == currentLayer.id}"
+    v-on:click="setCurrentLayer(layer.key)"
+    v-bind:class="{active: layer.key == currentLayer.key}"
     )
     .layer__visibility.flex-no-grow.mr-2.btn(v-on:click="toggleVisible")
       i-fa(icon="eye" v-if="layer._isVisible")
@@ -13,14 +13,14 @@
 </template>
 
 <script>
-  import {mapState, mapMutations} from 'vuex';
+  import {mapGetters, mapMutations} from 'vuex';
   export default {
     props: ['layer', 'index'],
     data(){return{
       menuOpen: false,
       hasMenu: !!this.layer.menuComponent,
     }},
-    computed: mapState(['currentLayer']),
+    computed: mapGetters(['currentLayer']),
     methods: {
       ...mapMutations([
         'setCurrentLayer'
@@ -49,7 +49,7 @@
   cursor: pointer;
 
   &.active {
-    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.3);
+    box-shadow: inset 0 0 0 2px #777;
   }
   &:hover {
     background: #555;

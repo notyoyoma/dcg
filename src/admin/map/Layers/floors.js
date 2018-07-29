@@ -3,10 +3,10 @@ import {toolFactory} from '../Tools';
 import {menuFactory} from '../UI';
 
 export class Floors extends Layer {
-  constructor(data) {
-    super(data);
+  constructor(data, setter) {
+    super(data, setter);
     this.title = "Floors";
-    this.id = "layer.floors";
+    this.key = "floors";
 
     this.toolComponent = toolFactory({
       options: ['stairs-up', 'stairs-down', 'no-floor']

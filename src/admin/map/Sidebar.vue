@@ -4,38 +4,42 @@
       a.btn(href="/admin"): i-fa(icon="arrow-left")
       a.btn(href='#saveChanges'): i-fa(icon="save")
       a.btn(href='/admin/map'): i-fa(icon="sync-alt")
-    .p-3(v-if="floors && layers")
+    .p-3(v-if="shouldRenderLayersAndTools()")
       h6.d-flex.align-items-center
-        | Current Floor: {{ currentFloor }}
+        | Current Floor: {{ currentFloorIndex + 1 }}
         ChangeFloor
       h2 Layers
       #layers.d-flex.flex-column
         Layer(
-          v-for="(layer, index) in layers.layers"
-          :key="layer.id"
+          v-for="(layer, index) in layers"
+          :key="layer.key"
           v-bind:layer="layer"
           v-bind:index="index"
         )
-      .tools(v-if="currentLayerToolComponent")
+      .tools(v-if="currentLayer")
         h2.mt-3 Tools
-        component(v-bind:is="currentLayerToolComponent")
+        component(v-bind:is="currentLayer.toolComponent")
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import {mapState, mapGetters} from 'vuex';
 import ChangeFloor from './UI/ChangeFloor';
 import Layer from './UI/Layer';
 export default {
   computed: {
     ...mapState([
       'floors',
-      'currentFloor',
       'layers',
+      'currentFloorIndex',
+    ]),
+    ...mapGetters([
+      'currentFloor',
       'currentLayer',
     ]),
-    currentLayerToolComponent() {
-      if (_.isEmpty(this.layers)) return false;
-      return this.layers[this.currentLayerIndex].toolComponent;
+  },
+  methods: {
+    shouldRenderLayersAndTools() {
+      return _.isEmpty(this.$store.floors) && _.isEmpty(this.$store.layers) && this.$store.getters.currentLayer;
     }
   },
   components: {

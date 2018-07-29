@@ -1,10 +1,13 @@
 import {Layer} from './Layer';
+import {toolFactory} from '../Tools';
+import {menuFactory} from '../UI';
+
 
 export class Effects extends Layer {
-  constructor(data) {
-    super(data);
+  constructor(data, setter) {
+    super(data, setter);
     this.title = "Effects"
-    this.id = "layer.effects"
+    this.key = "effects"
 
     this.toolComponent = toolFactory({
       options: ['fog', 'puddle',

@@ -2,6 +2,7 @@ export class Layer {
   constructor(data, setter) {
     this.data = data;
     this.setter = setter;
+    this.key = '';
     this._isVisible = true;
     this.toolComponent = false;
     this.menuComponent = false;
@@ -13,14 +14,6 @@ export class Layer {
 
   get visible() {
     return this._isVisible;
-  }
-
-  get data() {
-    return this.data;
-  }
-
-  set data(newData) {
-    this.setter(newData)
   }
 
   renderCanvas() {}

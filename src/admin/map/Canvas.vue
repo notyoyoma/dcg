@@ -1,5 +1,5 @@
 <template>
-  <svg width="600" height="600">
+  <svg width="600" height="600" v-if="currentLayer">
     <defs>
       <pattern id="grid" width="15" height="15" patternUnits="userSpaceOnUse">
         <path d="M 15 0 L 0 0 0 15" fill="none" stroke="#333" stroke-width="1"/>
@@ -18,9 +18,12 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+  import {mapState, mapGetters} from 'vuex'
   export default {
-    computed: mapState(['currentLayer', 'currentTool']),
+    computed: {
+      ...mapState(['currentTool', 'currentLayerKey']),
+      ...mapGetters(['currentLayer']),
+    },
     methods: {
       mouseEvent(e, eventType) {
         this.currentLayer[eventType](e, this.currentTool)
