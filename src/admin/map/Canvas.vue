@@ -9,6 +9,15 @@
       <rect width="100%" height="100%" fill="#000" />
       <rect width="100%" height="100%" fill="url(#grid)" />
     </g>
+    <g v-for="{key} in layers">
+      <g v-for="(row,y) in currentFloor[key]"
+        v-bind:key="`${key}-row-${y}`">
+        <rect width="15px" height="15px" fill="#888"
+          v-for="(cell,x) in row"
+          v-if="cell"
+          v-bind:x="x*15" v-bind:y="y*15" />
+      </g>
+    </g>
     <rect id="interactionHandler" width="100%" height="100%" fill="transparent"
       @mousedown="(e)=>mouseEvent(e, 'mousedown')"
       @mousemove="(e)=>mouseEvent(e, 'mousemove')"
@@ -21,13 +30,18 @@
   import {mapState, mapGetters} from 'vuex'
   export default {
     computed: {
-      ...mapState(['currentTool', 'currentLayerKey']),
-      ...mapGetters(['currentLayer']),
+      ...mapState(['currentTool', 'currentLayerKey', 'layers']),
+      ...mapGetters(['currentLayer', 'currentFloor']),
     },
     methods: {
       mouseEvent(e, eventType) {
-        this.currentLayer[eventType](e, this.currentTool)
+        if (this.currentTool) {
+          this.currentLayer[eventType](e, this.currentTool)
+        }
       }
+    },
+    updated() {
+      console.log('update');
     }
   }
 </script>

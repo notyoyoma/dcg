@@ -38,7 +38,9 @@ export const storeConf = {
       ];
     },
     setMapData(state, {key: layerKey, newData}) {
-      state.floors[state.currentFloorIndex][layerKey] = newData;
+      let newFloors = [...state.floors];
+      newFloors[state.currentFloorIndex][layerKey] = newData;
+      state.floors = newFloors;
     },
   }
 };

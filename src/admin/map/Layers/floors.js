@@ -40,10 +40,11 @@ export class Floors extends Layer {
   }
 
   interact({x, y, tool}) {
-    console.log(tool);
     // do logic with this.interaction
-    const xIndex = Math.floor(x / 80);
-    const yIndex = Math.floor(y / 80);
-    this.data[x][y] = tool;
+    const xIndex = Math.floor(x / 15);
+    const yIndex = Math.floor(y / 15);
+    if (_.isEmpty(this.data[yIndex])) this.data[yIndex] = [];
+    this.data[yIndex][xIndex] = tool;
+    this.setData(this.data);
   }
 }

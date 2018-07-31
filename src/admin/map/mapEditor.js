@@ -35,6 +35,7 @@ getMapData()
 
 export default {
   store,
+  comments: true,
   components: {
     Sidebar,
     Canvas,
