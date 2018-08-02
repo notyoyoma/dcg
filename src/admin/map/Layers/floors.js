@@ -1,6 +1,7 @@
 import {Layer} from './Layer';
 import {toolFactory} from '../Tools';
 import {menuFactory} from '../UI';
+import {tiles} from '../Tools/Tiles';
 
 export class Floors extends Layer {
   constructor(data, setter) {
@@ -9,7 +10,7 @@ export class Floors extends Layer {
     this.key = "floors";
 
     this.toolComponent = toolFactory({
-      options: ['stairs-up', 'stairs-down', 'no-floor']
+      options: tiles
     });
     this.menuComponent = menuFactory([
       {label: 'Reset', fn: this.reset}
@@ -29,6 +30,8 @@ export class Floors extends Layer {
   mousedown(e, tool) {
     this.interaction.mousedown = true;
     const self = this;
+    const {offsetX: x, offsetY: y} = e;
+    this.interact({x, y, tool});
     $(window).mouseup(()=>{self.interaction.mousedown = false})
   }
 
@@ -44,7 +47,6 @@ export class Floors extends Layer {
     const xIndex = Math.floor(x / 15);
     const yIndex = Math.floor(y / 15);
     if (_.isEmpty(this.data[yIndex])) this.data[yIndex] = [];
-    this.data[yIndex][xIndex] = tool;
-    this.setData(this.data);
+    this.setData([yIndex, xIndex], tool);
   }
 }

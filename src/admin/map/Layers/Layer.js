@@ -16,8 +16,11 @@ export class Layer {
     return this._isVisible;
   }
 
-  setData(newData) {
-    this.setter('setMapData', {key: this.key, newData});
+  setData(path, val) {
+    if (_.get(this.data, path) != val) {
+      this.setter('setMapData', {path, val, layerKey: this.key});
+    }
+
   }
 
   renderCanvas() {}

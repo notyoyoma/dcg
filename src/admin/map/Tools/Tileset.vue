@@ -1,11 +1,12 @@
 <template lang="pug">
   .tileset-container
     .tile(
-      v-for="tile in options"
-      v-bind:key="tile"
-      v-on:click="setCurrentTool(tile)"
-      v-bind:class="{active: tile == currentTool}"
-      ) {{tile}}
+      v-for="(key,id) in options"
+      v-bind:key="key"
+      v-on:click="setCurrentTool(id)"
+      v-bind:class="{active: id == currentTool}")
+      svg(width="15px" height="15px")
+        use(:xlink:href="'#'+key")
 </template>
 
 <script>

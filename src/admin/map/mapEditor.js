@@ -15,6 +15,7 @@ Vue.component('i-fa', FontAwesomeIcon);
 // app
 import Sidebar from './Sidebar';
 import Canvas from './Canvas';
+import SVGDefs from './Tools/Tiles'
 import {getMapData} from '../../World/data';
 import {storeConf} from './Store';
 require('./styles.scss');
@@ -39,5 +40,6 @@ export default {
   components: {
     Sidebar,
     Canvas,
+    SVGDefs,
   }
 }

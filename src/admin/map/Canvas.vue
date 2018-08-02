@@ -12,10 +12,10 @@
     <g v-for="{key} in layers">
       <g v-for="(row,y) in currentFloor[key]"
         v-bind:key="`${key}-row-${y}`">
-        <rect width="15px" height="15px" fill="#888"
-          v-for="(cell,x) in row"
-          v-if="cell"
-          v-bind:x="x*15" v-bind:y="y*15" />
+        <use v-for="(tileId,x) in row" width="15px" height="15px"
+          v-if="tileId"
+          v-bind:x="x*15" v-bind:y="y*15"
+          :xlink:href="'#'+tiles[tileId]" />
       </g>
     </g>
     <rect id="interactionHandler" width="100%" height="100%" fill="transparent"
@@ -27,12 +27,14 @@
 </template>
 
 <script>
-  import {mapState, mapGetters} from 'vuex'
+  import {mapState, mapGetters} from 'vuex';
+  import {tiles} from './Tools/Tiles';
   export default {
     computed: {
       ...mapState(['currentTool', 'currentLayerKey', 'layers']),
       ...mapGetters(['currentLayer', 'currentFloor']),
     },
+    data() {return {tiles}},
     methods: {
       mouseEvent(e, eventType) {
         if (this.currentTool) {

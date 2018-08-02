@@ -1,5 +1,6 @@
 <template>
   <div id="layout">
+    <SVGDefs />
     <Sidebar />
     <div id="canvas-container">
       <Canvas />

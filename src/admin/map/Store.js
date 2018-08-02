@@ -37,9 +37,9 @@ export const storeConf = {
         new Effects(effects, this.commit),
       ];
     },
-    setMapData(state, {key: layerKey, newData}) {
+    setMapData(state, {path, val, layerKey}) {
       let newFloors = [...state.floors];
-      newFloors[state.currentFloorIndex][layerKey] = newData;
+      _.set(newFloors, [state.currentFloorIndex, layerKey, ...path], val);
       state.floors = newFloors;
     },
   }
