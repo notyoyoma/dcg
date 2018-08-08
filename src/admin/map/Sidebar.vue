@@ -2,8 +2,8 @@
   #sidebar
     .actions.d-flex
       a.btn(href="/admin"): i-fa(icon="arrow-left")
-      a.btn(href='#saveChanges'): i-fa(icon="save")
-      a.btn(href='/admin/map'): i-fa(icon="sync-alt")
+      a.btn(href="#saveChanges"): i-fa(icon="save")
+      a.btn(href="/admin/map"): i-fa(icon="sync-alt")
     .p-3(v-if="shouldRenderLayersAndTools()")
       h6.d-flex.align-items-center
         | Current Floor: {{ currentFloorIndex + 1 }}
@@ -22,19 +22,19 @@
 </template>
 
 <script>
-import {mapState, mapGetters} from 'vuex';
-import ChangeFloor from './UI/ChangeFloor';
-import Layer from './UI/Layer';
+import {mapState, mapGetters} from "vuex";
+import ChangeFloor from "./UI/ChangeFloor";
+import Layer from "./UI/Layer";
 export default {
   computed: {
     ...mapState([
-      'floors',
-      'layers',
-      'currentFloorIndex',
+      "floors",
+      "layers",
+      "currentFloorIndex",
     ]),
     ...mapGetters([
-      'currentFloor',
-      'currentLayer',
+      "currentFloor",
+      "currentLayer",
     ]),
   },
   methods: {
@@ -46,7 +46,7 @@ export default {
     ChangeFloor,
     Layer
   },
-}
+};
 </script>
 
 <style lang="scss">

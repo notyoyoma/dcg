@@ -13,33 +13,33 @@
 </template>
 
 <script>
-  import {mapGetters, mapMutations} from 'vuex';
-  export default {
-    props: ['layer', 'index'],
-    data(){return{
-      menuOpen: false,
-      hasMenu: !!this.layer.menuComponent,
-    }},
-    computed: mapGetters(['currentLayer']),
-    methods: {
-      ...mapMutations([
-        'setCurrentLayer'
-      ]),
-      toggleMenu(e) {
-        e.stopPropagation();
-        this.menuOpen = !this.menuOpen;
-        if (this.menuOpen) {
-          document.addEventListener('click', this.toggleMenu);
-        } else {
-          document.removeEventListener('click', this.toggleMenu);
-        }
-      },
-      toggleVisible(e) {
-        e.stopPropagation();
-        this.layer.toggleVisible();
+import {mapGetters, mapMutations} from "vuex";
+export default {
+  props: ["layer", "index"],
+  data(){return{
+    menuOpen: false,
+    hasMenu: !!this.layer.menuComponent,
+  };},
+  computed: mapGetters(["currentLayer"]),
+  methods: {
+    ...mapMutations([
+      "setCurrentLayer"
+    ]),
+    toggleMenu(e) {
+      e.stopPropagation();
+      this.menuOpen = !this.menuOpen;
+      if (this.menuOpen) {
+        document.addEventListener("click", this.toggleMenu);
+      } else {
+        document.removeEventListener("click", this.toggleMenu);
       }
+    },
+    toggleVisible(e) {
+      e.stopPropagation();
+      this.layer.toggleVisible();
     }
   }
+};
 </script>
 
 <style lang="scss">

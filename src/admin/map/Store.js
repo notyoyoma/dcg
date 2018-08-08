@@ -1,4 +1,4 @@
-import {Floors, Effects} from './Layers'
+import {Floors, Effects, Walls} from "./Layers";
 
 export const storeConf = {
   state: {
@@ -7,7 +7,6 @@ export const storeConf = {
     layers: [],
     currentLayerKey: 0,
     currentTool: false,
-    layers: [],
   },
   getters: {
     currentFloor(state) {
@@ -31,10 +30,11 @@ export const storeConf = {
     },
     setFloor(state, floorIndex) {
       state.currentFloorIndex = floorIndex;
-      const {floors, effects} = state.floors[state.currentFloorIndex];
+      const {floors, effects, walls} = state.floors[state.currentFloorIndex];
       state.layers = [
         new Floors(floors, this.commit),
         new Effects(effects, this.commit),
+        new Walls(walls, this.commit),
       ];
     },
     setMapData(state, {path, val, layerKey}) {

@@ -1,20 +1,18 @@
-import {Layer} from './Layer';
-import {toolFactory} from '../Tools';
-import {menuFactory} from '../UI';
+import {TileLayer} from "./TileLayer";
+import {toolFactory} from "../Tools";
+import {menuFactory} from "../UI";
+import {effectTiles as tiles} from "../Tools/Tiles";
 
 
-export class Effects extends Layer {
+export class Effects extends TileLayer {
   constructor(data, setter) {
     super(data, setter);
-    this.title = "Effects"
-    this.key = "effects"
+    this.title = "Effects";
+    this.key = "effects";
 
-    this.toolComponent = toolFactory({
-      options: ['fog', 'puddle',
-        'light-0', 'light-1', 'light-2', 'light-3', 'light-4', 'light-5']
-    });
+    this.toolComponent = toolFactory({tiles});
     this.menuComponent = menuFactory([
-      {label: 'Reset', fn: this.reset}
+      {label: "Reset", fn: this.reset}
     ]);
   }
 

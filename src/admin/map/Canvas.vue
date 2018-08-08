@@ -9,7 +9,7 @@
       <rect width="100%" height="100%" fill="#000" />
       <rect width="100%" height="100%" fill="url(#grid)" />
     </g>
-    <g v-for="{key} in layers">
+    <g v-for="{key, _isVisible} in layers" v-if="_isVisible">
       <g v-for="(row,y) in currentFloor[key]"
         v-bind:key="`${key}-row-${y}`">
         <use v-for="(tileId,x) in row" width="15px" height="15px"

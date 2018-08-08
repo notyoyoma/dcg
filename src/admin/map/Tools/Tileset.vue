@@ -1,26 +1,26 @@
 <template lang="pug">
-  .tileset-container
+  .tileset-container.d-flex.flex-wrap
     .tile(
-      v-for="(key,id) in options"
+      v-for="(key,id) in tiles"
       v-bind:key="key"
       v-on:click="setCurrentTool(id)"
       v-bind:class="{active: id == currentTool}")
-      svg(width="15px" height="15px")
+      svg(width="15px" height="15px" style="display:block;margin: 2px;")
         use(:xlink:href="'#'+key")
 </template>
 
 <script>
-import {mapMutations, mapState} from 'vuex';
+import {mapMutations, mapState} from "vuex";
 export default {
-  name: 'Tileset',
-  props: ['options'],
-  computed: mapState(['currentTool']),
+  name: "Tileset",
+  props: ["tiles"],
+  computed: mapState(["currentTool"]),
   methods: {
     ...mapMutations([
-      'setCurrentTool'
+      "setCurrentTool"
     ]),
   }
-}
+};
 </script>
 
 <style>

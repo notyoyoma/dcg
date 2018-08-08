@@ -1,6 +1,7 @@
 <template>
   <div id="layout">
-    <SVGDefs />
+    <TileSvgs />
+    <WallSvgs />
     <Sidebar />
     <div id="canvas-container">
       <Canvas />

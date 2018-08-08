@@ -9,6 +9,13 @@
   },
   "author": "Marty Naselli",
   "license": "ISC",
+  "jshintConfig": {
+    "esversion": 6,
+    "globals": {
+      "$": false,
+      "_": false
+    }
+  },
   "dependencies": {
     "@babel/preset-env": "^7.0.0-beta.49",
     "babel-loader": "^8.0.0-beta.3",
@@ -38,6 +45,8 @@
     "axios": "^0.18.0",
     "babel-plugin-transform-es2015-destructuring": "^6.23.0",
     "bootstrap": "^4.1.1",
+    "eslint": "^5.3.0",
+    "eslint-plugin-vue": "^5.0.0-beta.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-harddisk-plugin": "^0.2.0",
     "jquery": "^3.3.1",

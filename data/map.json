@@ -1,14 +1,17 @@
 [
   {
     "floors": [[]],
-    "effects": [[]]
+    "effects": [[]],
+    "walls": [[[]]]
   },
   {
     "floors": [[]],
-    "effects": [[]]
+    "effects": [[]],
+    "walls": [[[]]]
   },
   {
     "floors": [[]],
-    "effects": [[]]
+    "effects": [[]],
+    "walls": [[[]]]
   }
 ]

@@ -8,8 +8,8 @@
 
 <script>
 export default {
-  props: ['items']
-}
+  props: ["items"]
+};
 </script>
 
 <style lang="scss">

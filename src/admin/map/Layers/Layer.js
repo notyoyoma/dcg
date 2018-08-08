@@ -2,10 +2,12 @@ export class Layer {
   constructor(data, setter) {
     this.data = data;
     this.setter = setter;
-    this.key = '';
+    this.key = "";
     this._isVisible = true;
     this.toolComponent = false;
     this.menuComponent = false;
+
+    this.interaction = {};
   }
 
   toggleVisible() {
@@ -18,18 +20,23 @@ export class Layer {
 
   setData(path, val) {
     if (_.get(this.data, path) != val) {
-      this.setter('setMapData', {path, val, layerKey: this.key});
+      this.setter("setMapData", {path, val, layerKey: this.key});
     }
 
   }
 
   renderCanvas() {}
 
-  mousedown() {}
+  mousedown() {
+    const self = this;
+    $(window).mouseup(()=>self.interaction.mousedown = false);
+  }
 
   mousemove() {}
 
-  mouseup() {}
+  mouseup() {
+    this.interaction = {};
+  }
 
   interact() {}
 }

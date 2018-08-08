@@ -1,9 +1,9 @@
-import Menu from './Menu';
-import mapEditor from './map';
-require('./styles.scss')
+import Menu from "./Menu";
+import mapEditor from "./map";
+require("./styles.scss")
 
 const routes = {
-  '/admin/map': mapEditor
+  "/admin/map": mapEditor
 }
 
 // Initialize app
@@ -14,8 +14,8 @@ new Vue({
   },
   computed: {
     ViewComponent () {
-      return routes[this.currentRoute] || Menu
+      return routes[this.currentRoute] || Menu;
     }
   },
-  render (h) { return h(this.ViewComponent) }
+  render (h) { return h(this.ViewComponent); }
 });
