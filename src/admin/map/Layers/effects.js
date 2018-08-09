@@ -9,6 +9,7 @@ export class Effects extends TileLayer {
     super(data, setter);
     this.title = "Effects";
     this.key = "effects";
+    this.tiles = tiles;
 
     this.toolComponent = toolFactory({tiles});
     this.menuComponent = menuFactory([

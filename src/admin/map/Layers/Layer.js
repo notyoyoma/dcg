@@ -6,6 +6,7 @@ export class Layer {
     this._isVisible = true;
     this.toolComponent = false;
     this.menuComponent = false;
+    this.tiles = [];
 
     this.interaction = {};
   }
@@ -22,7 +23,6 @@ export class Layer {
     if (_.get(this.data, path) != val) {
       this.setter("setMapData", {path, val, layerKey: this.key});
     }
-
   }
 
   renderCanvas() {}

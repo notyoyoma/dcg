@@ -42,10 +42,12 @@
 
 <script>
 export default {};
-export const tiles = {
+export const floorTiles = {
   1: "stairsUp",
   2: "stairsDown",
   3: "noFloor",
+};
+export const effectTiles = {
   4: "fog",
   5: "puddle",
   6: "light0",
@@ -55,6 +57,4 @@ export const tiles = {
   10: "light4",
   11: "light5",
 };
-export const floorTiles = _.pick(tiles, [1,2,3]);
-export const effectTiles = _.pick(tiles, [4,5,6,7,8,9,10,11]);
 </script>

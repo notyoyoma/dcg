@@ -32,11 +32,8 @@
 <script>
 export default {};
 export const walls = {
-  1: "wallH",
   2: "wallV",
-  3: "doorH",
   4: "doorV",
-  5: "hiddenDoorH",
   6: "hiddenDoorV",
 };
 </script>

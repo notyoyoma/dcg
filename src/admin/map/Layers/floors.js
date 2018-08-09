@@ -8,6 +8,7 @@ export class Floors extends TileLayer {
     super(data, setter);
     this.title = "Floors";
     this.key = "floors";
+    this.tiles = tiles;
 
     this.toolComponent = toolFactory({tiles});
     this.menuComponent = menuFactory([

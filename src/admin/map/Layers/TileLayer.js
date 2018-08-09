@@ -21,7 +21,6 @@ export class TileLayer extends Layer {
     // do logic with this.interaction
     const xIndex = Math.floor(x / 15);
     const yIndex = Math.floor(y / 15);
-    if (_.isEmpty(this.data[yIndex])) this.data[yIndex] = [];
     this.setData([yIndex, xIndex], tool);
   }
 }
