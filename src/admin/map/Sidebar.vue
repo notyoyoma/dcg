@@ -12,7 +12,7 @@
       #layers.d-flex.flex-column
         Layer(
           v-for="(layer, index) in layers"
-          :key="layer.key"
+          :key="layer.id"
           v-bind:layer="layer"
           v-bind:index="index"
         )

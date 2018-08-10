@@ -1,7 +1,7 @@
 <template lang="pug">
   .ui-layer.d-flex.align-items-center.w-100(
-    v-on:click="setCurrentLayer(layer.key)"
-    v-bind:class="{active: layer.key == currentLayer.key}"
+    v-on:click="setCurrentLayer(layer.id)"
+    v-bind:class="{active: layer.id== currentLayer.id}"
     )
     .layer__visibility.flex-no-grow.mr-2.btn(v-on:click="toggleVisible")
       i-fa(icon="eye" v-if="layer._isVisible")

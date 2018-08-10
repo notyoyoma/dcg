@@ -1,6 +1,11 @@
 import {Layer} from "./Layer";
+import TileLayerRenderer from '../Canvas/TileLayer';
 
 export class TileLayer extends Layer {
+  constructor() {
+    super(...arguments);
+    this.renderComponent = TileLayerRenderer;
+  }
 
   mousedown(e, tool) {
     super.mousedown();

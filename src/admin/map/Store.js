@@ -15,7 +15,7 @@ export const storeConf = {
     },
     currentLayer(state) {
       if (_.isEmpty(state.layers)) return false;
-      return _.find(state.layers, {key: state.currentLayerKey});
+      return _.find(state.layers, {id: state.currentLayerKey});
     }
   },
   mutations: {

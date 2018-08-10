@@ -9,16 +9,11 @@
       <rect width="100%" height="100%" fill="#000" />
       <rect width="100%" height="100%" fill="url(#grid)" />
     </g>
-    <!-- <LayerSvgs v-for="layer in layers" v-if="layer._isVisible" /> -->
-    <g v-for="{key, _isVisible, tiles} in layers" v-if="_isVisible">
-      <g v-for="(row,y) in currentFloor[key]"
-        v-bind:key="`${key}-row-${y}`">
-        <use v-for="(tileId,x) in row" width="15px" height="15px"
-          v-if="tileId"
-          v-bind:x="x*15" v-bind:y="y*15"
-          :xlink:href="'#'+tiles[tileId]" />
-      </g>
-    </g>
+    <component v-for="layer in layers"
+      v-if="layer._isVisible"
+      :key="layer.id"
+      v-bind:is="layer.renderComponent"
+      v-bind="layer" />
     <rect id="interactionHandler" width="100%" height="100%" fill="transparent"
       @mousedown="(e)=>mouseEvent(e, 'mousedown')"
       @mousemove="(e)=>mouseEvent(e, 'mousemove')"
@@ -29,11 +24,11 @@
 
 <script>
   import {mapState, mapGetters} from 'vuex';
-  import {tiles} from './Tools/Tiles';
+  import {tiles} from '../Tools/Tiles';
   export default {
     computed: {
-      ...mapState(['currentTool', 'currentLayerKey', 'layers']),
-      ...mapGetters(['currentLayer', 'currentFloor']),
+      ...mapState(['currentTool', 'layers']),
+      ...mapGetters(['currentLayer']),
     },
     methods: {
       mouseEvent(e, eventType) {
@@ -45,5 +40,5 @@
     updated() {
       console.log('update');
     }
-  }
+  };
 </script>

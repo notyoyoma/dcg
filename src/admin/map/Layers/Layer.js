@@ -2,11 +2,12 @@ export class Layer {
   constructor(data, setter) {
     this.data = data;
     this.setter = setter;
-    this.key = "";
+    this.id= "";
     this._isVisible = true;
     this.toolComponent = false;
     this.menuComponent = false;
     this.tiles = [];
+    this.renderComponent = {}
 
     this.interaction = {};
   }
@@ -21,7 +22,7 @@ export class Layer {
 
   setData(path, val) {
     if (_.get(this.data, path) != val) {
-      this.setter("setMapData", {path, val, layerKey: this.key});
+      this.setter("setMapData", {path, val, layerKey: this.id});
     }
   }
 

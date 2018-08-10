@@ -1,13 +1,15 @@
 import {TileLayer} from "./TileLayer";
 import {toolFactory} from "../Tools";
 import {walls} from "../Tools/Walls";
+import WallLayerRenderer from '../Canvas/WallLayer';
 
 export class Walls extends TileLayer {
   constructor(data, setter) {
     super(data, setter);
     this.title = "Walls";
-    this.key = "walls";
+    this.id= "walls";
     this.tiles = walls;
+    this.renderComponent = WallLayerRenderer;
 
     this.toolComponent = toolFactory({tiles: walls});
   }
