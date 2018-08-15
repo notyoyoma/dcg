@@ -14,12 +14,21 @@ export class Walls extends TileLayer {
     this.toolComponent = toolFactory({tiles: walls});
   }
 
-  getCoordsDeltas({x,y,modSum}) {
+  shouldPlaceNewWall({x,y,modSum}) {
     // If the cursor is...
     // on a pixel that is between the interatable triangles
     if (x == y || modSum == 14)  return undefined;
+    //    in top left 3x3     in top right 3x3     in bottom left 3x3   in bottom right 3x3
+    if ( (x < 3 && y < 3) || (x > 11 && y < 3) || (x < 3 && y > 11) || (x > 11 && y > 11)) return undefined;
+    //  in the middle 3x3
+    if ( x > 4 && x < 8 && y > 4 && y < 8) return undefined;
+    return true;
+  }
+
+  getCoordsDeltas({x,y,modSum}) {
+    // If the cursor is...
     // on the upper or left interactable triangles
-    if (modSum < 14)             return {xD: 0, yD: 0};
+    if (modSum < 14) return {xD: 0, yD: 0};
     // on the right triangle, xD = 1
     // on the bottom triangle, yD = 1
     return (x > y) ? {xD: 1, yD: 0} : {xD: 0, yD: 1};
@@ -30,9 +39,8 @@ export class Walls extends TileLayer {
     const yM = y % 15;
     const modSum = xM + yM;
     // Should we interact? if so, which tile?
-    const deltas = this.getCoordsDeltas({x: xM, y: yM, modSum});
-    if (!deltas) return;
-    const {xD, yD} = deltas;
+    if (!this.shouldPlaceNewWall({x: xM, y: yM, modSum})) return;
+    const {xD, yD} = this.getCoordsDeltas({x: xM, y: yM, modSum});
     const xIndex = Math.floor(x / 15) + xD;
     const yIndex = Math.floor(y / 15) + yD;
 

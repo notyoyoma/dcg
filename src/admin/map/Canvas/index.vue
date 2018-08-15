@@ -9,8 +9,7 @@
       <rect width="100%" height="100%" fill="#000" />
       <rect width="100%" height="100%" fill="url(#grid)" />
     </g>
-    <component v-for="layer in layers"
-      v-if="layer._isVisible"
+    <component v-for="layer in visibleLayers"
       :key="layer.id"
       v-bind:is="layer.renderComponent"
       v-bind="layer" />
@@ -23,22 +22,19 @@
 </template>
 
 <script>
-  import {mapState, mapGetters} from 'vuex';
-  import {tiles} from '../Tools/Tiles';
-  export default {
-    computed: {
-      ...mapState(['currentTool', 'layers']),
-      ...mapGetters(['currentLayer']),
-    },
-    methods: {
-      mouseEvent(e, eventType) {
-        if (this.currentTool) {
-          this.currentLayer[eventType](e, this.currentTool)
-        }
+import {mapState, mapGetters} from "vuex";
+export default {
+  computed: {
+    ...mapState(["currentTool", "layers"]),
+    ...mapGetters(["currentLayer"]),
+    visibleLayers() {return _.filter(this.layers, "_isVisible");}
+  },
+  methods: {
+    mouseEvent(e, eventType) {
+      if (this.currentTool) {
+        this.currentLayer[eventType](e, this.currentTool);
       }
-    },
-    updated() {
-      console.log('update');
     }
-  };
+  },
+};
 </script>

@@ -1,5 +1,8 @@
 <template>
   <svg style="display:none">
+    <symbol id="eraser" viewBox="0 0 15 15">
+      <i-fa icon="eraser" />
+    </symbol>
     <symbol id="stairsUp" viewBox="0 0 15 15">
       <text y="15" x="0" fill="#F00">S</text>
       <path d="M 12 14 L 12 5" fill="none" stroke="#F00" stroke-width="1"/>
@@ -48,13 +51,13 @@ export const floorTiles = {
   3: "noFloor",
 };
 export const effectTiles = {
-  4: "fog",
-  5: "puddle",
-  6: "light0",
-  7: "light1",
-  8: "light2",
-  9: "light3",
-  10: "light4",
-  11: "light5",
+  1: "fog",
+  2: "puddle",
+  3: "light0",
+  4: "light1",
+  5: "light2",
+  6: "light3",
+  7: "light4",
+  8: "light5",
 };
 </script>

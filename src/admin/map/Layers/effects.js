@@ -12,9 +12,6 @@ export class Effects extends TileLayer {
     this.tiles = tiles;
 
     this.toolComponent = toolFactory({tiles});
-    this.menuComponent = menuFactory([
-      {label: "Reset", fn: this.reset}
-    ]);
   }
 
   reset() {

@@ -1,4 +1,4 @@
-import {Floors, Effects, Walls} from "./Layers";
+import {Floors, Effects, Walls, Rooms} from "./Layers";
 
 export const storeConf = {
   state: {
@@ -30,16 +30,22 @@ export const storeConf = {
     },
     setFloor(state, floorIndex) {
       state.currentFloorIndex = floorIndex;
-      const {floors, effects, walls} = state.floors[state.currentFloorIndex];
+      const {floors, effects, walls, rooms} = state.floors[state.currentFloorIndex];
       state.layers = [
         new Floors(floors, this.commit),
         new Effects(effects, this.commit),
         new Walls(walls, this.commit),
+        new Rooms(rooms, this.commit),
       ];
     },
     setMapData(state, {path, val, layerKey}) {
       let newFloors = [...state.floors];
-      _.set(newFloors, [state.currentFloorIndex, layerKey, ...path], val);
+      const setPath = [state.currentFloorIndex, layerKey, ...path]
+      if (val === 0) {
+        _.unset(newFloors, setPath);
+      } else {
+        _.set(newFloors, setPath, val);
+      }
       state.floors = newFloors;
     },
   }

@@ -1,3 +1,5 @@
+import {menuFactory} from "../UI";
+
 export class Layer {
   constructor(data, setter) {
     this.data = data;
@@ -10,6 +12,14 @@ export class Layer {
     this.renderComponent = {}
 
     this.interaction = {};
+    
+    this.menuComponent = menuFactory([
+      {label: "Reset", fn: this.reset}
+    ]);
+  }
+
+  reset() {
+    this.data = [[]];
   }
 
   toggleVisible() {
