@@ -75,6 +75,7 @@ let conf = {
       _: 'lodash',
       Vue: 'vue/dist/vue.js',
       "$": 'jquery',
+      keymage: 'keymage',
 		}),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({

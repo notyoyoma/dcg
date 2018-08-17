@@ -1,7 +1,9 @@
 <template lang="pug">
   .ui-change-floor.ml-2
-    span.btn(v-on:click="changeFloor(1)") &#8963;
-    span.btn(v-on:click="changeFloor(-1)") &#8963;
+    KeyPress(on="ctrl-up" v-on:hit="changeFloor(1)")
+    .btn(v-on:click="changeFloor(1)") &#8963;
+    KeyPress(on="ctrl-down" v-on:hit="changeFloor(-1)")
+    .btn(v-on:click="changeFloor(-1)") &#8963;
 </template>
 
 <script>
@@ -21,7 +23,7 @@ export default {
 .ui-change-floor {
   display: flex;
   flex-direction: column;
-  span {
+  .btn {
     font-size: 0.8rem;
     height: 1rem;
     width: 1rem;

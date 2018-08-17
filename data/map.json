@@ -2,16 +2,22 @@
   {
     "floors": [[]],
     "effects": [[]],
-    "walls": [[[]]]
+    "walls": [[[]]],
+    "roomCoords": [[]],
+    "rooms": {}
   },
   {
     "floors": [[]],
     "effects": [[]],
-    "walls": [[[]]]
+    "walls": [[[]]],
+    "roomCoords": [[]],
+    "rooms": {}
   },
   {
     "floors": [[]],
     "effects": [[]],
-    "walls": [[[]]]
+    "walls": [[[]]],
+    "roomCoords": [[]],
+    "rooms": {}
   }
 ]

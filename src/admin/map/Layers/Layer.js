@@ -30,9 +30,21 @@ export class Layer {
     return this._isVisible;
   }
 
+  getData(path, dflt) {
+    return _.get(this.data, path, dflt);
+  }
+
+  interactionPath(e) {
+    const {offsetX: x, offsetY: y} = e;
+    const xIndex = Math.floor(x / 15);
+    const yIndex = Math.floor(y / 15);
+    return [yIndex, xIndex];
+  }
+
   setData(path, val) {
     if (_.get(this.data, path) != val) {
       this.setter("setMapData", {path, val, layerKey: this.id});
+      // TODO - why not add layerKey to the path here?
     }
   }
 

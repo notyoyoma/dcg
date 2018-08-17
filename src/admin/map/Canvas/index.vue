@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     mouseEvent(e, eventType) {
-      if (this.currentTool) {
+      if (!_.isUndefined(this.currentTool)) {
         this.currentLayer[eventType](e, this.currentTool);
       }
     }

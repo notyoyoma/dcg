@@ -2,7 +2,8 @@
   #sidebar
     .actions.d-flex
       a.btn(href="/admin"): i-fa(icon="arrow-left")
-      a.btn(href="#saveChanges"): i-fa(icon="save")
+      a.btn(href="#saveBtn")
+        i-fa(icon="save")
       a.btn(href="/admin/map"): i-fa(icon="sync-alt")
     .p-3(v-if="shouldRenderLayersAndTools()")
       h6.d-flex.align-items-center

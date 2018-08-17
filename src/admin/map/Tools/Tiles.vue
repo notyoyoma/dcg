@@ -3,6 +3,15 @@
     <symbol id="eraser" viewBox="0 0 15 15">
       <i-fa icon="eraser" />
     </symbol>
+    <symbol id="add" viewBox="0 0 15 15">
+      <i-fa icon="plus" />
+    </symbol>
+    <symbol id="edit" viewBox="0 0 15 15">
+      <i-fa icon="pen" />
+    </symbol>
+    <symbol id="select" viewBox="0 0 15 15">
+      <i-fa icon="mouse-pointer" />
+    </symbol>
     <symbol id="stairsUp" viewBox="0 0 15 15">
       <text y="15" x="0" fill="#F00">S</text>
       <path d="M 12 14 L 12 5" fill="none" stroke="#F00" stroke-width="1"/>

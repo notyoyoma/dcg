@@ -19,7 +19,8 @@
         "$": false,
         "_": false,
         "require": false,
-        "Vue": false
+        "Vue": false,
+        "keymage": false
     },
     "rules": {
         "indent": [
