@@ -1,20 +1,22 @@
 import {Layer} from "./Layer";
-import {toolFactory} from "../Tools";
 import RoomsTool from "../Tools/Rooms";
 import RoomLayerRenderer from "../Canvas/RoomLayer";
 import {roomIDs} from "../Canvas/RoomIDColors";
 
 // TODO - This is not final code, move this into game module
 class Room {
-  constructor({id, monsterTable, lootTable}) {
-    this.id = id;
-    this.floor = {
-      defaultMonsterTable: [],
-      defaultlootTable: [],
-    };
-    this.monsterTable = monsterTable;
-    this.lootTable = lootTable;
+  constructor(data) {
+    _.defaults(this, data, this.defaults);
   }
+
+  get defaults() {
+    return {
+      monsterTable: [],
+      lootTable: [],
+      flavorText: "",
+    };
+  }
+  
   toJSON() {
     const {monsterTable, lootTable} = this;
     return {monsterTable, lootTable};
@@ -26,9 +28,9 @@ export class Rooms extends Layer {
     super(roomCoords, setter);
     this.title = "Rooms";
     this.id= "rooms";
-    this.rooms = rooms;
+    this.rooms = _.mapKeys(rooms, (data)=>new Room(data));
 
-    this.toolComponent = toolFactory({tiles: {}, type: RoomsTool});
+    this.toolComponent = RoomsTool;
     this.renderComponent = RoomLayerRenderer;
 
     this.currentRoomID = 0;

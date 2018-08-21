@@ -1,6 +1,6 @@
 import  assert     from  "assert";
 import  merge      from  "merge";
-import  GameMap    from  "dcg-map";
+import  GameMap    from  ".";
 import  worldData  from  "dcg-world-data";
 
 describe('Map', function() {

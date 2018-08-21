@@ -1,5 +1,6 @@
 import Layout from './Layout';
 import views from './views';
+import Vue from "vue/dist/vue.js";
 
 require('./styles/index.scss');
 

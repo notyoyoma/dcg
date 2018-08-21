@@ -32,9 +32,9 @@ export const storeConf = {
       state.currentFloorIndex = floorIndex;
       const {floors, effects, walls, roomCoords, rooms} = state.floors[state.currentFloorIndex];
       state.layers = [
+        new Rooms({roomCoords,rooms}, this.commit),
         new Floors(floors, this.commit),
         new Effects(effects, this.commit),
-        new Rooms({roomCoords,rooms}, this.commit),
         new Walls(walls, this.commit),
       ];
     },

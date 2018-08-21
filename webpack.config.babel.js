@@ -1,4 +1,6 @@
 import path from 'path';
+import fs from "fs";
+import bodyParser from "body-parser";
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import VueLoaderPlugin from 'vue-loader/lib/plugin';
@@ -45,7 +47,10 @@ let conf = {
   },
   resolve: {
     extensions: ['.vue', '.js', 'scss'],
-    modules: ['src', 'node_modules'],
+    modules: ['src', 'node_modules'],  
+    alias: {
+      vue: 'vue/dist/vue.js',
+    }
   },
   devServer: {
     historyApiFallback: {
@@ -56,11 +61,16 @@ let conf = {
     },
     noInfo: true,
     overlay: true,
-    setup: app => {
-      app.post('/data/*', (req, res) => {
-        console.log('WOO HOO');
-        console.log(JSON.stringify(req));
-        return res;
+    before: app => { 
+      app.use(bodyParser.json());
+      app.post("/data/*", (req, res, next) => {
+        const filename = path.basename(req.url);
+        fs.writeFile(`./data/${filename}`, JSON.stringify(req.body, null, 2), "utf8", (err)=>{
+          if (err) throw err;
+          console.log(`${filename} has been saved!`);
+          res.json({success: true});
+          next();
+        });
       });
     },
     proxy: {
@@ -73,7 +83,6 @@ let conf = {
 	plugins: [
 		new webpack.ProvidePlugin({
       _: 'lodash',
-      Vue: 'vue/dist/vue.js',
       "$": 'jquery',
       keymage: 'keymage',
 		}),

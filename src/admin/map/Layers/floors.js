@@ -1,5 +1,4 @@
 import {TileLayer} from "./TileLayer";
-import {toolFactory} from "../Tools";
 import {floorTiles as tiles} from "../Tools/Tiles";
 
 export class Floors extends TileLayer {
@@ -8,8 +7,6 @@ export class Floors extends TileLayer {
     this.title = "Floors";
     this.id= "floors";
     this.tiles = tiles;
-
-    this.toolComponent = toolFactory({tiles});
   }
 
   reset() {

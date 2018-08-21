@@ -1,7 +1,7 @@
 <template lang="pug">
   .tileset-container.d-flex.flex-wrap
     .tile(
-      v-for="(key,id) in tiles"
+      v-for="(key,id) in tilesWithEraser"
       v-bind:key="key"
       v-on:click="setCurrentTool(id)"
       v-bind:class="{active: id == currentTool}")
@@ -15,12 +15,20 @@ import {mapMutations, mapState} from "vuex";
 export default {
   name: "Tileset",
   props: ["tiles"],
-  computed: mapState(["currentTool"]),
+  data() {return{
+    tilesWithEraser: {
+      0: "eraser",
+      ...this.tiles
+    }
+  };},
+  computed: {
+    ...mapState(["currentTool"]),
+  },
   methods: {
     ...mapMutations([
       "setCurrentTool"
-    ])
-  }
+    ]),
+  },
 };
 </script>
 

@@ -1,7 +1,6 @@
 import {TileLayer} from "./TileLayer";
-import {toolFactory} from "../Tools";
 import {walls} from "../Tools/Walls";
-import WallLayerRenderer from '../Canvas/WallLayer';
+import WallLayerRenderer from "../Canvas/WallLayer";
 
 export class Walls extends TileLayer {
   constructor(data, setter) {
@@ -10,8 +9,6 @@ export class Walls extends TileLayer {
     this.id= "walls";
     this.tiles = walls;
     this.renderComponent = WallLayerRenderer;
-
-    this.toolComponent = toolFactory({tiles: walls});
   }
 
   shouldPlaceNewWall({x,y,modSum}) {

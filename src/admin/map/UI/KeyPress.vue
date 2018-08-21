@@ -16,7 +16,7 @@ export default {
     },
     hit() {
       this.$emit("hit");
-    }
+    },
   },
   mounted() {
     keymage(this.on, this.hit);

@@ -1,10 +1,11 @@
+import Vue from "vue";
 import Menu from "./Menu";
 import mapEditor from "./map";
-require("./styles.scss")
+require("./styles.scss");
 
 const routes = {
   "/admin/map": mapEditor
-}
+};
 
 // Initialize app
 new Vue({

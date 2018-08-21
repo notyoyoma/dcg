@@ -3,6 +3,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEye, faEyeSlash, faCog, faSave, faSyncAlt, faArrowLeft,
   faEraser, faPlus, faPen, faMousePointer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import Vue from "vue";
 import Vuetify from "vuetify";
 import Vuex from "vuex";
 
