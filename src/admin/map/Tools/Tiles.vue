@@ -25,6 +25,11 @@
     <symbol id="noFloor" viewBox="0 0 15 15">
       <text y="15" x="0" fill="#F00">N</text>
     </symbol>
+    <symbol id="pitTrap" viewBox="0 0 15 15">
+      <rect x="0.5" y="0.5" width="14px" height="14px" stroke="#fff" />
+      <rect x="7" y="-2px" width="1px" height="19px" fill="#fff" transform="rotate(45, 7.5, 7.52)" />
+      <rect x="7" y="-2px" width="1px" height="19px" fill="#fff" transform="rotate(-45, 7.5, 7.52)" />
+    </symbol>
     <symbol id="fog" viewBox="0 0 15 15">
       <rect width="15px" height="15px" fill="#aaa" />
     </symbol>
@@ -58,6 +63,7 @@ export const floorTiles = {
   1: "stairsUp",
   2: "stairsDown",
   3: "noFloor",
+  4: "pitTrap",
 };
 export const effectTiles = {
   1: "fog",

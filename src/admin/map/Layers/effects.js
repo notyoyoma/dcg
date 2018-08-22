@@ -9,8 +9,4 @@ export class Effects extends TileLayer {
     this.id= "effects";
     this.tiles = tiles;
   }
-
-  reset() {
-    // TODO - add layer reset
-  }
 }

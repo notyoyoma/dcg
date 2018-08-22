@@ -1,5 +1,5 @@
 <template>
-  <svg width="600" height="600" v-if="currentLayer">
+  <svg :width="canvasWidth" :height="canvasHeight" v-if="currentLayer">
     <defs>
       <pattern id="grid" width="15" height="15" patternUnits="userSpaceOnUse">
         <path d="M 15 0 L 0 0 0 15" fill="none" stroke="#333" stroke-width="1"/>
@@ -8,6 +8,7 @@
     <g id="background">
       <rect width="100%" height="100%" fill="#000" />
       <rect width="100%" height="100%" fill="url(#grid)" />
+      <rect widht="100%" height="100%" fill="transparent" stroke="#fff" stroke-width="1.5px" />
     </g>
     <component v-for="layer in visibleLayers"
       :key="layer.id"
@@ -23,7 +24,12 @@
 
 <script>
 import {mapState, mapGetters} from "vuex";
+import {mapSettings} from "../../../World/mapSettings";
 export default {
+  data() {return{
+    canvasWidth: mapSettings.width * mapSettings.tileSize,
+    canvasHeight: mapSettings.height * mapSettings.tileSize
+  };},
   computed: {
     ...mapState(["currentTool", "layers"]),
     ...mapGetters(["currentLayer"]),

@@ -1,6 +1,7 @@
 import {TileLayer} from "./TileLayer";
 import {walls} from "../Tools/Walls";
 import WallLayerRenderer from "../Canvas/WallLayer";
+import {mapSettings} from "../../../World/mapSettings";
 
 export class Walls extends TileLayer {
   constructor(data, setter) {
@@ -31,6 +32,12 @@ export class Walls extends TileLayer {
     return (x > y) ? {xD: 1, yD: 0} : {xD: 0, yD: 1};
   }
 
+  isOutOfBounds({yIndex, xIndex, wIndex}) {
+    if (wIndex == 0 && (yIndex == 0 || yIndex >= mapSettings.height-1)) return true;
+    if (wIndex == 1 && (xIndex == 0 || xIndex >= mapSettings.width-1)) return true;
+    return false;
+  }
+
   interact({x,y,tool}) {
     const xM = x % 15;
     const yM = y % 15;
@@ -41,8 +48,10 @@ export class Walls extends TileLayer {
     const xIndex = Math.floor(x / 15) + xD;
     const yIndex = Math.floor(y / 15) + yD;
 
-    // Which wall should we set?
+    // Which wall should we set? 0 if top, 1 if left
     const wIndex = ( (xM > yM && modSum < 14) || (xM < yM && modSum > 14) ) ? 0 : 1;
+
+    if (this.isOutOfBounds({yIndex, xIndex, wIndex})) return;
 
     this.setData([yIndex, xIndex, wIndex], tool);
   }

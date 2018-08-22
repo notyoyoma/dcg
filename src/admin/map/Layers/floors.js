@@ -8,9 +8,4 @@ export class Floors extends TileLayer {
     this.id= "floors";
     this.tiles = tiles;
   }
-
-  reset() {
-    // TODO - reset current layer
-  }
-
 }
