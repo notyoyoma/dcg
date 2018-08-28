@@ -47,7 +47,7 @@ let conf = {
   },
   resolve: {
     extensions: ['.vue', '.js', 'scss'],
-    modules: ['src', 'node_modules'],  
+    modules: ['src/game_modules', 'node_modules'],
     alias: {
       vue: 'vue/dist/vue.js',
     }

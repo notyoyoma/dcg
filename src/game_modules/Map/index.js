@@ -1,5 +1,4 @@
 // Map Object
-import merge from "merge";
 
 class Map {
   constructor(data) {
@@ -65,7 +64,7 @@ class Map {
 class Floor {
   constructor(data, mapRef) {
     this.tiles        =  data.tiles;
-    this.defaultTile  =  merge(mapRef.defaultTile, data.defaultTile);
+    this.defaultTile  =  _.merge(mapRef.defaultTile, data.defaultTile);
     this.floorSize    =  mapRef.size;
   }
 
@@ -74,7 +73,7 @@ class Floor {
     ||  typeof this.tiles[y][x] == "undefined") {
       return this.defaultTile;
     }
-    return merge(this.tiles[y][x]);
+    return _.merge(this.tiles[y][x]);
   }
 
   getTileWalls(x,y) {

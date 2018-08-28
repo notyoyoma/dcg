@@ -1,5 +1,5 @@
 // Required Modules
-import  log        from  "dcg-log";
+import  log        from  "Log";
 
 // Character Data
 import  races       from  "./races.json";

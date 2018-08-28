@@ -1,14 +1,13 @@
 import  assert     from  "assert";
-import  merge      from  "merge";
 import  GameMap    from  ".";
-import  worldData  from  "dcg-world-data";
+import  map  from  "../../../data/map.json";
 
 describe('Map', function() {
 
 
   // Build char obj with just a name
   const buildMapObj = function(override) {
-    return new GameMap(merge.recursive({}, worldData.map, override));
+    return new GameMap(_.merge({}, map, override));
   };
   let mapObj = buildMapObj();
 

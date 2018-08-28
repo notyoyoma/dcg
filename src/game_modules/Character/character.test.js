@@ -1,6 +1,5 @@
 import  assert     from  "assert";
-import  merge      from  "merge";
-import  Character  from  "dcg-character";
+import  Character  from  "./character";
 import  races      from  "./races.json";
 import  guilds     from  "./guilds.json";
 import  spells     from  "./spells.json";
@@ -10,12 +9,12 @@ describe('Character', function() {
 
   // Build char obj with just a name
   const buildBlankCharObj = function(override) {
-    return merge.recursive({}, override);
+    return _.merge({}, override);
   };
 
   // Build char obj with some default values
   const buildDefaultCharObj = function(override) {
-    return merge.recursive({}, {
+    return _.merge({}, {
       maxHP:         30,
       currentHP:     20,
       maxMana:       32,
