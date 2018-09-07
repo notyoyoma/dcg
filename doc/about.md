@@ -30,4 +30,4 @@ The grunt task runs webpack with configuration options (you can run a dev server
 ## Contributors
 
 + [ Marty Naselli ]( http://github.com/notyoyoma )
-+ Dewayne Johnsonbaugh
++ [ DeWayne Johnsonbaugh ](http://github.com/djohnsonbaugh)
