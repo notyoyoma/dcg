@@ -1,4 +1,8 @@
 import monsters from './monsters.json';
+import { getData } from 'App/game/world/index';
+
+const monsters = {};
+getData('monsters', ({data}) => monsters = data);
 
 // TODO - write tests
 export default class Monster {

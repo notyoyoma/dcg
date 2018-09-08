@@ -24,7 +24,7 @@
 
 <script>
 import {mapState, mapGetters} from "vuex";
-import {mapSettings} from "../../../World/mapSettings";
+import {mapSettings} from "../../../game/world/mapSettings";
 export default {
   data() {return{
     canvasWidth: mapSettings.width * mapSettings.tileSize,

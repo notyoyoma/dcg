@@ -1,0 +1,12 @@
+{
+    "characters": [
+        "Bjarne"
+    ],
+    "location": {
+        "x":0,
+        "y":0,
+        "z":0
+    },
+    "currentFloorId": 0,
+    "facing": 2
+}

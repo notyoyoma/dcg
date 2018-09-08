@@ -1,0 +1,47 @@
+{
+    "tyke": {
+        "stats": {
+        "maxHp": 10,
+        "attack": 3,
+        "defence": 0,
+        "loot": 150
+        },
+        "alignments": ["neutral","good"]
+    },
+    "kobold":{
+        "stats": {
+        "maxHp": 15,
+        "attack": 5,
+        "defence": 2,
+        "loot": 350
+        },
+        "alignments": ["neutral","good"]
+    },
+    "giantSpider":{
+        "stats": {
+        "maxHp": 8,
+        "attack": 3,
+        "defence": 0,
+        "loot": 250
+        },
+        "poison": {
+        "potential": 0.5,
+        "strength": 1
+        },
+        "alignments": "evil"
+    },
+    "aboleth": {
+        "stats": {
+        "maxHp": 30,
+        "attack": 3,
+        "defence": 0,
+        "loot": 5000
+        },
+        "poison": {
+        "potential": 0.8,
+        "strength": 5
+        },
+        "alignments": "evil"
+    }
+}
+  

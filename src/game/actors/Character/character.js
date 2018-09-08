@@ -1,5 +1,5 @@
 // Required Modules
-import  log        from  "Log";
+import  log        from  "game/events/Log";
 
 // Character Data
 import  races       from  "./races.json";

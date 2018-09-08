@@ -3,13 +3,15 @@ class Logger {
     this.types = [
       'player',
       'party',
+      'character',
       'combat',
       'transaction',
       'general'
     ];
     this.streams = {};
     this.maxStreamLength = 100;
-    this.modal = alert;
+    // TODO -- find alert module
+    // this.modal = alert;
 
     for (let type of this.types) {
       this.streams[type] = [];
@@ -29,7 +31,7 @@ class Logger {
   }
 
   popup(data) {
-    this.modal(data);
+    //this.modal(data);
   }
 }
 

@@ -19,8 +19,8 @@ import Sidebar from "./Sidebar";
 import Canvas from "./Canvas";
 import TileSvgs from "./Tools/Tiles";
 import WallSvgs from "./Tools/Walls";
-import KeyPress from "./UI/KeyPress";
-import {getMapData} from "../../World/data";
+import KeyPress from "../../interaction/KeyPress";
+import {getData} from "../../game/world";
 import {storeConf} from "./Store";
 require("./styles.scss");
 
@@ -32,8 +32,7 @@ Vue.component("KeyPress", KeyPress);
 // Bootstrap App
 const store = new Vuex.Store(storeConf);
 
-getMapData()
-  .then(({data})=>{
+getData('map', ({data}) => {
     store.commit("initMapData", data);
     store.commit("setFloor", 0);
     store.commit("setCurrentLayer", "floors");

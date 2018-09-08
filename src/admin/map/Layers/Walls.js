@@ -1,7 +1,7 @@
 import {TileLayer} from "./TileLayer";
 import {walls} from "../Tools/Walls";
 import WallLayerRenderer from "../Canvas/WallLayer";
-import {mapSettings} from "../../../World/mapSettings";
+import {mapSettings} from "../../../game/world/mapSettings";
 
 export class Walls extends TileLayer {
   constructor(data, setter) {

@@ -1,4 +1,3 @@
-import  assert     from  "assert";
 import  Character  from  "./character";
 import  races      from  "./races.json";
 import  guilds     from  "./guilds.json";
@@ -30,7 +29,7 @@ describe('Character', function() {
         "charisma":      4,
         "dexterity":     12
       },
-      name: name
+      name:          "Sir Test"
     }, override);
   };
 

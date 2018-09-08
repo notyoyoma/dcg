@@ -92,5 +92,3 @@ class Floor {
 }
 
 export default Map;
-
-console.log('Finished dcg-map/main.js');
