@@ -33,8 +33,8 @@ export class Walls extends TileLayer {
   }
 
   isOutOfBounds({yIndex, xIndex, wIndex}) {
-    if (wIndex == 0 && (yIndex == 0 || yIndex >= mapSettings.height-1)) return true;
-    if (wIndex == 1 && (xIndex == 0 || xIndex >= mapSettings.width-1)) return true;
+    if (wIndex == 0 && (yIndex == 0 || yIndex > mapSettings.height-1)) return true;
+    if (wIndex == 1 && (xIndex == 0 || xIndex > mapSettings.width-1)) return true;
     return false;
   }
 

@@ -16,14 +16,14 @@ if (env === 'test') {
 }
 
 
-export function getData(key, fn) {
+export function getData(key, callback) {
   if (_.has(dataCache, key)) {
-    fn({data: dataCache[key]});
+    callback({data: dataCache[key]});
   } else {
     axios.get(`/data/${key}.json`)
       .then(({data}) => {
         dataCache[key] = data;
-        fn({data});
+        callback({data});
       });
   }
 }

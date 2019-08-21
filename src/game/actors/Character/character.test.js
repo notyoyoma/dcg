@@ -132,7 +132,7 @@ describe('Character', function() {
 
     let unequipChar = new Character(buildDefaultCharObj(
       {
-        name: 'unequip char2',
+        name: 'unequip char1',
         equipped: {
           hand: item1
         }
@@ -151,7 +151,7 @@ describe('Character', function() {
 
     let unequipChar3 = new Character(buildDefaultCharObj(
       {
-        name: 'unequip char2',
+        name: 'unequip char3',
         equipped: {
           hand: {
             appendage: 'hand',

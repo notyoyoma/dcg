@@ -14,6 +14,7 @@
       :key="layer.id"
       v-bind:is="layer.renderComponent"
       v-bind="layer" />
+    <rect width="100%" height="100%" stroke="#fff" stroke-width="1px" fill="transparent" />
     <rect id="interactionHandler" width="100%" height="100%" fill="transparent"
       @mousedown="(e)=>mouseEvent(e, 'mousedown')"
       @mousemove="(e)=>mouseEvent(e, 'mousemove')"

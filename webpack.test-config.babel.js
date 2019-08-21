@@ -9,5 +9,6 @@ webpackConfig.plugins.push(
     assert: ['chai', 'assert']
   })
 );
+webpackConfig.devtool = '#inline-cheap-module-source-map';
 
 export default webpackConfig;
