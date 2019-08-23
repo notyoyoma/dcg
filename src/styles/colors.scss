@@ -1,4 +1,36 @@
+$sizes: (
+  20: 20%,
+  33: 33%,
+  40: 40%,
+  60: 60%,
+  66: 66%,
+  80: 80%,
+  100: 100%,
+  auto: auto
+);
 $yellow: #F5C121;
 $green: #44C158;
 $blue: #3A8DAE;
 $red: #973239;
+
+$base: #282f44;
+$text: #ececec;
+$gold-dark: #e6af2e;
+$gold-light: #f5d061;
+
+body {
+  background: $base;
+  color: $text;
+}
+
+a {
+  text-decoration: none;
+  color: $gold-dark;
+  &:hover {
+    color: $blue;
+  }
+}
+
+h1,h2,h3 {
+  color: $gold-light;
+}

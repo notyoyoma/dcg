@@ -1,5 +1,5 @@
 import monsters from './monsters.json';
-import { getData } from 'App/game/world/index';
+import { getData } from 'App/game/world';
 
 const monsters = {};
 getData('monsters', ({data}) => monsters = data);

@@ -3,10 +3,9 @@
         "Bjarne"
     ],
     "location": {
-        "x":0,
-        "y":0,
-        "z":0
+        "x":39,
+        "y":39,
+        "z":1
     },
-    "currentFloorId": 0,
     "facing": 2
 }

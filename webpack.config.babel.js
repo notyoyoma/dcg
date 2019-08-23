@@ -81,6 +81,7 @@ let conf = {
   },
   devtool: 'eval-source-map',
 	plugins: [
+    new webpack.EnvironmentPlugin(['NODE_ENV', process.env.WEBPACK_MODE]),
 		new webpack.ProvidePlugin({
       _: 'lodash',
       "$": 'jquery',
@@ -88,6 +89,7 @@ let conf = {
 		}),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
+      template: 'index.html',
       chunks: ['app'],
     }),
     new HtmlWebpackPlugin({

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Vue from "vue";
 import Vuetify from "vuetify";
 import Vuex from "vuex";
+import axios from 'axios';
 
 // Setup Vendors
 Vue.use(Vuetify);
@@ -20,7 +21,6 @@ import Canvas from "./Canvas";
 import TileSvgs from "./Tools/Tiles";
 import WallSvgs from "./Tools/Walls";
 import KeyPress from "../../interaction/KeyPress";
-import {getData} from "../../game/world";
 import {storeConf} from "./Store";
 require("./styles.scss");
 
@@ -32,7 +32,8 @@ Vue.component("KeyPress", KeyPress);
 // Bootstrap App
 const store = new Vuex.Store(storeConf);
 
-getData('map', ({data}) => {
+axios.get('/data/map.json')
+  .then(({data}) => {
     store.commit("initMapData", data);
     store.commit("setFloor", 0);
     store.commit("setCurrentLayer", "floors");

@@ -1,14 +1,14 @@
-import Layout from './Layout';
-import views from './views';
+
 import Vue from "vue/dist/vue.js";
+import Layout from './Layout';
+import Game from "./game";
 
 require('./styles/index.scss');
 
-Layout.on('initialised', ()=>{
-  new Vue({
-    el: ".lm_goldenlayout.lm_root",
-    components: {
-      ...views
-    },
-  });
+Vue.prototype.$game = new Game()
+
+new Vue({
+  el: "#app",
+  template: "<Layout />",
+  components: {Layout},
 });

@@ -1,6 +1,6 @@
 // Map Object
 
-class Map {
+export default class Map {
   constructor(data) {
     this.size           =  data.size;
     this.defaultTile    =  data.defaultTile;
@@ -90,5 +90,3 @@ class Floor {
     };
   }
 }
-
-export default Map;

@@ -1,15 +1,12 @@
-import Encounter from 'dcg-encounter'
-
 export default class Party {
-  constructor(data, world) {
+  constructor(data) {
     this.location          = data.location || { x:0, y:0, z:0 };
     this.currentZone       = data.currentZone || 0;
     this.facing            = data.facing || 0;
     this.maxSize           = 4;
-    this.world             = world;
+    this.selectedCharacter = 0;
 
     this.initCharacters(data);
-    this.doEncounter();
   }
 
   initCharacters(data) {
@@ -26,11 +23,6 @@ export default class Party {
     } else {
       //TODO - create character modal
     }
-  }
-
-  doEncounter() {
-    delete this.encounter;
-    this.encounter = new Encounter(this.world.map.zones[this.currentZone], this)
   }
 
   addMember(character) {
