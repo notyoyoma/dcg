@@ -5,7 +5,7 @@ import Game from "./game";
 
 require('./styles/index.scss');
 
-Vue.prototype.$game = new Game()
+Vue.prototype.$game = new Game();
 
 new Vue({
   el: "#app",

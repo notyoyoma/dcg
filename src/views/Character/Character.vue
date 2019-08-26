@@ -1,14 +1,13 @@
 <template lang="pug">
-.p-1
-  h1 {{name}}
+  Marty
 </template>
 
 <script>
-  export default {
-    data: ()=>({
-      name: 'Marty'
-    }),
-    components: {
+export default {
+  computed: {
+    currentCharacter() {
+      return this.$game.selectedCharacter
     }
   }
+}
 </script>

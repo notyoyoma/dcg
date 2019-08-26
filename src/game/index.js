@@ -2,12 +2,17 @@ import Party from "./party";
 import Map from "./world/map";
 import axios from 'axios';
 import path from 'path';
+import Vuex from 'vuex';
 
 const env = process.env.NODE_ENV;
 
 export default class Game {
   constructor() {
-    this.data = {};
+    // Modules load from /data or from DB
+    // Each module will create a store
+    this.store = new Vuex.Store({
+      currentCharacter: 0
+    })
     this.fetchData();
   }
 
@@ -20,14 +25,6 @@ export default class Game {
       });
       loaded();
     } else {
-      const datum = [
-        'characters',
-        'items',
-        'map',
-        'monsters',
-        'npcs',
-        'party',
-      ];
       Promise.all(
         datum.map((key) => axios.get(`/data/${datum}.json`))
       )
