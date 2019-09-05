@@ -1,6 +1,17 @@
 {
     "characters": [
-        "Bjarne"
+        {
+            "name": "Bjarne",
+            "health": 50,
+            "spellPoints": 10,
+            "currentAction": "Attack"
+        },
+        {
+            "name": "Guido",
+            "health": 30,
+            "spellPoints": 60,
+            "currentAction": "Cast 'Fireball'"
+        }
     ],
     "location": {
         "x":39,

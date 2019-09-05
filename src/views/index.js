@@ -1,8 +1,8 @@
-import Character from './Character/';
+import Character from './Character';
 import Party from './Party';
 import Map from './Map';
-import Combat from './Combat';
-import CombatFeed from './CombatFeed';
+import Encounter from './Encounter';
+import EncounterFeed from './EncounterFeed';
 import GameLog from './GameLog';
 
 
@@ -10,7 +10,7 @@ export default {
   Character,
   Party,
   Map,
-  Combat,
-  CombatFeed,
+  Encounter,
+  EncounterFeed,
   GameLog,
 }

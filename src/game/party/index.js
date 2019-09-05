@@ -1,12 +1,21 @@
+import {isEmpty} from 'lodash';
+
 export default class Party {
-  constructor(data) {
+  constructor(data, game) {
+    this.game              = game;
     this.location          = data.location || { x:0, y:0, z:0 };
     this.currentZone       = data.currentZone || 0;
     this.facing            = data.facing || 0;
     this.maxSize           = 4;
     this.selectedCharacter = 0;
 
-    this.initCharacters(data);
+    this.characters = data.characters || [];
+    if (!isEmpty(this.characters)) {
+      this.game.store.commit('party/set', this.characters);
+      this.game.store.commit('character/set', this.characters[0]);
+    } else {
+      // TODO -- open character creation screen
+    }
   }
 
   initCharacters(data) {

@@ -4,7 +4,7 @@ class Logger {
       'player',
       'party',
       'character',
-      'combat',
+      'encounter',
       'transaction',
       'general'
     ];

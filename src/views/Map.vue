@@ -1,5 +1,4 @@
-<template>
-  <p>
-    map here...
-  </p>
+<template lang="pug">
+  .map
+    h3 TODO -- map here
 </template>

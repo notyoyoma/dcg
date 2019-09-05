@@ -1,22 +1,20 @@
 // Map Object
+import {mapSettings} from './mapSettings';
 
 export default class Map {
-  constructor(data) {
-    this.size           =  data.size;
-    this.defaultTile    =  data.defaultTile;
-    this.zones          =  data.zones;
+  constructor(data, game) {
+    this.settings       =  mapSettings;
+    this.game           =  game;
+    this.floors         =  data;
 
-    this.floors         =  [];
-    this.loadFloors(data.floors);
-    this.currentFloorId =  data.currentFloorId || 0;
-    this.currentFloor   =  this.floors[this.currentFloorId];
+    this.loadFloor();
   }
 
-  loadFloors(floors) {
-    // Create new Floor objects for each floor.
-    for (var i=0; i < floors.length; i+=1) {
-      this.floors[i] = new Floor(floors[i], this);
-    }
+  loadFloor() {
+    const currentFloorId = _.get(this.game, 'store.party.state.location.z', 0);
+    this.currentFloor = _.get(this.floors, currentFloorId);
+    // TODO -- set to only show what the party has mapped. (will need to store that data separately)
+    this.game.store.commit('visibleMap/set', this.currentFloor);
   }
 
   getTile(x,y,z) {
@@ -64,7 +62,6 @@ export default class Map {
 class Floor {
   constructor(data, mapRef) {
     this.tiles        =  data.tiles;
-    this.defaultTile  =  _.merge(mapRef.defaultTile, data.defaultTile);
     this.floorSize    =  mapRef.size;
   }
 

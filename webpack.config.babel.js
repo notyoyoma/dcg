@@ -49,6 +49,7 @@ let conf = {
     extensions: ['.vue', '.js', 'scss'],
     modules: ['src', 'node_modules'],
     alias: {
+      '~': './src',
       vue: 'vue/dist/vue.js',
     }
   },
@@ -81,7 +82,6 @@ let conf = {
   },
   devtool: 'eval-source-map',
 	plugins: [
-    new webpack.EnvironmentPlugin(['NODE_ENV', process.env.WEBPACK_MODE]),
 		new webpack.ProvidePlugin({
       _: 'lodash',
       "$": 'jquery',
