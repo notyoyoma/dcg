@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/js/main.js",
   "scripts": {
-    "dev": "NODE_ENV=develop webpack-dev-server --mode=development --open --hot",
+    "dev": "webpack-dev-server --mode=development --open --hot",
     "build": "webpack --mode=production --progress --hide-modules",
     "test": "mocha-webpack --webpack-config ./webpack.test-config.babel.js \"src/**/*[-.]test.js\"",
     "test:debug": "node --inspect-brk ./node_modules/.bin/mocha-webpack --webpack-config ./webpack.test-config.babel.js \"src/**/*[-.]test.js\""

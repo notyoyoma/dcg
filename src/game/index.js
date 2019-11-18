@@ -1,4 +1,4 @@
-import Party from "./party";
+import Party, {partyStore} from "./party";
 import Map from "./world/map";
 import axios from 'axios';
 import path from 'path';
@@ -6,8 +6,6 @@ import Vuex from 'vuex';
 import makeStore from '~/util/makeStore';
 
 const env = process.env.NODE_ENV;
-
-
 
 export default class Game {
   constructor() {
@@ -20,7 +18,7 @@ export default class Game {
       },
       modules: {
         character: makeStore(),
-        party: makeStore([]),
+        party: partyStore,
         visibleMap: makeStore(),
       },
       mutations: {

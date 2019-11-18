@@ -1,5 +1,16 @@
 import {isEmpty} from 'lodash';
 
+export const partyStore = {
+  namespaced: true,
+  state: [],
+  mutations: {
+    set (state, newState) {state.splice(0, state.length, ...newState)},
+    push (state, item) {state.push(item)},
+    remove (state, index) {state.slice(index, 1)},
+    updateCharacter(state, index, newChar) {state[index] = newChar}
+  }
+}
+
 export default class Party {
   constructor(data, game) {
     this.game              = game;
