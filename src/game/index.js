@@ -1,7 +1,6 @@
 import Party, {partyStore} from "./party";
 import Map from "./world/map";
 import axios from 'axios';
-import path from 'path';
 import Vuex from 'vuex';
 import makeStore from '~/util/makeStore';
 
@@ -49,6 +48,6 @@ export default class Game {
   load(data) {
     this.party = new Party(data.party, this);
     this.map   = new Map(data.map, this);
-    this.store.commit('doneLoading');
+    // this.store.commit('doneLoading');
   }
 }

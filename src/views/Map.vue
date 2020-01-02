@@ -6,7 +6,7 @@
 <script>
 export default {
   computed: {
-    visibleFloor () {return this.$store.state.visibleFloor}
+    visibleMap () {return this.$store.state.visibleMap}
   }
 }
 </script>

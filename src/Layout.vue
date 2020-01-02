@@ -1,7 +1,7 @@
 <template lang="pug">
     #app-layout.d-flex(v-else)
-      #loading(v-if=("loading"))
-      template(v-else)
+      #loading("v-if"=("loading")) LOADING INDICATOR
+      template("v-else")
         .d-flex.flex-column
           .h-60
             Character
@@ -21,7 +21,7 @@
 import views from './views';
 export default {
   computed: {
-    loading() {return this.$store.state.loading}
+    loading: ()=>this.$game.store.state.loading
   },
   components: views
 }
