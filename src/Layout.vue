@@ -21,7 +21,7 @@
 import views from './views';
 export default {
   computed: {
-    loading: ()=>this.$game.store.state.loading
+    loading(){return this.$game.store.state.loading}
   },
   components: views
 }
