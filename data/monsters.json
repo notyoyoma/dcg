@@ -1,47 +1,56 @@
-{
-    "tyke": {
-        "stats": {
-        "maxHp": 10,
-        "attack": 3,
-        "defence": 0,
-        "loot": 150
-        },
-        "alignments": ["neutral","good"]
+[
+  {
+    "name": "tyke",
+    "stats": {
+      "maxHp": 10,
+      "attack": 3,
+      "defence": 0,
+      "loot": 150
     },
-    "kobold":{
-        "stats": {
-        "maxHp": 15,
-        "attack": 5,
-        "defence": 2,
-        "loot": 350
-        },
-        "alignments": ["neutral","good"]
+    "alignments": [
+      "neutral",
+      "good"
+    ]
+  },
+  {
+    "name": "kobold",
+    "stats": {
+      "maxHp": 15,
+      "attack": 5,
+      "defence": 2,
+      "loot": 350
     },
-    "giantSpider":{
-        "stats": {
-        "maxHp": 8,
-        "attack": 3,
-        "defence": 0,
-        "loot": 250
-        },
-        "poison": {
-        "potential": 0.5,
-        "strength": 1
-        },
-        "alignments": "evil"
+    "alignments": [
+      "neutral",
+      "good"
+    ]
+  },
+  {
+    "name": "giantSpider",
+    "stats": {
+      "maxHp": 8,
+      "attack": 3,
+      "defence": 0,
+      "loot": 250
     },
-    "aboleth": {
-        "stats": {
-        "maxHp": 30,
-        "attack": 3,
-        "defence": 0,
-        "loot": 5000
-        },
-        "poison": {
-        "potential": 0.8,
-        "strength": 5
-        },
-        "alignments": "evil"
-    }
-}
-  
+    "poison": {
+      "potential": 0.5,
+      "strength": 1
+    },
+    "alignments": "evil"
+  },
+  {
+    "name": "aboleth",
+    "stats": {
+      "maxHp": 30,
+      "attack": 3,
+      "defence": 0,
+      "loot": 5000
+    },
+    "poison": {
+      "potential": 0.8,
+      "strength": 5
+    },
+    "alignments": "evil"
+  }
+]

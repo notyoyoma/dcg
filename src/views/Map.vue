@@ -1,6 +1,7 @@
-<template lang="pug">
-  .map
-    h3 TODO -- map here
+<template>
+  <div class="map">
+    <h3>TODO -- map here</h3>
+  </div>
 </template>
 
 <script>

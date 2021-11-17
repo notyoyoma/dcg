@@ -1,4 +1,5 @@
-<template lang="pug">
-  .encounter-feed
-    h3 TODO -- Encounter feed here
+<template>
+  <div>
+    <h3>TODO -- Encounter feed here</h3>
+  </div>
 </template>

@@ -1,9 +1,14 @@
-<template lang="pug">
-  .menu.d-flex.flex-column
-    a.menu__item(
+<template>
+  <div class="menu d-flex flex-column">
+    <a
+      class="menu__item"
       v-for="{label, fn} of items"
-      v-on:click="fn"
-    ) {{label}}
+      :key="label"
+      @click="fn"
+    >
+      {{label}}
+    </a>
+  </div>
 </template>
 
 <script>

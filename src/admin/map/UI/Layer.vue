@@ -1,16 +1,16 @@
-<template lang="pug">
-  .ui-layer.d-flex.align-items-center.w-100(
-    v-on:click="setAsCurrentLayer()"
-    v-bind:class="{active: layer.id == currentLayer.id}"
-    )
-    .layer__visibility.flex-no-grow.mr-2.btn(v-on:click="toggleVisible")
-      i-fa(icon="eye" v-if="layer._isVisible")
-      i-fa(icon="eye-slash" v-else)
-    KeyPress(:on="`alt-${index+1}`" v-on:hit="setAsCurrentLayer")
-    .layer__title.flex-grow {{ layer.title }}
-    .layer__menu.flex-no-grow.ml-2.btn(v-if="hasMenu" v-on:click="toggleMenu")
-      i-fa(icon='cog')
-      component(v-bind:is="layer.menuComponent" v-if="menuOpen")
+<template>
+  <div class="ui-layer d-flex align-items-center w-100" v-on:click="setAsCurrentLayer()" v-bind:class="{active: layer.id == currentLayer.id}">
+    <div class="layer__visibility flex-no-grow mr-2 btn" v-on:click="toggleVisible">
+      <i-fa icon="eye" v-if="layer._isVisible"></i-fa>
+      <i-fa icon="eye-slash" v-else="v-else"></i-fa>
+    </div>
+    <KeyPress :on="`alt-${index+1}`" v-on:hit="setAsCurrentLayer"></KeyPress>
+    <div class="layer__title flex-grow">{{ layer.title }}</div>
+    <div class="layer__menu flex-no-grow ml-2 btn" v-if="hasMenu" v-on:click="toggleMenu">
+      <i-fa icon="cog"></i-fa>
+      <component v-bind:is="layer.menuComponent" v-if="menuOpen"></component>
+    </div>
+  </div>
 </template>
 
 <script>

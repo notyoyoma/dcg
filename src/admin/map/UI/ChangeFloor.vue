@@ -1,9 +1,10 @@
-<template lang="pug">
-  .ui-change-floor.ml-2
-    KeyPress(on="ctrl-up" v-on:hit="changeFloor(1)")
-    .btn(v-on:click="changeFloor(1)") &#8963;
-    KeyPress(on="ctrl-down" v-on:hit="changeFloor(-1)")
-    .btn(v-on:click="changeFloor(-1)") &#8963;
+<template>
+  <div class="ui-change-floor ml-2">
+    <KeyPress on="ctrl-up" v-on:hit="changeFloor(1)"></KeyPress>
+    <div class="btn" v-on:click="changeFloor(1)">&#8963;</div>
+    <KeyPress on="ctrl-down" v-on:hit="changeFloor(-1)"></KeyPress>
+    <div class="btn" v-on:click="changeFloor(-1)">&#8963;</div>
+  </div>
 </template>
 
 <script>

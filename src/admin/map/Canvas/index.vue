@@ -1,5 +1,5 @@
 <template>
-  <svg :width="canvasWidth" :height="canvasHeight" v-if="currentLayer">
+  <svg :width="width" :height="height" v-if="currentLayer">
     <defs>
       <pattern id="grid" width="15" height="15" patternUnits="userSpaceOnUse">
         <path d="M 15 0 L 0 0 0 15" fill="none" stroke="#333" stroke-width="1"/>
@@ -25,15 +25,12 @@
 
 <script>
 import {mapState, mapGetters} from "vuex";
-import {mapSettings} from "../../../game/world/mapSettings";
+
 export default {
-  data() {return{
-    canvasWidth: mapSettings.width * mapSettings.tileSize,
-    canvasHeight: mapSettings.height * mapSettings.tileSize
-  };},
   computed: {
     ...mapState(["currentTool", "layers"]),
     ...mapGetters(["currentLayer"]),
+    ...mapState("map", ["width", "height"]),
     visibleLayers() {return _.filter(this.layers, "_isVisible");}
   },
   methods: {

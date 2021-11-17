@@ -1,4 +1,5 @@
-<template lang="pug">
-  .encounter
-    h3 TODO -- Encounter here
+<template>
+  <div class="encounter">
+    <h3>TODO -- Encounter here</h3>
+  </div>
 </template>

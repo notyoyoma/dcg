@@ -1,4 +1,5 @@
-<template lang="pug">
-  .d-flex.flex-column
-    a(href="/admin/map") Map
+<template>
+  <div class="d-flex flex-column">
+    <a href="/admin/map">Map</a>
+  </div>
 </template>

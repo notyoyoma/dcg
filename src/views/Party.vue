@@ -1,11 +1,14 @@
-<template lang="pug">
-table
-  tbody
-    tr(v-for="character in party")
-      td {{character.name}}
-      td {{character.health}}
-      td {{character.spellPoints}}
-      td {{character.currentAction}}
+<template>
+  <table>
+    <tbody>
+      <tr v-for="character in party" :key="character.name">
+        <td>{{character.name}}</td>
+        <td>{{character.health}}</td>
+        <td>{{character.spellPoints}}</td>
+        <td>{{character.currentAction}}</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>

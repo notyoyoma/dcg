@@ -1,18 +1,15 @@
+import Vue from "vue";
+import Vuex from "vuex";
 
-import Vue from "vue/dist/vue.js";
-import Layout from './Layout';
-import Game from "./game";
-import Vuex from 'vuex';
+import Main from "./Main";
+import store from "./store";
 
-require('./styles/index.scss');
+require("./styles/index.scss");
 Vue.use(Vuex);
-const game = new Game();
-window.game = game;
-Vue.prototype.$game = game;
 
 new Vue({
   el: "#app",
-  template: "<Layout />",
-  components: {Layout},
-  store: game.store,
+  template: "<Main />",
+  components: { Main },
+  store,
 });

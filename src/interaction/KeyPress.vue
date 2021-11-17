@@ -1,5 +1,5 @@
-<template lang="pug">
-  span.keypress(:data-on="on" v-bind:class="{show: show}")
+<template>
+    <span class="keypress" :data-on="on" v-bind:class="{show: show}"></span>
 </template>
 
 <script>

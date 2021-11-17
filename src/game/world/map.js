@@ -1,11 +1,10 @@
 // Map Object
-import {mapSettings} from './mapSettings';
-
 export default class Map {
   constructor(data, game) {
-    this.settings       =  mapSettings;
+    const {levels, height, width} = data;
+    this.settings       =  { height, width, tileSize: 15 };
     this.game           =  game;
-    this.floors         =  data;
+    this.floors         =  levels;
 
     this.loadFloor();
   }

@@ -1,22 +1,22 @@
 {
-    "characters": [
-        {
-            "name": "Bjarne",
-            "health": 50,
-            "spellPoints": 10,
-            "currentAction": "Attack"
-        },
-        {
-            "name": "Guido",
-            "health": 30,
-            "spellPoints": 60,
-            "currentAction": "Cast 'Fireball'"
-        }
-    ],
-    "location": {
-        "x":39,
-        "y":39,
-        "z":1
+  "characters": [
+    {
+      "name": "Bjarne",
+      "health": 50,
+      "spellPoints": 10,
+      "currentAction": "Attack"
     },
-    "facing": 2
+    {
+      "name": "Guido",
+      "health": 30,
+      "spellPoints": 60,
+      "currentAction": "Cast 'Fireball'"
+    }
+  ],
+  "location": {
+    "x": 39,
+    "y": 39,
+    "z": 1
+  },
+  "facing": 2
 }
