@@ -1,11 +1,24 @@
-# Dungeon Crawler Game (DCG)
+# dcg2
 
-A browser-based, old-school, single player (for now) dungeon crawling game.
+## Project setup
+```
+yarn install
+```
 
-## About the game
+### Compiles and hot-reloads for development
+```
+yarn serve
+```
 
-Inspired by Mordor. We'll write a manual when we've finished more of the game.
+### Compiles and minifies for production
+```
+yarn build
+```
 
-## About the code
+### Lints and fixes files
+```
+yarn lint
+```
 
-Javascript, HTML, CSS and lots of black magic. [ Read the documentation ]( ./doc/README.md ) for more info.
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
