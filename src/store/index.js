@@ -4,11 +4,11 @@ import Vuex from "vuex";
 const store = new Vuex.Store({
   state: () => ({
     loading: true,
-    isDevEnv: process.env === "development",
+    isDevEnv: process.env.NODE_ENV === "development",
   }),
   mutations: {
-    loaded() {
-      // state.loading = false;
+    loaded(state) {
+      state.loading = false;
     },
   },
 });

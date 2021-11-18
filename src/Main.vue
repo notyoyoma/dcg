@@ -3,7 +3,7 @@
   <template v-else>
     <router-view />
     <div v-if="isDevEnv" class="adminNav">
-      <router-link to="admin">Admin</router-link>
+      <router-link to="editMap">Map</router-link>
     </div>
   </template>
 </template>

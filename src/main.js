@@ -4,7 +4,7 @@ import Main from "./Main";
 import store from "./store";
 import router from "./router";
 
-const isDevEnv = process.env === "development";
+const isDevEnv = process.env.NODE_ENV === "development";
 
 const app = createApp(Main);
 

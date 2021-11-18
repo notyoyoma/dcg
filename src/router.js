@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Game from "./Game";
 
-const isDevEnv = process.env === "development";
+const isDevEnv = process.env.NODE_ENV === "development";
 
 const routes = [
   {
