@@ -1,19 +1,30 @@
 <template>
   <div class="character-view">
     <div class="d-flex align-items-center">
-      <div style="width:50px;height:50px;background:#aaa">picture</div>
-      <h1>{{character.name}}</h1>
+      <div class="picture">picture</div>
+      <h1>{{ selectedCharacter.name }}</h1>
     </div>
-    <h4>TODO -- character sheet tabs here</h4>
+    <pre
+      >{{ JSON.stringify(selectedCharacter, undefined, 2) }}
+    </pre>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
-  computed: {
-    character: function () {
-      return this.$store.state.character;
-    },
-  },
+  computed: mapGetters("party", ["selectedCharacter"]),
 };
 </script>
+
+<style scoped>
+.picture {
+  width: 150px;
+  height: 150px;
+  background: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>

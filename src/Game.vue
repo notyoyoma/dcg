@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex" id="app-layout">
+  <div class="game-layout d-flex">
     <div class="d-flex flex-column">
       <div class="h-60">
         <Character></Character>
@@ -29,3 +29,17 @@ export default {
   components: views,
 };
 </script>
+
+<style scoped lang="scss">
+.game-layout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  & > * {
+    flex-grow: 1;
+  }
+}
+</style>

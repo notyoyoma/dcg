@@ -1,8 +1,16 @@
+const webpack = require("webpack");
 const path = require("path");
 const fs = require("fs");
 const bodyParser = require("body-parser");
 
 module.exports = {
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `@import "~@/styles/prepend.scss";`,
+      },
+    },
+  },
   configureWebpack: {
     devServer: {
       before: (app) => {
@@ -34,5 +42,10 @@ module.exports = {
         });
       },
     },
+    plugins: [
+      new webpack.ProvidePlugin({
+        _: "lodash",
+      }),
+    ],
   },
 };
