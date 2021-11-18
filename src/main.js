@@ -1,15 +1,21 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import { createApp } from "vue";
+
+require("./styles/index.scss");
 
 import Main from "./Main";
 import store from "./store";
+import router from "./router";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import KeyPress from "./interaction/KeyPress";
 
-require("./styles/index.scss");
-Vue.use(Vuex);
+const isDevEnv = process.env === "development";
 
-new Vue({
-  el: "#app",
-  template: "<Main />",
-  components: { Main },
-  store,
-});
+const app = createApp(Main).use(store).use(router).mount("#app");
+
+app.component("i-fa", FontAwesomeIcon);
+app.component("KeyPress", KeyPress);
+app.filter("humanize", _.startCase);
+
+if (isDevEnv) {
+  import("./admin/setup").then((setupAdmin) => setupAdmin(app));
+}

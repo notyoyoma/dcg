@@ -1,11 +1,14 @@
 <template>
-    <span class="keypress" :data-on="on" v-bind:class="{show: show}"></span>
+  <slot />
+  <span class="keypress" :data-on="on" v-bind:class="{ show: show }"></span>
 </template>
 
 <script>
 export default {
-  props: {on: String},
-  data() {return{show:false};},
+  props: { on: String },
+  data: () => ({
+    show: false,
+  }),
   methods: {
     showHide(force) {
       if (_.isBoolean(force)) {
@@ -21,12 +24,12 @@ export default {
   mounted() {
     keymage(this.on, this.hit);
     keymage("shift-/", this.showHide);
-    keymage("esc", ()=>this.showHide(false));
+    keymage("esc", () => this.showHide(false));
   },
   beforeDestroy() {
     keymage.unbind(this.on, this.hit);
     keymage.unbind("shift-/", this.showHide);
-  }
+  },
 };
 </script>
 
@@ -48,7 +51,7 @@ export default {
     position: absolute;
     display: none;
     white-space: nowrap;
-    box-shadow: 0 1px 0px 1px rgba(255,255,255, .5);
+    box-shadow: 0 1px 0px 1px rgba(255, 255, 255, 0.5);
   }
 
   &.show:before {
