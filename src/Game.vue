@@ -1,6 +1,6 @@
 <template>
   <div class="game-layout d-flex">
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column w-30">
       <div class="h-60">
         <Character></Character>
       </div>
@@ -8,8 +8,10 @@
         <Party></Party>
       </div>
     </div>
-    <Map></Map>
-    <div class="d-flex flex-column">
+    <div class="d-flex align-items-center w-40">
+      <Map />
+    </div>
+    <div class="d-flex flex-column w-30">
       <div class="h-40">
         <Encounter></Encounter>
       </div>
@@ -38,7 +40,7 @@ export default {
   width: 100vw;
   height: 100vh;
 
-  & > * {
+  > * {
     flex-grow: 1;
   }
 }

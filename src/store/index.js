@@ -7,8 +7,8 @@ const store = new Vuex.Store({
     isDevEnv: process.env.NODE_ENV === "development",
   }),
   mutations: {
-    loaded(state, loading = false) {
-      state.loading = true || loading;
+    setLoading(state, loading = false) {
+      state.loading = loading;
     },
   },
 });
@@ -43,6 +43,6 @@ const moduleLoadingPromises = Object.keys(modules).map((moduleName) =>
 );
 
 // once all modules have loaded, continue
-Promise.all(moduleLoadingPromises).then(() => store.commit("loaded"));
+Promise.all(moduleLoadingPromises).then(() => store.commit("setLoading"));
 
 export default store;

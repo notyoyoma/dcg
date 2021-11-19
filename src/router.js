@@ -3,21 +3,23 @@ import Game from "./Game";
 
 const isDevEnv = process.env.NODE_ENV === "development";
 
-const routes = [
-  {
-    path: "/",
-    name: "Game",
-    component: Game,
-  },
-];
+const gameRoute = {
+  path: "/",
+  name: "Game",
+  component: Game,
+};
 
-if (isDevEnv) {
-  import("./admin/routes").then((adminRoutes) => routes.concat(adminRoutes));
+export async function buildRouter() {
+  let routes;
+  if (isDevEnv) {
+    const { adminRoutes } = await import("./admin/routes");
+    routes = [gameRoute, ...adminRoutes];
+  } else {
+    routes = [gameRoute];
+  }
+
+  return createRouter({
+    history: createWebHistory(process.env.BASE_URL),
+    routes,
+  });
 }
-
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes,
-});
-
-export default router;

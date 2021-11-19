@@ -1,9 +1,9 @@
 import EditMap from "./map";
 
-export const routes = [
+export const adminRoutes = [
   {
-    path: "/",
-    name: "editMap",
+    path: "/adminMap",
+    name: "EditMap",
     component: EditMap,
   },
 ];

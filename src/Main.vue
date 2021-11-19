@@ -1,11 +1,7 @@
 <template>
   <LoadingAnimation v-if="loading" />
-  <template v-else>
-    <router-view />
-    <div v-if="isDevEnv" class="adminNav">
-      <router-link to="editMap">Map</router-link>
-    </div>
-  </template>
+  <router-view v-else />
+  <admin-nav v-if="isDevEnv" />
 </template>
 
 <script>
@@ -22,7 +18,7 @@ export default {
 </script>
 
 <style lang="scss">
-* {
+body {
   font-family: "Abel", sans-serif;
   color: #fff;
 }
@@ -55,6 +51,13 @@ h1,
 h2,
 h3 {
   color: $gold-light;
+}
+
+#app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 </style>
 
