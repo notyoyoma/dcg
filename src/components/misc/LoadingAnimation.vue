@@ -10,7 +10,8 @@
           <stop offset="80%" stop-color="#000" />
         </radialGradient>
       </defs>
-      <circle class="halo" cx="50" cy="70" r="310" fill="url(#halo)" />
+      <circle class="halo" cx="70" cy="70" r="310" fill="url(#halo)" />
+      <!-- <circle cx="50" cy="150" r="200" fill="#fff" /> -->
       <g class="flame">
         <g class="sparks">
           <circle class="spark_1" fill="white" cx="5" cy="20" r="1" />
@@ -68,6 +69,158 @@
           <rect fill="#000" height="26" width="125" x="0" y="300" />
         </g>
       </g>
+      <g class="head-torso">
+        <!-- head -->
+        <circle fill="black" cx="40" cy="120" r="15">
+          <animate
+            attributeName="cx"
+            values="40;45;40"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="cy"
+            values="120;125;120"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <!-- torso -->
+        <line x1="40" y1="134" x2="35" y2="185">
+          <animate
+            attributeName="x1"
+            values="40;45;40"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="y1"
+            values="134;139;134"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="x2"
+            values="35;45;35"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="y2"
+            values="185;190;185"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+        </line>
+        <g class="leg">
+          <line x1="70" y1="175" x2="35" y2="185">
+            <animate
+              attributeName="x1"
+              values="70;80;70"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y1"
+              values="175;205;175"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="x2"
+              values="35;45;35"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y2"
+              values="185;190;185"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line x1="70" y1="175" x2="50" y2="225">
+            <animate
+              attributeName="x1"
+              values="70;80;70"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y1"
+              values="175;205;175"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="x2"
+              values="50;75;50"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y2"
+              values="225;250;225"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+          </line>
+        </g>
+        <g class="leg">
+          <line x1="65" y1="210" x2="35" y2="185">
+            <animate
+              attributeName="x1"
+              values="65;80;65"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y1"
+              values="210;195;210"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="x2"
+              values="35;45;35"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y2"
+              values="185;190;185"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line x1="65" y1="210" x2="75" y2="250">
+            <animate
+              attributeName="x1"
+              values="65;80;65"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y1"
+              values="210;195;210"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="x2"
+              values="75;50;75"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y2"
+              values="250;225;250"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+          </line>
+        </g>
+      </g>
     </svg>
     <h1 class="ms-4">Loading</h1>
   </div>
@@ -110,7 +263,7 @@
   }
 
   .stairs {
-    animation: stairs-slide 1s linear infinite;
+    animation: stairs-slide 1s linear 0.2s infinite;
   }
 
   @keyframes flame-fade {
@@ -150,7 +303,7 @@
   }
 
   .flame {
-    transform: translate(40px, 50px);
+    transform: translate(60px, 50px);
     width: 20px;
     height: 29px;
     animation: flame-fade 10s ease-out 1s forwards;
@@ -226,6 +379,13 @@
   }
   .spark_5 {
     animation-delay: 13s;
+  }
+
+  .head-torso {
+    line {
+      stroke: black;
+      stroke-width: 2px;
+    }
   }
 }
 </style>
