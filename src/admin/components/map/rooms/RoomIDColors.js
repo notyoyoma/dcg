@@ -38,9 +38,10 @@ function color(i) {
 
 // used when computing new IDs for room objects
 export const roomIDs = [...Array(colors).keys()];
-const interlacedIds = compact(
-  flatten(zip(...chunk(roomIDs, variations.hue)))
+const interlacedIds = compact(flatten(zip(...chunk(roomIDs, variations.hue))));
+const colorMap = interlacedIds.reduce(
+  (r, id, i) => ({ ...r, [i]: color(id) }),
+  {}
 );
-const colorMap = interlacedIds.reduce((r, id, i) => ({ ...r, [i]: color(id) }), {}),
 
 export default colorMap;

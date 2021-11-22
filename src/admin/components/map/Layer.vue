@@ -1,43 +1,44 @@
 <template>
   <div
     class="ui-layer d-flex align-items-center w-100"
-    v-on:click="setAsCurrentLayer()"
-    :class="{ active: layer.id == currentLayer.id }"
+    :class="{ active: layerKey == currentLayerKey }"
   >
     <div
       class="layer__visibility flex-no-grow mr-2 btn"
-      v-on:click="toggleVisible"
+      @click="toggleVisible(layerKey)"
     >
-      <i-fa icon="eye" v-if="layer._isVisible"></i-fa>
+      <i-fa icon="eye" v-if="layerIsVisible(layerKey)"></i-fa>
       <i-fa icon="eye-slash" v-else></i-fa>
     </div>
-    <KeyPress :on="`alt-${index + 1}`" @hit="setAsCurrentLayer">
-      <div class="layer__title flex-grow">{{ layer.title }}</div>
-    </KeyPress>
+    <div class="layer__title flex-grow">{{ layerName }}</div>
     <div
       class="layer__menu flex-no-grow ml-2 btn"
-      v-if="hasMenu"
-      v-on:click="toggleMenu"
+      v-if="menuComponent"
+      @click="toggleMenu"
     >
       <i-fa icon="cog"></i-fa>
-      <component :is="layer.menuComponent" v-if="menuOpen"></component>
+      <component :is="menuComponent" v-if="menuComponent"></component>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
+
 export default {
-  props: ["layer", "index"],
-  data() {
-    return {
-      menuOpen: false,
-      hasMenu: !!this.layer.menuComponent,
-    };
+  props: ["layerKey", "menuComponent"],
+  data: () => ({
+    menuOpen: false,
+  }),
+  computed: {
+    ...mapState("mapEditor", ["currentLayerKey"]),
+    ...mapGetters("mapEditor", ["layerIsVisible"]),
+    layerName() {
+      return this.layerKey.charAt(0).toUpperCase() + this.layerKey.slice(1);
+    },
   },
-  computed: mapGetters(["currentLayer"]),
   methods: {
-    ...mapMutations(["setCurrentLayer"]),
+    ...mapActions("mapEditor", ["toggleVisible"]),
     toggleMenu(e) {
       e.stopPropagation();
       this.menuOpen = !this.menuOpen;
@@ -47,22 +48,16 @@ export default {
         document.removeEventListener("click", this.toggleMenu);
       }
     },
-    toggleVisible(e) {
-      e.stopPropagation();
-      this.layer.toggleVisible();
-    },
-    setAsCurrentLayer() {
-      this.setCurrentLayer(this.layer.id);
-    },
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .ui-layer {
   background: #444;
   border-radius: 5px;
   cursor: pointer;
+  padding: 2px;
 
   &.active {
     box-shadow: inset 0 0 0 2px #777;

@@ -24,7 +24,7 @@
     <component
       v-for="layer in visibleLayers"
       :key="layer.id"
-      v-bind:is="layer.renderComponent"
+      :is="layer.renderComponent"
       v-bind="layer"
     />
     <rect

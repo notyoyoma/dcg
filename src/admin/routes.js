@@ -1,4 +1,4 @@
-import EditMap from "./map";
+import EditMap from "./views/EditMap";
 
 export default [
   {

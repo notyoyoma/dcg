@@ -1,6 +1,6 @@
 <template>
   <slot @click="hit" />
-  <span class="keypress" :data-on="on" v-bind:class="{ show: show }"></span>
+  <span class="keypress" :data-on="on" :class="{ show: show }"></span>
 </template>
 
 <script>
@@ -8,6 +8,7 @@ import keymage from "keymage";
 
 export default {
   props: { on: String },
+  emits: ["hit"],
   data: () => ({
     show: false,
   }),

@@ -6,7 +6,8 @@ import set from "lodash/set";
 const defaultState = {
   currentToolIndex: false,
   currentFloorIndex: 0,
-  currentLayerKey: 0,
+  currentLayerKey: "rooms",
+  hideLayers: [],
 };
 
 export default {
@@ -20,6 +21,9 @@ export default {
     currentLayer(state, getters, { map }) {
       if (isEmpty(map.layers)) return false;
       return map.layers.find((layer) => layer.id === state.currentLayerKey);
+    },
+    layerIsVisible(state) {
+      return (layerId) => !state.hideLayers.includes(layerId);
     },
   },
   mutations: {
@@ -44,6 +48,16 @@ export default {
         set(newFloors, setPath, val);
       }
       state.floors = newFloors;
+    },
+  },
+  actions: {
+    toggleVisible({ state }, id) {
+      const isHidden = state.hideLayers.includes(id);
+      if (isHidden) {
+        state.hideLayers = state.hideLayers.filter((layerId) => layerId !== id);
+      } else {
+        state.hideLayers.push(id);
+      }
     },
   },
 };

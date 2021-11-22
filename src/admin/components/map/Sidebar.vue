@@ -15,51 +15,49 @@
       </h6>
       <h2>Layers</h2>
       <div class="d-flex flex-column" id="layers">
-        <Layer
-          v-for="(layer, index) in layers"
-          :key="layer.id"
-          v-bind:layer="layer"
-          v-bind:index="index"
-        ></Layer>
+        <template v-for="(layer, key, index) in layers" :key="`layer-${key}`">
+          <KeyPress :on="`alt-${index + 1}`" @hit="setAsCurrentLayer(key)">
+            <Layer :layerKey="key" :menuComponent="layer.menuComponent" />
+          </KeyPress>
+        </template>
       </div>
-      <div class="tools" v-if="toolComponent">
+      <div class="tools" v-if="currentLayerTools.length">
         <h2 class="mt-3">Tools</h2>
-        <component
-          v-bind:is="toolComponent"
-          v-bind:key="currentLayerKey + '-tools'"
-          :tiles="toolTiles"
-        ></component>
+        <Tools :layerTools="currentLayerTools" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
-import ChangeFloor from "./UI/ChangeFloor";
-import Layer from "./UI/Layer";
+import { mapMutations, mapState } from "vuex";
+import ChangeFloor from "./ChangeFloor";
+import Layer from "./Layer";
+import Tools from "./Tools";
 import axios from "axios";
 
-const tools = [];
+import rooms from "./rooms";
+
+const layers = { rooms };
 
 export default {
+  components: {
+    ChangeFloor,
+    Layer,
+    Tools,
+  },
+  data: () => ({ layers }),
   computed: {
-    ...mapState("mapEditor", [
-      "currentToolIndex",
-      "currentFloorIndex",
-      "currentLayerKey",
-    ]),
-    toolComponent() {
-      return tools[this.currentToolIndex];
-    },
-    toolTiles() {
-      return [];
+    ...mapState("mapEditor", ["currentFloorIndex", "currentLayerKey"]),
+    currentLayerTools() {
+      return this.layers[this.currentLayerKey].tools;
     },
   },
   methods: {
+    ...mapMutations("mapEditor", ["setCurrentLayer"]),
     save() {
       axios
-        .post("/data/map", this.floors)
+        .post("/data/map", this.$store.state.map)
         .then(this.refresh)
         .catch(this.flashSaveError);
     },
@@ -70,10 +68,6 @@ export default {
       // TODO - figure out Vue animation library
       console.log("ya done fucked up now! " + JSON.stringify(arguments));
     },
-  },
-  components: {
-    ChangeFloor,
-    Layer,
   },
 };
 </script>

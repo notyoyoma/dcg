@@ -4,21 +4,21 @@
     <WallSvgs />
     <Sidebar />
     <div id="canvas-container">
-      <Canvas />
+      <MapRender />
     </div>
   </div>
 </template>
 
 <script>
-import Sidebar from "./Sidebar";
-import Canvas from "./Canvas";
-import TileSvgs from "./Tools/Tiles";
-import WallSvgs from "./Tools/Walls";
+import Sidebar from "@/admin/components/map/Sidebar";
+import MapRender from "@/admin/components/map/RenderFull";
+import TileSvgs from "@/admin/components/map/util/Tiles";
+import WallSvgs from "@/admin/components/map/util/Walls";
 
 export default {
   components: {
     Sidebar,
-    Canvas,
+    MapRender,
     TileSvgs,
     WallSvgs,
   },
