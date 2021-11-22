@@ -1,11 +1,14 @@
 <template>
   <div id="sidebar">
     <div class="actions d-flex">
-      <a class="btn" href="/admin"> <i-fa icon="arrow-left"></i-fa></a
-      ><a class="btn" @click="save()"> <i-fa icon="save"></i-fa></a
-      ><a class="btn" href="/admin/map"> <i-fa icon="sync-alt"></i-fa></a>
+      <KeyPress on="ctrl-s" @hit="save">
+        <span class="p-2"><i-fa icon="save"></i-fa></span>
+      </KeyPress>
+      <KeyPress on="ctrl-r" @hit="refresh">
+        <span class="p-2"><i-fa icon="sync-alt"></i-fa></span>
+      </KeyPress>
     </div>
-    <div class="p-3" v-if="shouldRenderLayersAndTools()">
+    <div class="p-3">
       <h6 class="d-flex align-items-center">
         Current Floor: {{ currentFloorIndex + 1 }}
         <ChangeFloor></ChangeFloor>
@@ -36,36 +39,32 @@ import { mapState } from "vuex";
 import ChangeFloor from "./UI/ChangeFloor";
 import Layer from "./UI/Layer";
 import axios from "axios";
+
+const tools = [];
+
 export default {
   computed: {
-    ...mapState(["floors", "layers", "currentFloorIndex", "currentLayerKey"]),
-    ...mapState({
-      currentLayer: (state) =>
-        _.find(state.layers, { id: state.currentLayerKey }),
-      toolComponent() {
-        return this.currentLayer.toolComponent;
-      },
-      toolTiles() {
-        return this.currentLayer.tiles;
-      },
-    }),
+    ...mapState("mapEditor", [
+      "currentToolIndex",
+      "currentFloorIndex",
+      "currentLayerKey",
+    ]),
+    toolComponent() {
+      return tools[this.currentToolIndex];
+    },
+    toolTiles() {
+      return [];
+    },
   },
   methods: {
-    shouldRenderLayersAndTools() {
-      return (
-        _.isEmpty(this.$store.floors) &&
-        _.isEmpty(this.$store.layers) &&
-        this.$store.getters.currentLayer
-      );
-    },
     save() {
       axios
-        .post("/data/map.json", this.floors)
+        .post("/data/map", this.floors)
         .then(this.refresh)
         .catch(this.flashSaveError);
     },
     refresh() {
-      location.reload();
+      this.$store.dispatch("map/load");
     },
     flashSaveError() {
       // TODO - figure out Vue animation library

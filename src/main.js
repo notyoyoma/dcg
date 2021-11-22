@@ -1,14 +1,13 @@
 import { createApp } from "vue";
 
 import Main from "./Main";
-import store from "./admin/store";
+import store from "./store";
 
-import "./admin/icons";
+import "./icons";
 
 const app = createApp(Main);
 
-import AdminNav from "./admin/Nav";
-app.component("admin-nav", AdminNav);
+app.component("admin-nav", { template: `<span></span>` });
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import KeyPress from "./interaction/KeyPress";

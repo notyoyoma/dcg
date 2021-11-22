@@ -11,8 +11,9 @@
       <i-fa icon="eye" v-if="layer._isVisible"></i-fa>
       <i-fa icon="eye-slash" v-else></i-fa>
     </div>
-    <KeyPress :on="`alt-${index + 1}`" v-on:hit="setAsCurrentLayer"></KeyPress>
-    <div class="layer__title flex-grow">{{ layer.title }}</div>
+    <KeyPress :on="`alt-${index + 1}`" @hit="setAsCurrentLayer">
+      <div class="layer__title flex-grow">{{ layer.title }}</div>
+    </KeyPress>
     <div
       class="layer__menu flex-no-grow ml-2 btn"
       v-if="hasMenu"

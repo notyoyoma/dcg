@@ -1,5 +1,5 @@
 <template>
-  <div id="layout">
+  <div id="mapEditor">
     <TileSvgs />
     <WallSvgs />
     <Sidebar />
@@ -26,12 +26,18 @@ export default {
 </script>
 
 <style lang="scss">
+#mapEditor {
+  height: 100vh;
+  display: flex;
+  justify-content: stretch;
+}
 #canvas-container {
+  align-self: stretch;
   background: #555;
-  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-grow: 1;
 }
 
 #canvas {

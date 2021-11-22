@@ -5,7 +5,6 @@
         class="tile"
         v-for="(key, id) in tools"
         :key="key"
-        v-on:click="setCurrentTool(id)"
         v-bind:class="{ active: id == currentTool }"
       >
         <KeyPress :on="id" @hit="setCurrentTool(id)">
@@ -21,6 +20,8 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
+import get from "lodash/get";
+
 export default {
   name: "RoomsTool",
   data() {
@@ -36,10 +37,10 @@ export default {
   computed: {
     ...mapState(["currentTool", "layers"]),
     roomLayer() {
-      return _.find(this.layers, { id: "rooms" });
+      return this.layers.find((layer) => layer.id === "rooms");
     },
     currentRoom() {
-      return _.get(
+      return get(
         this.roomLayer,
         ["rooms", this.roomLayer.currentRoomID],
         false

@@ -1,5 +1,5 @@
 <template>
-  <slot />
+  <slot @click="hit" />
   <span class="keypress" :data-on="on" v-bind:class="{ show: show }"></span>
 </template>
 

@@ -1,20 +1,25 @@
+import clone from "lodash/clone";
+import isEmpty from "lodash/isEmpty";
+import unset from "lodash/unset";
+import set from "lodash/set";
+
 const defaultState = {
-  currentTool: false,
+  currentToolIndex: false,
   currentFloorIndex: 0,
   currentLayerKey: 0,
 };
 
 export default {
   namespaced: true,
-  state: _.clone(defaultState),
+  state: clone(defaultState),
   getters: {
     currentFloor(state, getters, { map }) {
-      if (_.isEmpty(map.floors)) return false;
+      if (isEmpty(map.floors)) return false;
       return map.floors[state.currentFloorIndex];
     },
     currentLayer(state, getters, { map }) {
-      if (_.isEmpty(map.layers)) return false;
-      return _.find(map.layers, { id: state.currentLayerKey });
+      if (isEmpty(map.layers)) return false;
+      return map.layers.find((layer) => layer.id === state.currentLayerKey);
     },
   },
   mutations: {
@@ -25,7 +30,7 @@ export default {
       state.currentLayerKey = key;
     },
     setCurrentTool(state, tool) {
-      state.currentTool = tool;
+      state.currentToolIndex = tool;
     },
     setFloor(state, floorIndex) {
       state.currentFloorIndex = floorIndex;
@@ -34,9 +39,9 @@ export default {
       let newFloors = [...state.floors];
       const setPath = [state.currentFloorIndex, layerKey, ...path];
       if (val === 0) {
-        _.unset(newFloors, setPath);
+        unset(newFloors, setPath);
       } else {
-        _.set(newFloors, setPath, val);
+        set(newFloors, setPath, val);
       }
       state.floors = newFloors;
     },
