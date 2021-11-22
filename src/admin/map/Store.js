@@ -1,11 +1,9 @@
-import {Floors, Effects, Walls, Rooms} from "./Layers";
+import { Floors, Effects, Walls, Rooms } from "./Layers";
 
 export const storeConf = {
   state: {
     floors: [],
-    currentFloorIndex: 0,
     layers: [],
-    currentLayerKey: 0,
     currentTool: false,
   },
   getters: {
@@ -15,8 +13,8 @@ export const storeConf = {
     },
     currentLayer(state) {
       if (_.isEmpty(state.layers)) return false;
-      return _.find(state.layers, {id: state.currentLayerKey});
-    }
+      return _.find(state.layers, { id: state.currentLayerKey });
+    },
   },
   mutations: {
     initMapData(state, mapData) {
@@ -30,15 +28,16 @@ export const storeConf = {
     },
     setFloor(state, floorIndex) {
       state.currentFloorIndex = floorIndex;
-      const {floors, effects, walls, roomCoords, rooms} = state.floors[state.currentFloorIndex];
+      const { floors, effects, walls, roomCoords, rooms } =
+        state.floors[state.currentFloorIndex];
       state.layers = [
-        new Rooms({roomCoords,rooms}, this.commit),
+        new Rooms({ roomCoords, rooms }, this.commit),
         new Floors(floors, this.commit),
         new Effects(effects, this.commit),
         new Walls(walls, this.commit),
       ];
     },
-    setMapData(state, {path, val, layerKey}) {
+    setMapData(state, { path, val, layerKey }) {
       let newFloors = [...state.floors];
       const setPath = [state.currentFloorIndex, layerKey, ...path];
       if (val === 0) {
@@ -48,5 +47,5 @@ export const storeConf = {
       }
       state.floors = newFloors;
     },
-  }
+  },
 };

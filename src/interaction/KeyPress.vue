@@ -4,6 +4,8 @@
 </template>
 
 <script>
+import keymage from "keymage";
+
 export default {
   props: { on: String },
   data: () => ({
@@ -11,10 +13,10 @@ export default {
   }),
   methods: {
     showHide(force) {
-      if (_.isBoolean(force)) {
-        this.show = force;
-      } else {
+      if (force === undefined) {
         this.show = !this.show;
+      } else {
+        this.show = force;
       }
     },
     hit() {
@@ -26,7 +28,7 @@ export default {
     keymage("shift-/", this.showHide);
     keymage("esc", () => this.showHide(false));
   },
-  beforeDestroy() {
+  beforeUnmount() {
     keymage.unbind(this.on, this.hit);
     keymage.unbind("shift-/", this.showHide);
   },

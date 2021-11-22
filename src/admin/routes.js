@@ -1,6 +1,6 @@
 import EditMap from "./map";
 
-export const adminRoutes = [
+export default [
   {
     path: "/adminMap",
     name: "EditMap",

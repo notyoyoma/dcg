@@ -52,7 +52,7 @@ import { mapState, mapGetters } from "vuex";
 export default {
   computed: {
     ...mapState(["currentTool", "layers"]),
-    ...mapGetters(["currentLayer"]),
+    ...mapGetters("mapEditor", ["currentLayer"]),
     ...mapState("map", ["width", "height"]),
     visibleLayers() {
       return this.layers.filter((l) => l._isVisible);

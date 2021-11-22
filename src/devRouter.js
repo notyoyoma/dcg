@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Game from "./Game";
+import adminRoutes from "./admin/routes";
 
 const routes = [
   {
@@ -7,6 +8,7 @@ const routes = [
     name: "Game",
     component: Game,
   },
+  ...adminRoutes,
 ];
 
 const router = createRouter({

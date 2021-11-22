@@ -1,5 +1,5 @@
-import axios from "axios";
 import Vuex from "vuex";
+import modules from "./modules";
 
 const store = new Vuex.Store({
   state: () => ({
@@ -11,35 +11,11 @@ const store = new Vuex.Store({
       state.loading = loading;
     },
   },
+  modules,
 });
 
-async function makeModule(moduleName, module) {
-  const { data } = await axios.get(`/data/${moduleName}`);
-  store.registerModule(moduleName, {
-    namespaced: true,
-    state: () => data,
-    ...module,
-  });
-}
-
-// load all the module data, and add the modules to store
-import characters from "./characters";
-import items from "./items";
-import map from "./map";
-import monsters from "./monsters";
-import npcs from "./npcs";
-import party from "./party";
-const modules = {
-  characters,
-  items,
-  map,
-  monsters,
-  npcs,
-  party,
-};
-
 const moduleLoadingPromises = Object.keys(modules).map((moduleName) =>
-  makeModule(moduleName, modules[moduleName])
+  store.dispatch(`${moduleName}/load`)
 );
 
 // once all modules have loaded, continue

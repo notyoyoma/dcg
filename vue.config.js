@@ -1,7 +1,8 @@
-const webpack = require("webpack");
 const path = require("path");
 const fs = require("fs");
 const bodyParser = require("body-parser");
+
+const isDevEnv = process.env.NODE_ENV === "development";
 
 module.exports = {
   css: {
@@ -12,6 +13,7 @@ module.exports = {
     },
   },
   configureWebpack: {
+    entry: isDevEnv ? "./src/devMain.js" : "./src/main.js",
     devServer: {
       before: (app) => {
         app.use(bodyParser.json());
@@ -42,10 +44,5 @@ module.exports = {
         });
       },
     },
-    plugins: [
-      new webpack.ProvidePlugin({
-        _: "lodash",
-      }),
-    ],
   },
 };
