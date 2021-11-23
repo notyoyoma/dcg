@@ -1,5 +1,5 @@
 <template>
-  <slot @click="hit" />
+  <span @click="hit"><slot /></span>
   <span class="keypress" :data-on="on" :class="{ show: show }"></span>
 </template>
 
@@ -13,12 +13,11 @@ export default {
     show: false,
   }),
   methods: {
-    showHide(force) {
-      if (force === undefined) {
-        this.show = !this.show;
-      } else {
-        this.show = force;
-      }
+    toggle() {
+      this.show = !this.show;
+    },
+    hide() {
+      this.show = false;
     },
     hit() {
       this.$emit("hit");
@@ -26,12 +25,13 @@ export default {
   },
   mounted() {
     keymage(this.on, this.hit);
-    keymage("shift-/", this.showHide);
-    keymage("esc", () => this.showHide(false));
+    keymage("shift-/", this.toggle);
+    keymage("esc", this.hide);
   },
   beforeUnmount() {
     keymage.unbind(this.on, this.hit);
-    keymage.unbind("shift-/", this.showHide);
+    keymage.unbind("shift-/", this.toggle);
+    keymage.unbind("esc", this.hide);
   },
 };
 </script>

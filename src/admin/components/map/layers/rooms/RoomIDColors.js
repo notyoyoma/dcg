@@ -3,7 +3,7 @@ import flatten from "lodash/flatten";
 import zip from "lodash/zip";
 import chunk from "lodash/chunk";
 
-const colors = 1600;
+const colors = 800;
 const variations = {
   hue: 30, // not used right now.
   sat: 24, // <- Play around

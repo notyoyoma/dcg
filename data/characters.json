@@ -1,1 +1,3 @@
-[{ "name": "Bjarne" }, { "name": "Guido" }]
+{
+  "characters": [{ "name": "Bjarne" }, { "name": "Guido" }]
+}

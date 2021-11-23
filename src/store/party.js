@@ -1,7 +1,7 @@
-import { loadData } from "./generic";
+import generic from "./generic";
 
 export default {
-  namespaced: true,
+  ...generic.root,
   state() {
     // this should mirror the structure of /data/party.json
     return {
@@ -20,7 +20,10 @@ export default {
       return state.characters[state.selectedCharacter || 0];
     },
   },
+  mutations: {
+    ...generic.mutations,
+  },
   actions: {
-    load: loadData("party"),
+    ...generic.actions,
   },
 };

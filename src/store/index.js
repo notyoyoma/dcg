@@ -15,7 +15,7 @@ const store = new Vuex.Store({
 });
 
 const moduleLoadingPromises = Object.keys(modules).map((moduleName) =>
-  store.dispatch(`${moduleName}/load`)
+  store.dispatch(`${moduleName}/loadModuleData`, moduleName)
 );
 
 // once all modules have loaded, continue

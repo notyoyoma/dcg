@@ -15,9 +15,9 @@
       </h6>
       <h2>Layers</h2>
       <div class="d-flex flex-column" id="layers">
-        <template v-for="(layer, key, index) in layers" :key="`layer-${key}`">
-          <KeyPress :on="`alt-${index + 1}`" @hit="setAsCurrentLayer(key)">
-            <Layer :layerKey="key" :menuComponent="layer.menuComponent" />
+        <template v-for="(layer, index) in layers" :key="`layer-${layer.id}`">
+          <KeyPress :on="`alt-${index + 1}`" @hit="setCurrentLayer(layer.id)">
+            <Layer :layerKey="layer.id" :menuComponent="layer.menuComponent" />
           </KeyPress>
         </template>
       </div>
@@ -32,13 +32,11 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 import ChangeFloor from "./ChangeFloor";
-import Layer from "./Layer";
+import Layer from "./LayerHandle";
 import Tools from "./Tools";
 import axios from "axios";
 
-import rooms from "./rooms";
-
-const layers = { rooms };
+import layers, { sidebarLayers } from "./layers";
 
 export default {
   components: {
@@ -46,11 +44,11 @@ export default {
     Layer,
     Tools,
   },
-  data: () => ({ layers }),
+  data: () => ({ layers: sidebarLayers }),
   computed: {
     ...mapState("mapEditor", ["currentFloorIndex", "currentLayerKey"]),
     currentLayerTools() {
-      return this.layers[this.currentLayerKey].tools;
+      return layers[this.currentLayerKey].tools;
     },
   },
   methods: {
@@ -80,6 +78,10 @@ export default {
   .actions a {
     flex: 1;
     text-align: center;
+  }
+
+  #layers > *:not(:first-child) {
+    margin-top: 4px;
   }
 }
 </style>

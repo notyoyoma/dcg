@@ -1,5 +1,5 @@
 <template>
-  <svg style="display:none">
+  <svg style="display: none">
     <symbol id="wall" viewBox="0 0 15 15">
       <rect width="1px" height="15px" fill="#fff" x="7" />
     </symbol>

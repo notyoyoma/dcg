@@ -8,7 +8,7 @@
           v-if="roomId"
           :x="x * 15"
           :y="y * 15"
-          :fill="idColors[roomIDColors]"
+          :fill="roomIDColors[roomId]"
         />
       </template>
     </g>
@@ -21,13 +21,11 @@ import roomIDColors from "./RoomIDColors";
 
 export default {
   props: ["id", "tiles"],
-  data() {
-    return {
-      roomIDColors,
-    };
-  },
+  data: () => ({
+    roomIDColors,
+  }),
   computed: {
-    ...mapGetters(["currentFloor"]),
+    ...mapGetters("mapEditor", ["currentFloor"]),
   },
 };
 </script>

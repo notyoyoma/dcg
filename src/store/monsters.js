@@ -1,12 +1,15 @@
-import { loadData } from "./generic";
+import generic from "./generic";
 
 export default {
-  namespaced: true,
+  ...generic.root,
   state() {
     // this should mirror the structure of /data/monsters.json
-    return [];
+    return { monsters: [] };
+  },
+  mutations: {
+    ...generic.mutations,
   },
   actions: {
-    load: loadData("monsters"),
+    ...generic.actions,
   },
 };

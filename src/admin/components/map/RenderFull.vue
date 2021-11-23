@@ -1,5 +1,9 @@
 <template>
-  <svg :width="width" :height="height" v-if="currentLayer">
+  <svg
+    :width="svg.width"
+    :height="svg.height"
+    :viewBox="`0 0 ${svg.boxWidth} ${svg.boxHeight}`"
+  >
     <defs>
       <pattern id="grid" width="15" height="15" patternUnits="userSpaceOnUse">
         <path
@@ -9,6 +13,7 @@
           stroke-width="1"
         />
       </pattern>
+      <WallDefs />
     </defs>
     <g id="background">
       <rect width="100%" height="100%" fill="#000" />
@@ -21,12 +26,9 @@
         stroke-width="1.5px"
       />
     </g>
-    <component
-      v-for="layer in visibleLayers"
-      :key="layer.id"
-      :is="layer.renderComponent"
-      v-bind="layer"
-    />
+    <template v-for="key in visibleLayers" :key="`layer-${key}`">
+      <component :is="renderLayer(key)" />
+    </template>
     <rect
       width="100%"
       height="100%"
@@ -39,31 +41,75 @@
       width="100%"
       height="100%"
       fill="transparent"
-      @mousedown="(e) => mouseEvent(e, 'mousedown')"
-      @mousemove="(e) => mouseEvent(e, 'mousemove')"
-      @mouseup="(e) => mouseEvent(e, 'mouseup')"
+      @mousedown="interact"
+      @mousemove="interact"
+      @mouseup="interact"
     />
   </svg>
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
+import keymage from "keymage";
+
+import layers from "./layers";
+import WallDefs from "./layers/walls/Defs";
 
 export default {
+  components: { WallDefs },
+  data: () => ({
+    zoom: 15,
+  }),
   computed: {
-    ...mapState(["currentTool", "layers"]),
-    ...mapGetters("mapEditor", ["currentLayer"]),
+    ...mapState("mapEditor", ["hideLayers"]),
     ...mapState("map", ["width", "height"]),
+    svg() {
+      return {
+        width: this.width * this.zoom,
+        height: this.height * this.zoom,
+        boxWidth: this.width * 15,
+        boxHeight: this.height * 15,
+      };
+    },
     visibleLayers() {
-      return this.layers.filter((l) => l._isVisible);
+      return Object.keys(layers).filter(
+        (key) => !this.hideLayers.includes(key)
+      );
     },
   },
   methods: {
-    mouseEvent(e, eventType) {
-      if (this.currentTool === undefined) {
-        this.currentLayer[eventType](e, this.currentTool);
-      }
+    ...mapMutations("mapEditor", ["setMouseHeldDown"]),
+    ...mapActions("mapEditor", ["interact"]),
+    renderLayer(key) {
+      return layers[key].RenderComponent;
     },
+    changeZoom(event) {
+      this.zoom = Math.max(
+        5,
+        Math.min(50, this.zoom + (event.deltaY < 0 ? 1 : -1))
+      );
+    },
+    mouseDown() {
+      this.setMouseHeldDown(true);
+    },
+    mouseUp() {
+      this.setMouseHeldDown(false);
+    },
+    resetZoom() {
+      this.zoom = 15;
+    },
+  },
+  mounted() {
+    window.addEventListener("wheel", this.changeZoom);
+    window.addEventListener("mousedown", this.mouseDown);
+    window.addEventListener("mouseup", this.mouseUp);
+    keymage("ctrl-0", this.resetZoom);
+  },
+  beforeUnmount() {
+    window.removeEventListener("wheel", this.changeZoom);
+    window.removeEventListener("mousedown", this.mouseDown);
+    window.removeEventListener("mouseup", this.mouseUp);
+    keymage.unbind("ctrl-0", this.resetZoom);
   },
 };
 </script>

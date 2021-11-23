@@ -1,8 +1,18 @@
 import axios from "axios";
 
-export function loadData(moduleName) {
-  return async ({ state }) => {
-    const { data } = await axios.get(`/data/${moduleName}`);
-    Object.assign(state, data);
-  };
-}
+export default {
+  root: {
+    namespaced: true,
+  },
+  mutations: {
+    setState(state, newState) {
+      Object.assign(state, newState);
+    },
+  },
+  actions: {
+    async loadModuleData({ commit }, moduleName) {
+      const { data } = await axios.get(`/data/${moduleName}`);
+      commit("setState", data);
+    },
+  },
+};

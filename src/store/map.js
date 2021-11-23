@@ -1,16 +1,23 @@
-import { loadData } from "./generic";
+import generic from "./generic";
+import set from "lodash/set";
 
 export default {
-  namespaced: true,
+  ...generic.root,
   state() {
     // this should mirror the structure of /data/items.json
     return {
-      levels: [],
+      floors: [],
       width: 40,
       height: 40,
     };
   },
+  mutations: {
+    ...generic.mutations,
+    setValueAtPath(state, { path, value }) {
+      set(state.floors, path, value);
+    },
+  },
   actions: {
-    load: loadData("items"),
+    ...generic.actions,
   },
 };

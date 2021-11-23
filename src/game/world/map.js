@@ -3,10 +3,10 @@ import get from "lodash/get";
 // Map Object
 export default class Map {
   constructor(data, game) {
-    const { levels, height, width } = data;
+    const { floors, height, width } = data;
     this.settings = { height, width, tileSize: 15 };
     this.game = game;
-    this.floors = levels;
+    this.floors = floors;
 
     this.loadFloor();
   }
