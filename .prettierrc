@@ -4,5 +4,6 @@
   "endOfLine": "auto",
   "globals": {
     "_": "readonly"
-  }
+  },
+  "noDebugger": false
 }

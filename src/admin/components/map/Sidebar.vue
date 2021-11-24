@@ -53,14 +53,16 @@ export default {
   },
   methods: {
     ...mapMutations("mapEditor", ["setCurrentLayer"]),
-    save() {
+    save(e) {
+      e.preventDefault();
       axios
         .post("/data/map", this.$store.state.map)
         .then(this.refresh)
         .catch(this.flashSaveError);
     },
-    refresh() {
-      this.$store.dispatch("map/load");
+    refresh(e) {
+      e.preventDefault();
+      this.$store.dispatch("map/loadModuleData", "map");
     },
     flashSaveError() {
       // TODO - figure out Vue animation library

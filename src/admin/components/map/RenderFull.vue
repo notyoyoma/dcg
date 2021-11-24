@@ -50,7 +50,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import keymage from "keymage";
+// import keymage from "keymage";
 
 import layers from "./layers";
 import WallDefs from "./layers/walls/Defs";
@@ -83,33 +83,42 @@ export default {
     renderLayer(key) {
       return layers[key].RenderComponent;
     },
-    changeZoom(event) {
-      this.zoom = Math.max(
-        5,
-        Math.min(50, this.zoom + (event.deltaY < 0 ? 1 : -1))
-      );
-    },
+    // changeZoom(event) {
+    //   this.zoom = Math.max(
+    //     5,
+    //     Math.min(50, this.zoom + (event.deltaY < 0 ? 1 : -1))
+    //   );
+    // },
     mouseDown() {
       this.setMouseHeldDown(true);
     },
     mouseUp() {
       this.setMouseHeldDown(false);
     },
-    resetZoom() {
-      this.zoom = 15;
+    windowMouseOut(e) {
+      e = e ? e : window.event;
+      const target = e.relatedTarget || e.toElement;
+      if (!target || target.nodeName == "HTML") {
+        this.mouseUp();
+      }
     },
+    // resetZoom() {
+    //   this.zoom = 15;
+    // },
   },
   mounted() {
-    window.addEventListener("wheel", this.changeZoom);
+    // window.addEventListener("wheel", this.changeZoom);
     window.addEventListener("mousedown", this.mouseDown);
     window.addEventListener("mouseup", this.mouseUp);
-    keymage("ctrl-0", this.resetZoom);
+    window.addEventListener("mouseout", this.windowMouseOut);
+    // keymage("ctrl-0", this.resetZoom);
   },
   beforeUnmount() {
-    window.removeEventListener("wheel", this.changeZoom);
+    // window.removeEventListener("wheel", this.changeZoom);
     window.removeEventListener("mousedown", this.mouseDown);
     window.removeEventListener("mouseup", this.mouseUp);
-    keymage.unbind("ctrl-0", this.resetZoom);
+    window.removeEventListener("mouseout", this.windowMouseOut);
+    // keymage.unbind("ctrl-0", this.resetZoom);
   },
 };
 </script>

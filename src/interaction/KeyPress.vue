@@ -19,8 +19,8 @@ export default {
     hide() {
       this.show = false;
     },
-    hit() {
-      this.$emit("hit");
+    hit(e) {
+      this.$emit("hit", e);
     },
   },
   mounted() {

@@ -1,27 +1,27 @@
 import clone from "lodash/clone";
-import isEmpty from "lodash/isEmpty";
 import unset from "lodash/unset";
 import set from "lodash/set";
 import { shouldInteract, interactWithLayer } from "./layerLogic";
 
 const defaultState = {
-  currentToolIndex: false,
+  currentToolIndex: 0,
   currentFloorIndex: 0,
-  currentLayerKey: "rooms",
+  currentLayerKey: "walls",
   mouseHeldDown: false,
+  dragCoordPaths: [],
   hideLayers: [],
+  layerValueBin: 0,
 };
 
 export default {
   namespaced: true,
   state: clone(defaultState),
   getters: {
-    currentFloor(state, getters, { map }) {
-      if (isEmpty(map.floors)) return false;
-      return map.floors[state.currentFloorIndex || 0];
-    },
     layerIsVisible(state) {
       return (layerId) => !state.hideLayers.includes(layerId);
+    },
+    currentFloor({ currentFloorIndex }, getters, { map }) {
+      return map.floors[currentFloorIndex];
     },
   },
   mutations: {
@@ -30,6 +30,7 @@ export default {
     },
     setCurrentLayer(state, key) {
       state.currentLayerKey = key;
+      state.currentToolIndex = 0;
     },
     setCurrentTool(state, tool) {
       state.currentToolIndex = tool;
@@ -49,6 +50,15 @@ export default {
     },
     setMouseHeldDown(state, mouseHeldDown) {
       state.mouseHeldDown = mouseHeldDown;
+      if (!mouseHeldDown) {
+        state.dragCoordPaths = [];
+      }
+    },
+    addDragCoordPath(state, coordPath) {
+      state.dragCoordPaths.push(coordPath);
+    },
+    setLayerValueBin(state, value) {
+      state.layerValueBin = value;
     },
   },
   actions: {
