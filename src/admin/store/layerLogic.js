@@ -1,44 +1,71 @@
 import store from "./index";
 
+export function wallCoordInteraction(x, y) {
+  /* Which triangle was clicked?
+    x =     0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
+    y =  0  b  a  a  a  a  a  a  a  a  a  a  a  a  a  c
+         1  b  b  a  a  a  a  a  a  a  a  a  a  a  c  c
+         2  b  b  b  a  a  a  a  a  a  a  a  a  c  c  c
+         3  b  b  b  b  a  a  a  a  a  a  a  c  c  c  c
+         4  b  b  b  b  b  a  a  a  a  a  c  c  c  c  c
+         5  b  b  b  b  b  b  a  a  a  c  c  c  c  c  c
+         6  b  b  b  b  b  b  b  a  c  c  c  c  c  c  c
+         7  b  b  b  b  b  b  b  d  c  c  c  c  c  c  c
+         8  b  b  b  b  b  b  d  d  d  c  c  c  c  c  c
+         9  b  b  b  b  b  d  d  d  d  d  c  c  c  c  c
+        10  b  b  b  b  d  d  d  d  d  d  d  c  c  c  c
+        11  b  b  b  d  d  d  d  d  d  d  d  d  c  c  c
+        12  b  b  d  d  d  d  d  d  d  d  d  d  d  c  c
+        13  b  d  d  d  d  d  d  d  d  d  d  d  d  d  c
+        14  d  d  d  d  d  d  d  d  d  d  d  d  d  d  d
+  */
+  const xM = x % 15;
+  const yM = y % 15;
+  const aOrB = xM + yM < 14;
+  const aOrC = xM > yM;
+  const xI = Math.floor(x / 15);
+  const yI = Math.floor(y / 15);
+  let triangle;
+
+  if (aOrB && aOrC) triangle = "a";
+  if (aOrB && !aOrC) triangle = "b";
+  if (!aOrB && aOrC) triangle = "c";
+  if (!aOrB && !aOrC) triangle = "d";
+  return { triangle, xM, yM, xI, yI };
+}
+
 const layerActChecks = {
   default: ({ type }) => type === "mousedown",
-  rooms: (event, mouseHeldDown) => mouseHeldDown || event.type === "mouseup",
+  rooms: ({ type }, mouseHeldDown) => mouseHeldDown || type === "mouseup",
   walls({ offsetX: x, offsetY: y, type }, mouseHeldDown) {
     // only accept mousedown and drag
     if (type !== "mousedown" && !(type === "mousemove" && mouseHeldDown))
       return false;
+
     // out of bounds
     if (x < 0 || y < 0 || x > 600 || y > 600) return false;
-    const xM = x % 15;
-    const yM = y % 15;
-    /* 4 dead pixels around tile intersections */
+
+    // get interaction coords
+    const { triangle, xM, yM, xI, yI } = wallCoordInteraction(x, y);
+
+    // disable walls against edges
+    if (xI === 0 && triangle === "b") return false;
+    if (xI === 14 && triangle === "c") return false;
+    if (yI === 0 && triangle === "a") return false;
+    if (yI === 4 && triangle === "d") return false;
+
+    //dead zones for dragging
     if (
-      (xM < 2 && yM < 2) ||
-      (xM < 2 && yM > 12) ||
-      (xM > 12 && yM < 2) ||
-      (xM > 12 && yM > 12)
+      type !== "mousedown" &&
+      ((xM < 2 && yM < 2) ||
+        (xM < 2 && yM > 12) ||
+        (xM > 12 && yM < 2) ||
+        (xM > 12 && yM > 12) ||
+        (xM > 5 && xM < 9 && yM > 5 && yM < 9))
     )
       return false;
 
-    // disable triangles around the edge of the map
-    // intial check for closeness
     if (x < 7 || x > 593 || y < 7 || y > 593) return false;
-    // const modSum = xM + yM;
-
-    // SKIP if the cursor is...
-    // on a pixel that is between the interatable triangles
-    // if (xM == yM || modSum == 14) return false;
-    // //    in top left 3x3     in top right 3x3     in bottom left 3x3   in bottom right 3x3
-    // if (
-    //   (x < 3 && y < 3) ||
-    //   (x > 11 && y < 3) ||
-    //   (x < 3 && y > 11) ||
-    //   (x > 11 && y > 11)
-    // )
-    //   return false;
-    //  in the middle 3x3
-    // if (x > 4 && x < 8 && y > 4 && y < 8) return false;
-    console.log("do");
     return true;
   },
 };
@@ -48,33 +75,24 @@ export function shouldInteract(event, layerKey, mouseHeldDown) {
   return actCheck(event, mouseHeldDown);
 }
 
-const layerCoordMappers = {
+export const layerCoordMappers = {
   default: ({ offsetX: x, offsetY: y }) => [
     Math.floor(y / 15),
     Math.floor(x / 15),
   ],
   walls({ offsetX: x, offsetY: y }) {
-    // BUGGY AF, get a testing library
-    const xM = x % 15;
-    const yM = y % 15;
+    const { triangle, xI, yI } = wallCoordInteraction(x, y);
 
-    const modSum = xM + yM;
-    let xD = 0;
-    let yD = 0;
-    if (modSum > 15) {
-      xD = xM < yM ? 0 : 1;
-      yD = yM < xM ? 0 : 1;
+    switch (triangle) {
+      case "a":
+        return [yI, xI, 0];
+      case "b":
+        return [yI, xI, 1];
+      case "c":
+        return [yI, xI + 1, 1];
+      case "d":
+        return [yI + 1, xI, 0];
     }
-    const xIndex = Math.floor(x / 15) + xD;
-    const yIndex = Math.floor(y / 15) + yD;
-
-    // Which wall should we set? 0 if top, 1 if left
-    const wIndex =
-      (xM > yM && modSum <= 15) || (xM < yM && modSum >= 15) ? 0 : 1;
-
-    console.log([xM, yM, xD, yD, wIndex]);
-
-    return [yIndex, xIndex, wIndex];
   },
 };
 
