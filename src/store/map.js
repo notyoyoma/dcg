@@ -4,7 +4,7 @@ import set from "lodash/set";
 export default {
   ...generic.root,
   state() {
-    // this should mirror the structure of /data/items.json
+    // this should mirror the structure of /data/map.json
     return {
       floors: [],
       width: 40,

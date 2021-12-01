@@ -2,6 +2,7 @@ import clone from "lodash/clone";
 import unset from "lodash/unset";
 import set from "lodash/set";
 import { shouldInteract, interactWithLayer } from "./layerLogic";
+import { emptyFloor } from "@/admin/components/map/layers";
 
 const defaultState = {
   currentToolIndex: 0,
@@ -74,6 +75,9 @@ export default {
       const { currentLayerKey, mouseHeldDown } = state;
       if (!shouldInteract(event, currentLayerKey, mouseHeldDown)) return;
       interactWithLayer({ event, ...state });
+    },
+    addFloor({ rootState }) {
+      rootState.map.floors.push({ ...emptyFloor });
     },
   },
 };

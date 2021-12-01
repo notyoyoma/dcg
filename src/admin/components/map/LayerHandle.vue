@@ -5,7 +5,7 @@
   >
     <div
       class="layer__visibility flex-no-grow mr-2 btn"
-      @click="toggleVisible(layerKey)"
+      @click.stop="toggleVisible(layerKey)"
     >
       <i-fa icon="eye" v-if="layerIsVisible(layerKey)"></i-fa>
       <i-fa icon="eye-slash" v-else></i-fa>

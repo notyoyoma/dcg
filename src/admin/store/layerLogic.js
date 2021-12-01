@@ -35,8 +35,7 @@ export function wallCoordInteraction(x, y) {
 }
 
 const layerActChecks = {
-  default: ({ type }) => type === "mousedown",
-  rooms: ({ type }, mouseHeldDown) => mouseHeldDown || type === "mouseup",
+  default: ({ type }, mouseHeldDown) => mouseHeldDown || type === "mouseup",
   walls({ offsetX: x, offsetY: y, type }, mouseHeldDown) {
     // only accept mousedown and drag
     if (type !== "mousedown" && !(type === "mousemove" && mouseHeldDown))

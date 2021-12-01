@@ -10,3 +10,12 @@ export const sidebarLayers = [walls, rooms, effects, floors];
 
 // layers keys in the order they are rendered
 export const renderOrder = ["rooms", "effects", "floors", "walls"];
+
+// empty floor with empty layers
+export const emptyFloor = {
+  floors: [[]],
+  effects: [[]],
+  walls: [[[]]],
+  roomCoords: [[]],
+  rooms: {},
+};

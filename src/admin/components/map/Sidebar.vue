@@ -57,19 +57,15 @@ export default {
   methods: {
     ...mapMutations("mapEditor", ["setCurrentLayer"]),
     save(e) {
-      e.preventDefault();
+      if (e && e.preventDefault) e.preventDefault();
       axios
         .post("/data/map", this.$store.state.map)
         .then(this.refresh)
-        .catch(this.flashSaveError);
+        .catch(console.log);
     },
     refresh(e) {
-      e.preventDefault();
+      if (e && e.preventDefault) e.preventDefault();
       this.$store.dispatch("map/loadModuleData", "map");
-    },
-    flashSaveError() {
-      // TODO - figure out Vue animation library
-      console.log("ya done fucked up now! " + JSON.stringify(arguments));
     },
   },
 };
