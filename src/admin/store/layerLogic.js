@@ -65,7 +65,6 @@ const layerActChecks = {
     )
       return false;
 
-    if (x < 7 || x > 593 || y < 7 || y > 593) return false;
     return true;
   },
 };
