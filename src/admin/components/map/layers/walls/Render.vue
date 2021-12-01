@@ -1,5 +1,13 @@
 <template>
   <g :id="id">
+    <rect
+      x="0"
+      y="0"
+      width="600"
+      height="600"
+      stroke="#fff"
+      fill="transparent"
+    />
     <g v-for="(row, y) in currentFloorWalls" :key="y">
       <template v-for="(column, x) in row" :key="x">
         <g v-if="column && (column[0] || column[1])">
