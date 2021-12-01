@@ -13,7 +13,20 @@
           stroke-width="1"
         />
       </pattern>
+      <symbol id="eraser" viewBox="0 0 15 15">
+        <i-fa icon="eraser" />
+      </symbol>
+      <symbol id="add" viewBox="0 0 15 15">
+        <i-fa icon="plus" />
+      </symbol>
+      <symbol id="edit" viewBox="0 0 15 15">
+        <i-fa icon="pen" />
+      </symbol>
+      <symbol id="select" viewBox="0 0 15 15">
+        <i-fa icon="mouse-pointer" />
+      </symbol>
       <WallDefs />
+      <TileDefs />
     </defs>
     <g id="background">
       <rect width="100%" height="100%" fill="#000" />
@@ -26,8 +39,12 @@
         stroke-width="1.5px"
       />
     </g>
-    <template v-for="key in visibleLayers" :key="`layer-${key}`">
-      <component :is="renderLayer(key)" />
+    <template v-for="id in visibleLayers" :key="`layer-${id}`">
+      <component
+        :is="layer(id).RenderComponent"
+        :id="id"
+        :tools="layer(id).tools"
+      />
     </template>
     <rect
       width="100%"
@@ -52,11 +69,12 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 // import keymage from "keymage";
 
-import layers from "./layers";
+import layers, { renderOrder } from "./layers";
 import WallDefs from "./layers/walls/Defs";
+import TileDefs from "./layers/genericTile/Defs";
 
 export default {
-  components: { WallDefs },
+  components: { WallDefs, TileDefs },
   data: () => ({
     zoom: 15,
   }),
@@ -72,16 +90,14 @@ export default {
       };
     },
     visibleLayers() {
-      return Object.keys(layers).filter(
-        (key) => !this.hideLayers.includes(key)
-      );
+      return renderOrder.filter((id) => !this.hideLayers.includes(id));
     },
   },
   methods: {
     ...mapMutations("mapEditor", ["setMouseHeldDown"]),
     ...mapActions("mapEditor", ["interact"]),
-    renderLayer(key) {
-      return layers[key].RenderComponent;
+    layer(id) {
+      return layers[id];
     },
     // changeZoom(event) {
     //   this.zoom = Math.max(

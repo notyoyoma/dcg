@@ -1,7 +1,5 @@
 <template>
   <div id="mapEditor">
-    <TileSvgs />
-    <WallSvgs />
     <Sidebar />
     <div id="canvas-container">
       <MapRender />
@@ -12,15 +10,11 @@
 <script>
 import Sidebar from "@/admin/components/map/Sidebar";
 import MapRender from "@/admin/components/map/RenderFull";
-import TileSvgs from "@/admin/components/map/util/Tiles";
-import WallSvgs from "@/admin/components/map/util/Walls";
 
 export default {
   components: {
     Sidebar,
     MapRender,
-    TileSvgs,
-    WallSvgs,
   },
 };
 </script>

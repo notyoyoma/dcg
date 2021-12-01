@@ -1,14 +1,14 @@
 <template>
   <g :id="id">
-    <g v-for="(row, y) in currentFloor.roomCoords" :key="y">
-      <template v-for="(roomId, x) in row" :key="`${y},${x}`">
-        <rect
+    <g v-for="(row, y) in currentFloor[id]" :key="y">
+      <template v-for="(tileId, x) in row" :key="`${y},${x}`">
+        <use
           width="15px"
           height="15px"
-          v-if="roomId"
+          v-if="tileId"
           :x="x * 15"
           :y="y * 15"
-          :fill="roomIDColors[roomId]"
+          :xlink:href="`#${tools[tileId]}`"
         />
       </template>
     </g>
@@ -17,13 +17,9 @@
 
 <script>
 import { mapGetters } from "vuex";
-import roomIDColors from "./RoomIDColors";
 
 export default {
   props: ["id", "tools"],
-  data: () => ({
-    roomIDColors,
-  }),
   computed: {
     ...mapGetters("mapEditor", ["currentFloor"]),
   },

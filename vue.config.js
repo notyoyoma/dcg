@@ -15,6 +15,7 @@ module.exports = {
   configureWebpack: {
     entry: isDevEnv ? "./src/devMain.js" : "./src/main.js",
     devServer: {
+      port: 3333,
       before: (app) => {
         app.use(bodyParser.json());
 

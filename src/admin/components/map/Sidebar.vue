@@ -15,7 +15,10 @@
       </h6>
       <h2>Layers</h2>
       <div class="d-flex flex-column" id="layers">
-        <template v-for="(layer, index) in layers" :key="`layer-${layer.id}`">
+        <template
+          v-for="(layer, index) in sidebarLayers"
+          :key="`layer-${layer.id}`"
+        >
           <KeyPress :on="`alt-${index + 1}`" @hit="setCurrentLayer(layer.id)">
             <Layer :layerKey="layer.id" :menuComponent="layer.menuComponent" />
           </KeyPress>
@@ -44,7 +47,7 @@ export default {
     Layer,
     Tools,
   },
-  data: () => ({ layers: sidebarLayers }),
+  data: () => ({ sidebarLayers }),
   computed: {
     ...mapState("mapEditor", ["currentFloorIndex", "currentLayerKey"]),
     currentLayerTools() {
