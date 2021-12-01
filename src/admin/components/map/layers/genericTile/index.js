@@ -1,5 +1,4 @@
 import RenderComponent from "./Render";
-// const floorLayerTools = ["stairsUp", "stairsDown", "noFloor", "pitTrap"];
 
 export const effects = {
   id: "effects",
@@ -14,5 +13,11 @@ export const effects = {
     "light4",
     "light5",
   ],
+  RenderComponent,
+};
+
+export const floors = {
+  id: "floors",
+  tools: ["eraser", "stairsUp", "stairsDown", "noFloor", "pitTrap"],
   RenderComponent,
 };
