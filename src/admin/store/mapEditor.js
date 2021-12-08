@@ -1,34 +1,32 @@
-import clone from "lodash/clone";
+import cloneDeep from "lodash/cloneDeep";
 import unset from "lodash/unset";
 import set from "lodash/set";
 import { shouldInteract, interactWithLayer } from "./layerLogic";
 import { emptyFloor } from "@/admin/components/map/layers";
-
-const defaultState = {
-  currentToolIndex: 0,
-  currentFloorIndex: 0,
-  currentLayerKey: "walls",
-  mouseHeldDown: false,
-  dragCoordPaths: [],
-  hideLayers: [],
-  layerValueBin: 0,
-};
+import game from "@/game";
+import axios from "axios";
 
 export default {
   namespaced: true,
-  state: clone(defaultState),
+  state: () => ({
+    floors: [],
+    currentToolIndex: 0,
+    currentFloorIndex: 0,
+    currentLayerKey: "walls",
+    mouseHeldDown: false,
+    dragCoordPaths: [],
+    hideLayers: [],
+    layerValueBin: 0,
+  }),
   getters: {
     layerIsVisible(state) {
       return (layerId) => !state.hideLayers.includes(layerId);
     },
-    currentFloor({ currentFloorIndex }, getters, { map }) {
-      return map.floors[currentFloorIndex];
+    currentFloor({ currentFloorIndex, floors }) {
+      return floors[currentFloorIndex];
     },
   },
   mutations: {
-    reset(state) {
-      Object.merge(state, defaultState);
-    },
     setCurrentLayer(state, key) {
       state.currentLayerKey = key;
       state.currentToolIndex = 0;
@@ -61,8 +59,14 @@ export default {
     setLayerValueBin(state, value) {
       state.layerValueBin = value;
     },
+    setValueAtPath(state, { path, value }) {
+      set(state.floors, path, value);
+    },
   },
   actions: {
+    initializeModule({ state }) {
+      state.floors = cloneDeep(game.map.data.floors);
+    },
     toggleVisible({ state }, id) {
       const isHidden = state.hideLayers.includes(id);
       if (isHidden) {
@@ -78,6 +82,17 @@ export default {
     },
     addFloor({ rootState }) {
       rootState.map.floors.push({ ...emptyFloor });
+    },
+    async writeToFile({ dispatch, state }) {
+      const data = {
+        floors: state.floors,
+        width: 40,
+        height: 40,
+      };
+      await axios.post("/data/map", data).catch(console.log);
+      await dispatch("map/loadModuleData", null, { root: true });
+      dispatch("initializeModule");
+      console.log("Saved to file");
     },
   },
 };

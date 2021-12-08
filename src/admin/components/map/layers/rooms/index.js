@@ -7,7 +7,7 @@ import compact from "lodash/compact";
 import store from "@/admin/store";
 
 export function getNextRoomId() {
-  const { roomCoords } = store.getters["mapEditor/currentFloor"];
+  const { roomCoords } = store.getters["mapEditor/currentFloor"].roomCoords;
   const roomIds = uniq(compact(flatten(roomCoords))).sort((a, b) => a - b);
   for (let i = 1; i < roomIds.length; i++) {
     if (i !== roomIds[i - 1]) {

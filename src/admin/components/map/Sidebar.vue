@@ -33,11 +33,10 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapState, mapActions } from "vuex";
 import ChangeFloor from "./ChangeFloor";
 import Layer from "./LayerHandle";
 import Tools from "./Tools";
-import axios from "axios";
 
 import layers, { sidebarLayers } from "./layers";
 
@@ -56,16 +55,14 @@ export default {
   },
   methods: {
     ...mapMutations("mapEditor", ["setCurrentLayer"]),
+    ...mapActions("mapEditor", ["writeToFile", "initializeModule"]),
     save(e) {
       if (e && e.preventDefault) e.preventDefault();
-      axios
-        .post("/data/map", this.$store.state.map)
-        .then(this.refresh)
-        .catch(console.log);
+      this.writeToFile();
     },
     refresh(e) {
       if (e && e.preventDefault) e.preventDefault();
-      this.$store.dispatch("map/loadModuleData", "map");
+      this.initializeModule();
     },
   },
 };

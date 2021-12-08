@@ -2,6 +2,7 @@ import { createApp } from "vue";
 
 import Main from "./Main";
 import store from "./admin/store";
+import game from "./game";
 
 import "./admin/icons";
 
@@ -22,3 +23,4 @@ app.mount("#app");
 
 window.app = app;
 window.store = store;
+window.game = game;

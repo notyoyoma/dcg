@@ -8,7 +8,7 @@
       stroke="#fff"
       fill="transparent"
     />
-    <g v-for="(row, y) in currentFloorWalls" :key="y">
+    <g v-for="(row, y) in currentFloor.walls" :key="y">
       <template v-for="(column, x) in row" :key="x">
         <g v-if="column && (column[0] || column[1])">
           <use
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   props: ["id", "tools"],
@@ -48,11 +48,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState("mapEditor", ["currentFloorIndex"]),
-    ...mapState("map", ["floors"]),
-    currentFloorWalls() {
-      return this.floors[this.currentFloorIndex].walls;
-    },
+    ...mapGetters("mapEditor", ["currentFloor"]),
   },
 };
 </script>

@@ -1,7 +1,13 @@
 import { GenericStore, GenericLogic } from "./Generic";
-import set from "lodash/set";
 
-export class Map extends GenericLogic {}
+export class Map extends GenericLogic {
+  initialize() {
+    const floorIndex = this.game.party.data.location.z;
+    this.update({
+      currentFloor: this.data[floorIndex],
+    });
+  }
+}
 
 const base = new GenericStore({
   moduleName: "map",
@@ -11,18 +17,14 @@ const base = new GenericStore({
 export default {
   ...base.properties,
   state() {
-    // this should mirror the structure of /data/map.json
     return {
-      floors: [],
+      currentFloor: {},
       width: 40,
       height: 40,
     };
   },
   mutations: {
     ...base.mutations,
-    setValueAtPath(state, { path, value }) {
-      set(state.floors, path, value);
-    },
   },
   actions: {
     ...base.actions,

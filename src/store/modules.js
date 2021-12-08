@@ -14,3 +14,12 @@ export default {
   npcs,
   party,
 };
+
+export const initializeOrder = [
+  "characters",
+  "party",
+  "npcs",
+  "items",
+  "monsters",
+  "map",
+];

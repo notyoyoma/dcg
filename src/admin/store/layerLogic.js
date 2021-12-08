@@ -100,20 +100,20 @@ const interactions = {
   default({ currentToolIndex, currentLayerKey, currentFloorIndex }, coordPath) {
     const value = currentToolIndex === 0 ? null : currentToolIndex;
     const path = [currentFloorIndex, currentLayerKey, ...coordPath];
-    store.commit("map/setValueAtPath", { path, value });
+    store.commit("mapEditor/setValueAtPath", { path, value });
   },
   rooms({ currentToolIndex, currentFloorIndex, layerValueBin }, coordPath) {
     const path = [currentFloorIndex, "roomCoords", ...coordPath];
     if (currentToolIndex === 0) {
       // erase acts like the default
-      store.commit("map/setValueAtPath", { path, value: null });
+      store.commit("mapEditor/setValueAtPath", { path, value: null });
     } else if (currentToolIndex === 1) {
       const nextRoomId = getNextRoomId();
       store.commit("mapEditor/setLayerValueBin", nextRoomId);
-      store.commit("map/setValueAtPath", { path, value: nextRoomId });
+      store.commit("mapEditor/setValueAtPath", { path, value: nextRoomId });
       store.commit("mapEditor/setCurrentTool", 2); // set tool to edit
     } else if (currentToolIndex === 2) {
-      store.commit("map/setValueAtPath", { path, value: layerValueBin });
+      store.commit("mapEditor/setValueAtPath", { path, value: layerValueBin });
     } else if (currentToolIndex === 3) {
       const { roomCoords } = store.getters["mapEditor/currentFloor"];
       const clickedRoomId = roomCoords[path[2]][path[3]];

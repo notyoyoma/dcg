@@ -1,5 +1,5 @@
 import Vuex from "vuex";
-import modules from "./modules";
+import modules, { initializeOrder } from "./modules";
 
 const store = new Vuex.Store({
   state: () => ({
@@ -18,7 +18,13 @@ const moduleLoadingPromises = Object.keys(modules).map((moduleName) =>
   store.dispatch(`${moduleName}/loadModuleData`)
 );
 
-// once all modules have loaded, continue
-Promise.all(moduleLoadingPromises).then(() => store.commit("setLoading"));
+// once all modules have loaded data, initialize them in order
+Promise.all(moduleLoadingPromises).then(async () => {
+  const initializePromises = initializeOrder.map((moduleName) =>
+    store.dispatch(`${moduleName}/initializeModule`)
+  );
+  await Promise.all(initializePromises);
+  store.commit("setLoading");
+});
 
 export default store;
