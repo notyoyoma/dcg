@@ -1,15 +1,22 @@
-import generic from "./generic";
+import { GenericStore, GenericLogic } from "./Generic";
+
+export class Characters extends GenericLogic {}
+
+const base = new GenericStore({
+  moduleName: "characters",
+  logicClass: Characters,
+});
 
 export default {
-  ...generic.root,
+  ...base.properties,
   state() {
     // this should mirror the structure of /data/characters.json
     return { characters: [] };
   },
   mutations: {
-    ...generic.mutations,
+    ...base.mutations,
   },
   actions: {
-    ...generic.actions,
+    ...base.actions,
   },
 };

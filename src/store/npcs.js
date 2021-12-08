@@ -1,15 +1,22 @@
-import generic from "./generic";
+import { GenericStore, GenericLogic } from "./Generic";
+
+export class Npcs extends GenericLogic {}
+
+const base = new GenericStore({
+  moduleName: "npcs",
+  logicClass: Npcs,
+});
 
 export default {
-  ...generic.root,
+  ...base.properties,
   state() {
     // this should mirror the structure of /data/npcs.json
     return { npcs: [] };
   },
   mutations: {
-    ...generic.mutations,
+    ...base.mutations,
   },
   actions: {
-    ...generic.actions,
+    ...base.actions,
   },
 };

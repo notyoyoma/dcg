@@ -1,8 +1,15 @@
-import generic from "./generic";
+import { GenericStore, GenericLogic } from "./Generic";
 import set from "lodash/set";
 
+export class Map extends GenericLogic {}
+
+const base = new GenericStore({
+  moduleName: "map",
+  logicClass: Map,
+});
+
 export default {
-  ...generic.root,
+  ...base.properties,
   state() {
     // this should mirror the structure of /data/map.json
     return {
@@ -12,12 +19,12 @@ export default {
     };
   },
   mutations: {
-    ...generic.mutations,
+    ...base.mutations,
     setValueAtPath(state, { path, value }) {
       set(state.floors, path, value);
     },
   },
   actions: {
-    ...generic.actions,
+    ...base.actions,
   },
 };

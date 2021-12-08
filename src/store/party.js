@@ -1,7 +1,14 @@
-import generic from "./generic";
+import { GenericStore, GenericLogic } from "./Generic";
+
+export class Party extends GenericLogic {}
+
+const base = new GenericStore({
+  moduleName: "party",
+  logicClass: Party,
+});
 
 export default {
-  ...generic.root,
+  ...base.properties,
   state() {
     // this should mirror the structure of /data/party.json
     return {
@@ -21,9 +28,9 @@ export default {
     },
   },
   mutations: {
-    ...generic.mutations,
+    ...base.mutations,
   },
   actions: {
-    ...generic.actions,
+    ...base.actions,
   },
 };
