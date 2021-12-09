@@ -1,4 +1,4 @@
-import Monster from 'dcg-monster';
+import Monster from "dcg-monster";
 
 const settings = {
   // How often to respawn zones (in ms)
@@ -14,13 +14,17 @@ export default class Encounter {
   constructor(zone, party) {
     this.zone = zone;
 
-    if ( this.shouldSpawn() ) {
-      this.zone.monster = new Monster(this.zone.monsters[Math.floor( Math.random()*this.zone.monsters.length )])
+    if (this.shouldSpawn()) {
+      this.zone.monster = new Monster(
+        this.zone.monsters[
+          Math.floor(Math.random() * this.zone.monsters.length)
+        ]
+      );
       this.zone.monster.initHostility(party);
       this.zone.monster.rollJoin();
     }
 
-    if ( this.zone.monster.hostility > 10 ) {
+    if (this.zone.monster.hostility > 10) {
       this.initiative = [this.zone.monster, party];
     } else {
       this.initiative = [party, this.zone.monster];
@@ -28,11 +32,11 @@ export default class Encounter {
   }
 
   shouldSpawn() {
-    return !this.zone.monster    // room is empty
-    && this.zone.monsters.length // room can spawn monsters
-    && ( // and room was last cleared more than [respawnTimer] ago
-      !this.zone.lastCleared
-      || this.zone.lastCleared < Date.now() - settings.respawnTimer
+    return (
+      !this.zone.monster && // room is empty
+      this.zone.monsters.length && // room can spawn monsters // and room was last cleared more than [respawnTimer] ago
+      (!this.zone.lastCleared ||
+        this.zone.lastCleared < Date.now() - settings.respawnTimer)
     );
   }
 
@@ -41,21 +45,21 @@ export default class Encounter {
   }
 
   /*
-   * 
+   *
    */
   actionRound() {
     // TODO - calculate which actors act first
     // TODO - run actors actions
     // TODO - remove dead actors
-    if ( !encounterOver() ) {
+    if (!encounterOver()) {
       this.triggerNextRound();
     }
   }
 
   triggerNextRound() {
     let self = this;
-    setTimeout(function() {
-      if ( !encounterOver() ) {
+    setTimeout(function () {
+      if (!encounterOver()) {
         self.actionRound();
       }
     }, settings.actionRoundTime);

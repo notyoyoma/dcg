@@ -7,7 +7,9 @@
 <script>
 export default {
   computed: {
-    visibleMap () {return this.$store.state.visibleMap}
-  }
-}
+    visibleMap() {
+      return this.$store.state.visibleMap;
+    },
+  },
+};
 </script>

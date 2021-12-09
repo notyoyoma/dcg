@@ -1,43 +1,17 @@
 import axios from "axios";
-import game from "../game";
+import game from "@/game";
+import logicModules from "@/game/modules";
+import { capitalize } from "@/utils/string";
 
-export class GenericLogic {
-  data = {};
-
-  constructor(context, moduleName, data) {
-    this.moduleName = moduleName;
-    this.context = context;
-
-    const LSData = localStorage.getItem(this.moduleName);
-    if (LSData) {
-      this.data = JSON.parse(LSData);
-    } else {
-      this.data = data;
-    }
-  }
-
-  // TODO debounce by game loop duration, and queue all changes during game loop for single update
-  update(value) {
-    this.context.commit("setState", value);
-  }
-
-  save() {
-    localStorage.setItem(this.moduleName, this.data);
-  }
-
-  async initialize() {
-    this.update(this.data);
-  }
-}
-
-export class GenericStore {
+export default class GenericStore {
   properties = {
     namespaced: true,
   };
 
-  constructor({ moduleName, logicClass }) {
+  constructor({ moduleName }) {
     this.moduleName = moduleName;
-    this.logicClass = logicClass;
+    const logicClassName = capitalize(moduleName);
+    this.logicClass = logicModules[logicClassName];
   }
 
   get mutations() {

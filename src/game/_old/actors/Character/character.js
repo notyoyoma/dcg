@@ -1,14 +1,14 @@
 // Required Modules
-import  log        from  "game/events/Log";
+import log from "game/events/Log";
 
 // Character Data
-import  races       from  "./races.json";
-import  guilds      from  "./guilds.json";
-import  spells      from  "./spells.json";
-import  alignments  from  "./alignments.json";
+import races from "./races.json";
+import guilds from "./guilds.json";
+import spells from "./spells.json";
+import alignments from "./alignments.json";
 
 // Sub Modules
-import  Inventory  from  "./inventory.js";
+import Inventory from "./inventory.js";
 
 export default class Character {
   /*
@@ -16,21 +16,21 @@ export default class Character {
    * Structure of data in ./doc/character-data.md
    */
   constructor(data) {
-    this.maxHP         =  data.maxHP          ||  15;
-    this.currentHP     =  data.currentHP      ||  this.maxHP;
-    this.maxMana       =  data.maxMana        ||  30;
-    this.currentMana   =  data.currentMana    ||  this.maxMana;
-    this.guilds        =  data.guilds         ||  {artisan:{xp:0, lvl:1}};
-    this.currentGuild  =  data.currentGuild   ||  "artisan";
-    this.statuses      =  data.statuses       ||  {};
-    this.gender        =  data.gender         ||  'm';
-    this.race          =  races[data.race]    ||  races["human"];
-    this.alignment     =  data.alignment      ||  this.race.defaultAlignment;
-    this.stats         =  data.stats          ||  this.race.defaultStats;
-    this.learnedStats  =  data.learnedStats   ||  {};
-    this.equipped      =  data.equipped       ||  {};
-    this.name          =  data.name           ||  "no name";
-    this.inventory     =  new Inventory( data.inventory || false );
+    this.maxHP = data.maxHP || 15;
+    this.currentHP = data.currentHP || this.maxHP;
+    this.maxMana = data.maxMana || 30;
+    this.currentMana = data.currentMana || this.maxMana;
+    this.guilds = data.guilds || { artisan: { xp: 0, lvl: 1 } };
+    this.currentGuild = data.currentGuild || "artisan";
+    this.statuses = data.statuses || {};
+    this.gender = data.gender || "m";
+    this.race = races[data.race] || races["human"];
+    this.alignment = data.alignment || this.race.defaultAlignment;
+    this.stats = data.stats || this.race.defaultStats;
+    this.learnedStats = data.learnedStats || {};
+    this.equipped = data.equipped || {};
+    this.name = data.name || "no name";
+    this.inventory = new Inventory(data.inventory || false);
 
     this.updateActiveStats();
   }
@@ -45,18 +45,18 @@ export default class Character {
     this.activeStats = JSON.parse(JSON.stringify(this.stats));
 
     // Core stats => core activeStats
-    this.activeStats.attack      = this.stats.strength;
-    this.activeStats.accuracy    = this.stats.dexterity;
-    this.activeStats.dodge       = this.stats.dexterity;
-    this.activeStats.defence     = this.stats.constitution;
-    this.activeStats.spellPower  = this.stats.intelligence;
+    this.activeStats.attack = this.stats.strength;
+    this.activeStats.accuracy = this.stats.dexterity;
+    this.activeStats.dodge = this.stats.dexterity;
+    this.activeStats.defence = this.stats.constitution;
+    this.activeStats.spellPower = this.stats.intelligence;
 
     // Learned stats (acquired from guilds)
     for (let learnedStat in this.learnedStats) {
       if (this.activeStats[learnedStat]) {
-        this.activeStats[learnedStat] += this.learnedStats[learnedStat]
+        this.activeStats[learnedStat] += this.learnedStats[learnedStat];
       } else {
-        this.activeStats[learnedStat] = this.learnedStats[learnedStat]
+        this.activeStats[learnedStat] = this.learnedStats[learnedStat];
       }
     }
 
@@ -90,15 +90,15 @@ export default class Character {
     // failure cases
     if (!this.meetsRequirements(item.requirements)) {
       log.message({
-        type: 'party',
-        message: `${this.name} can't equip ${item.name} because one or more stats are too low.`
+        type: "party",
+        message: `${this.name} can't equip ${item.name} because one or more stats are too low.`,
       });
       return false;
     }
     if (this.equipped[appendage] && !this.unequip(appendage)) {
       log.message({
-        type: 'party',
-        message: `${this.name} can't equip ${item.name} because he can't unequip the previous item.`
+        type: "party",
+        message: `${this.name} can't equip ${item.name} because he can't unequip the previous item.`,
       });
       return false;
     }
@@ -116,17 +116,17 @@ export default class Character {
     let item = this.equipped[appendage];
 
     // failure cases
-    if ( item.cursed ) {
+    if (item.cursed) {
       log.message({
-        type: 'party',
-        message: `${this.name} can't unequip ${item.name} because it is cursed.`
+        type: "party",
+        message: `${this.name} can't unequip ${item.name} because it is cursed.`,
       });
       return false;
     }
-    if ( this.inventory.isFull() ) {
+    if (this.inventory.isFull()) {
       log.message({
-        type: 'party',
-        message: `${this.name} can't unequip ${item.name} because his inventory is full.`
+        type: "party",
+        message: `${this.name} can't unequip ${item.name} because his inventory is full.`,
       });
       return false;
     }
@@ -160,10 +160,7 @@ export default class Character {
   modifyCoreStat(mods) {
     for (let mod in mods) {
       this.stats[mod] = Math.max(
-        Math.min(
-          this.stats[mod] + mods[mod],
-          this.race.maxStats[mod]
-        ),
+        Math.min(this.stats[mod] + mods[mod], this.race.maxStats[mod]),
         this.race.minStats[mod]
       );
     }
@@ -181,18 +178,20 @@ export default class Character {
     let guild = guilds[guildName];
     if (this.guilds.hasOwnProperty(guildName)) {
       // Only checks requirements if joining the first time
-      this.currentGuild = guildName
+      this.currentGuild = guildName;
       this.setExp();
     } else if (this.meetsRequirements(guild.requirements)) {
       // If the character's core stats meet the requirements, join the guild
-      this.guilds[guildName] = {xp:0};
+      this.guilds[guildName] = { xp: 0 };
       this.currentGuild = guildName;
       this.setExp();
     } else {
       // Otherwise, log the message.
       log.message({
-        type: 'party',
-        message: `${this.name}'s stats are too low to join ${humanize(guildName)}.`
+        type: "party",
+        message: `${this.name}'s stats are too low to join ${humanize(
+          guildName
+        )}.`,
       });
     }
   }
@@ -227,15 +226,16 @@ export default class Character {
    * Calculate the exp needed to advance to the next level in the current guild.
    * Factors in the levels in other guilds.
    */
-  calculateExp(cgLvl) {                           // Desired guild level
-    let curGuild     = guilds[this.currentGuild],
-        curGuildStat = this.guilds[this.currentGuild];
+  calculateExp(cgLvl) {
+    // Desired guild level
+    let curGuild = guilds[this.currentGuild],
+      curGuildStat = this.guilds[this.currentGuild];
 
-    let baseXP = 50,                              // Amount of XP for level 1 of an easy guild
-        cgExF  = curGuild.experienceFactor,       // Current guild experience factor
-        ogExF  = 1,                               // Multiplication of other guild experience factors
-        ogLvl  = 1,                               // Sum of ther guild levels
-        rExF;                                     // Race experience factor
+    let baseXP = 50, // Amount of XP for level 1 of an easy guild
+      cgExF = curGuild.experienceFactor, // Current guild experience factor
+      ogExF = 1, // Multiplication of other guild experience factors
+      ogLvl = 1, // Sum of ther guild levels
+      rExF; // Race experience factor
 
     for (let otherGuild in this.guilds) {
       if (otherGuild != this.currentGuild) {
@@ -244,9 +244,9 @@ export default class Character {
       }
     }
 
-    let xp  = (baseXP * cgExF) * ( 1 + ( cgLvl * cgLvl / 20 ) );
-        xp *= ogExF * ( 1 + ogLvl / 20 );
-        xp *= rExF;
+    let xp = baseXP * cgExF * (1 + (cgLvl * cgLvl) / 20);
+    xp *= ogExF * (1 + ogLvl / 20);
+    xp *= rExF;
 
     return Math.trunc(xp);
   }
@@ -265,7 +265,7 @@ export default class Character {
       case 0:
         // if the [monster, npm, item] is the same alignment as the character
         // influence = magnitutde
-        effect = 1
+        effect = 1;
       case 1:
         // if the [monster, npm, item] is a different alignment, but not opposite
         // influence = -magnitutde
@@ -280,9 +280,6 @@ export default class Character {
 
   // TODO - write tests
   getActionPriority() {
-    return Math.max(
-      this.stats.dexterity,
-      this.stats.intelligence
-    );
+    return Math.max(this.stats.dexterity, this.stats.intelligence);
   }
 }

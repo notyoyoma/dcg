@@ -20,9 +20,9 @@ module.exports = {
         app.use(bodyParser.json());
 
         // handle READ from data
-        app.get("/data/*", (req, res, next) => {
+        app.get("/data/*", (req, res) => {
           const filename = path.basename(req.url);
-          fs.readFile(`./data/${filename}.json`, (err, json) => {
+          fs.readFile(`./data/${filename}.json`, (_, json) => {
             let obj = JSON.parse(json);
             res.json(obj);
           });

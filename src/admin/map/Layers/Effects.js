@@ -1,12 +1,11 @@
-import {TileLayer} from "./TileLayer";
-import {effectTiles as tiles} from "../Tools/Tiles";
-
+import { TileLayer } from "./TileLayer";
+import { effectTiles as tiles } from "../Tools/Tiles";
 
 export class Effects extends TileLayer {
   constructor(data, setter) {
     super(data, setter);
     this.title = "Effects";
-    this.id= "effects";
+    this.id = "effects";
     this.tiles = tiles;
   }
 }

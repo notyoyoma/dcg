@@ -29,8 +29,8 @@ export default class Inventory {
       this.slots[slotNum] = item;
     } else {
       log.message({
-        type: 'party',
-        message: `${this.name}'s inventory is full.`
+        type: "party",
+        message: `${this.name}'s inventory is full.`,
       });
       return false;
     }
@@ -50,6 +50,6 @@ export default class Inventory {
    * check if inventory is full
    */
   isFull() {
-    return ( this.slots.indexOf(null) == -1 );
+    return this.slots.indexOf(null) == -1;
   }
 }

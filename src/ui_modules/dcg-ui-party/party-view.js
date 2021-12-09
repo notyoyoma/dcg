@@ -1,6 +1,6 @@
 export default {
   title: "Party",
   componentState: {
-    template: require('./template.html'),
-  }
-}
+    template: require("./template.html"),
+  },
+};

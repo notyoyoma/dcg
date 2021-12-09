@@ -1,8 +1,8 @@
-require('./style.scss');
+require("./style.scss");
 
 export default {
   title: "Map",
   componentState: {
-    template: require('./template.html'),
-  }
-}
+    template: require("./template.html"),
+  },
+};

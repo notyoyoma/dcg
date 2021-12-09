@@ -1,29 +1,37 @@
-import {isEmpty} from 'lodash';
+import { isEmpty } from "lodash";
 
 export const partyStore = {
   namespaced: true,
   state: [],
   mutations: {
-    set (state, newState) {state.splice(0, state.length, ...newState)},
-    push (state, item) {state.push(item)},
-    remove (state, index) {state.slice(index, 1)},
-    updateCharacter(state, index, newChar) {state[index] = newChar}
-  }
-}
+    set(state, newState) {
+      state.splice(0, state.length, ...newState);
+    },
+    push(state, item) {
+      state.push(item);
+    },
+    remove(state, index) {
+      state.slice(index, 1);
+    },
+    updateCharacter(state, index, newChar) {
+      state[index] = newChar;
+    },
+  },
+};
 
 export default class Party {
   constructor(data, game) {
-    this.game              = game;
-    this.location          = data.location || { x:0, y:0, z:0 };
-    this.currentZone       = data.currentZone || 0;
-    this.facing            = data.facing || 0;
-    this.maxSize           = 4;
+    this.game = game;
+    this.location = data.location || { x: 0, y: 0, z: 0 };
+    this.currentZone = data.currentZone || 0;
+    this.facing = data.facing || 0;
+    this.maxSize = 4;
     this.selectedCharacter = 0;
 
     this.characters = data.characters || [];
     if (!isEmpty(this.characters)) {
-      this.game.store.commit('party/set', this.characters);
-      this.game.store.commit('character/set', this.characters[0]);
+      this.game.store.commit("party/set", this.characters);
+      this.game.store.commit("character/set", this.characters[0]);
     } else {
       // TODO -- open character creation screen
     }
@@ -34,7 +42,7 @@ export default class Party {
       this.characters = [];
       for (let charName of data.characters) {
         this.characters.push(
-          this.world.characters.find(function(c) {
+          this.world.characters.find(function (c) {
             return charName == c.name;
           })
         );
@@ -48,8 +56,8 @@ export default class Party {
   addMember(character) {
     if (this.characters.length + 1 > this.maxSize) {
       log.error({
-        type: 'party',
-        text: 'Cannot have more than 4 characters in a party.'
+        type: "party",
+        text: "Cannot have more than 4 characters in a party.",
       });
     } else {
       this.characters.push(character);
@@ -61,7 +69,7 @@ export default class Party {
     character.currentZone = this.currentZone;
   }
 
-  reorderMember(newindex,oldIndex) {
+  reorderMember(newindex, oldIndex) {
     let character = this.characters[oldIndex].pop();
     this.characters.splice(newIndex, 0, character);
   }
@@ -70,15 +78,15 @@ export default class Party {
   moveForward() {
     let resultObj = this.world.map.tryMove(this.location, this.facing);
     if (resultObj.success) {
-      if ( this.currentZone != resultObj.newTile.zone ) {
-        this.currentZone = resultObj.newTile.zone
+      if (this.currentZone != resultObj.newTile.zone) {
+        this.currentZone = resultObj.newTile.zone;
         this.doEncounter();
       }
     }
     if (resultObj.message) {
       log.message({
-        type: 'party',
-        message: resultObj.message
+        type: "party",
+        message: resultObj.message,
       });
     }
   }

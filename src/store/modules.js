@@ -1,10 +1,10 @@
 // load all the module data, and add the modules to store
-import characters, { Characters } from "./characters";
-import items, { Items } from "./items";
-import map, { Map } from "./map";
-import monsters, { Monsters } from "./monsters";
-import npcs, { Npcs } from "./npcs";
-import party, { Party } from "./party";
+import characters from "./characters";
+import items from "./items";
+import map from "./map";
+import monsters from "./monsters";
+import npcs from "./npcs";
+import party from "./party";
 
 export default {
   characters,
@@ -13,15 +13,6 @@ export default {
   monsters,
   npcs,
   party,
-};
-
-export const logicClasses = {
-  Characters,
-  Items,
-  Map,
-  Monsters,
-  Npcs,
-  Party,
 };
 
 export const initializeOrder = [

@@ -1,10 +1,7 @@
-import { GenericStore, GenericLogic } from "./Generic";
-
-export class Npcs extends GenericLogic {}
+import GenericStore from "./Generic";
 
 const base = new GenericStore({
   moduleName: "npcs",
-  logicClass: Npcs,
 });
 
 export default {

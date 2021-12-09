@@ -1,12 +1,12 @@
 class Logger {
   constructor() {
     this.types = [
-      'player',
-      'party',
-      'character',
-      'encounter',
-      'transaction',
-      'general'
+      "player",
+      "party",
+      "character",
+      "encounter",
+      "transaction",
+      "general",
     ];
     this.streams = {};
     this.maxStreamLength = 100;
@@ -19,8 +19,8 @@ class Logger {
   }
 
   message(data) {
-    let stream = this.streams[ data.type || 'general' ];
-    stream.push( data.text || "");
+    let stream = this.streams[data.type || "general"];
+    stream.push(data.text || "");
     while (stream.length > this.maxStreamLength) {
       stream.pop();
     }

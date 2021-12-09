@@ -2,8 +2,5 @@
   "tabWidth": 2,
   "useTabs": false,
   "endOfLine": "auto",
-  "globals": {
-    "_": "readonly"
-  },
   "noDebugger": false
 }

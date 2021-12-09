@@ -1,4 +1,4 @@
-import keypress from 'keypress.js';
+import keypress from "keypress.js";
 
 export default class Controls {
   constructor(game) {
@@ -7,9 +7,17 @@ export default class Controls {
   }
 
   bindControls(game) {
-    this.listener.simple_combo("up",    function(){game.party.moveForward();});
-    this.listener.simple_combo("right", function(){game.party.turnRight();});
-    this.listener.simple_combo("down",  function(){game.party.turnAround();});
-    this.listener.simple_combo("left",  function(){game.party.turnLeft();});
+    this.listener.simple_combo("up", function () {
+      game.party.moveForward();
+    });
+    this.listener.simple_combo("right", function () {
+      game.party.turnRight();
+    });
+    this.listener.simple_combo("down", function () {
+      game.party.turnAround();
+    });
+    this.listener.simple_combo("left", function () {
+      game.party.turnLeft();
+    });
   }
 }

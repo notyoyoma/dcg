@@ -2,18 +2,18 @@
   <div class="menu d-flex flex-column">
     <a
       class="menu__item"
-      v-for="{label, fn} of items"
+      v-for="{ label, fn } of items"
       :key="label"
       @click="fn"
     >
-      {{label}}
+      {{ label }}
     </a>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["items"]
+  props: ["items"],
 };
 </script>
 

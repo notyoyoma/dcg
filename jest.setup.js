@@ -2,19 +2,20 @@
 process.on("unhandledRejection", () => {});
 
 import { create } from "vuex-mock-context";
-import { Game } from "./src/game/index.js";
-import { initializeOrder, logicClasses } from "./src/store/modules.js";
-import gameData from "./data/index.js";
+import { Game } from "./src/game";
+import { initializeOrder } from "./src/store/modules.js";
+import logicClasses from "./src/game/modules";
+import gameData from "./data";
+import { capitalize } from "@/utils/string";
 
 global.game = new Game();
 initializeOrder.forEach((moduleName) => {
   const vuexMockContext = create();
-  const logicClassName =
-    moduleName.charAt(0).toUpperCase() + moduleName.slice(1);
+  const logicClassName = capitalize(moduleName);
   const instance = new logicClasses[logicClassName](
     vuexMockContext,
     moduleName,
     gameData[moduleName]
   );
-  game._addModule(moduleName, instance);
+  global.game._addModule(moduleName, instance);
 });
