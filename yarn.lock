@@ -10169,6 +10169,11 @@ vue@^3.0.0:
     "@vue/server-renderer" "3.2.22"
     "@vue/shared" "3.2.22"
 
+vuex-mock-context@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/vuex-mock-context/-/vuex-mock-context-1.2.0.tgz#527ae0814ecbe4157b1acdef5adee23f865befef"
+  integrity sha512-6cyngIaxxoUnY9QGI3PswnXLE6PzyuX9kfgcShygj6PEQ5oM5z6mb/5JDsgVtlFWOBDZW6LE8Y0i6MnLYGyD7Q==
+
 vuex@^4.0.0-0:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-4.0.2.tgz#f896dbd5bf2a0e963f00c67e9b610de749ccacc9"

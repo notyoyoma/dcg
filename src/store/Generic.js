@@ -3,11 +3,10 @@ import game from "../game";
 
 export class GenericLogic {
   data = {};
-  game = game;
 
-  constructor({ commit }, moduleName, data) {
+  constructor(context, moduleName, data) {
     this.moduleName = moduleName;
-    this._commit = commit;
+    this.context = context;
 
     const LSData = localStorage.getItem(this.moduleName);
     if (LSData) {
@@ -17,9 +16,9 @@ export class GenericLogic {
     }
   }
 
-  // TODO debounce by game loop duration, and store changes during game loop for single update
+  // TODO debounce by game loop duration, and queue all changes during game loop for single update
   update(value) {
-    this._commit("setState", value);
+    this.context.commit("setState", value);
   }
 
   save() {

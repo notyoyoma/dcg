@@ -1,6 +1,10 @@
 import { GenericStore, GenericLogic } from "./Generic";
 
-export class Party extends GenericLogic {}
+export class Party extends GenericLogic {
+  teleport(coords) {
+    this.data.location = { ...coords };
+  }
+}
 
 const base = new GenericStore({
   moduleName: "party",

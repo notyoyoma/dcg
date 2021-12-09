@@ -1,4 +1,4 @@
-class Game {
+export class Game {
   _addModule(moduleName, instance) {
     this[moduleName] = instance;
   }
