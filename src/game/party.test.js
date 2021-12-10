@@ -5,3 +5,8 @@ test("teleport", () => {
   party.teleport(pos1);
   expect(party.data.location).toMatchObject(pos1);
 });
+
+test("move", () => {
+  party.moveForward();
+  expect(party.data.location).toMatchObject(pos1);
+});
