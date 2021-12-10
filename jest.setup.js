@@ -8,14 +8,18 @@ import logicClasses from "./src/game/modules";
 import gameData from "./data";
 import { capitalize } from "@/utils/string";
 
-global.game = new Game();
-initializeOrder.forEach((moduleName) => {
-  const vuexMockContext = create();
-  const logicClassName = capitalize(moduleName);
-  const instance = new logicClasses[logicClassName](
-    vuexMockContext,
-    moduleName,
-    gameData[moduleName]
-  );
-  global.game._addModule(moduleName, instance);
-});
+global.resetGame = function () {
+  global.game = new Game();
+  initializeOrder.forEach((moduleName) => {
+    const vuexMockContext = create();
+    const logicClassName = capitalize(moduleName);
+    const instance = new logicClasses[logicClassName](
+      vuexMockContext,
+      moduleName,
+      gameData[moduleName]
+    );
+    global.game._addModule(moduleName, instance);
+  });
+};
+
+resetGame();

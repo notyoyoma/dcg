@@ -61,5 +61,4 @@ h3 {
 }
 </style>
 
-<style src="bootstrap/scss/_helpers.scss" lang="scss"></style>
-<style src="bootstrap/scss/utilities/_api.scss" lang="scss"></style>
+<style src="@/styles/main.scss" lang="scss"></style>

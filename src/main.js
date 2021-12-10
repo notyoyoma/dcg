@@ -10,9 +10,11 @@ const app = createApp(Main);
 app.component("admin-nav", { template: `<span></span>` });
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import KeyPress from "./interaction/KeyPress";
+import KeyPress from "@/components/interaction/KeyPress";
+import KeyButton from "@/components/interaction/KeyButton";
 app.component("i-fa", FontAwesomeIcon);
 app.component("KeyPress", KeyPress);
+app.component("KeyButton", KeyButton);
 
 app.use(store);
 import router from "./router";
