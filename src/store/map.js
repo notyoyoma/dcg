@@ -10,7 +10,7 @@ export default {
     return {
       currentFloorIndex: 0,
       currentFloor: {},
-      explored: [],
+      currentFloorExplored: [],
       width: 40,
       height: 40,
     };
