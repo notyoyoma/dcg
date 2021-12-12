@@ -17,7 +17,13 @@ export default class GenericStore {
   get mutations() {
     return {
       setState(state, newState) {
-        Object.assign(state, newState);
+        Object.keys(newState).forEach((key) => {
+          if (typeof newState[key] === "object") {
+            state[key] = { ...newState[key] };
+          } else {
+            state[key] = newState[key];
+          }
+        });
       },
     };
   }

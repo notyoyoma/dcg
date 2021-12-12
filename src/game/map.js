@@ -3,6 +3,9 @@ import GenericLogic from "./Generic";
 import game from "./index.js";
 
 export default class Map extends GenericLogic {
+  width = 40;
+  height = 40;
+
   constructor(...args) {
     super(...args);
     const savedExploredData = localStorage.getItem("map.explored");
@@ -28,5 +31,14 @@ export default class Map extends GenericLogic {
 
   saveExplored() {
     localStorage.setItem("map.explored", JSON.stringify(this.exploredData));
+  }
+
+  isOutOfBounds({ x, y, z }) {
+    if (z < 0 || y < 0 || x < 0) return true; // no negative indexes
+    // check if floor is deeper than map goes
+    if (z > this.data.floors.length - 1) return true;
+    // check if coords are larger than map
+    if (y > this.height || x > this.width) return true;
+    return false;
   }
 }

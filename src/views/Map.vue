@@ -9,10 +9,6 @@
         :style="positionMapTransform"
       >
         <defs>
-          <symbol id="partyIndicator" viewBox="0 0 15 15">
-            <rect x="5px" y="7px" width="5px" height="6px" fill="#aaf" />
-            <polygon points="2,7 13,7 7.5,2" fill="#aaf" />
-          </symbol>
           <WallDefs />
           <TileDefs />
         </defs>
@@ -41,14 +37,18 @@
           stroke-width="1px"
           fill="transparent"
         />
-        <use
-          xlink:href="#partyIndicator"
+        <svg
           :x="location.x * 15"
           :y="location.y * 15"
+          viewBox="0 0 15 15"
           width="15px"
           height="15px"
-          :transform="rotatePartyIndicatorTransform"
-        />
+        >
+          <g :transform="rotatePartyIndicatorTransform">
+            <rect x="5px" y="7px" width="5px" height="6px" fill="#aaf" />
+            <polygon points="2,7 13,7 7.5,2" fill="#aaf" />
+          </g>
+        </svg>
       </svg>
     </div>
   </div>
@@ -73,9 +73,8 @@ export default {
     ...mapState("map", ["width", "height"]),
     ...mapState("party", ["location", "facing"]),
     positionMapTransform() {
-      const { x, y } = this.location;
-      const transformX = (x - 20) * -15;
-      const transformY = (y - 20) * -15;
+      const transformX = (this.location.x - 20) * -15;
+      const transformY = (this.location.y - 20) * -15;
       return {
         transform: `translate(${transformX}px, ${transformY}px)`,
       };

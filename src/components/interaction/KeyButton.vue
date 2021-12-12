@@ -1,6 +1,6 @@
 <template>
   <KeyPress :on="shortcutKey" @hit="$emit('click')">
-    <button @click="$emit('click')" :title="tooltip">
+    <button :title="tooltip">
       <slot />
     </button>
   </KeyPress>
@@ -9,5 +9,6 @@
 <script>
 export default {
   props: ["shortcutKey", "tooltip"],
+  emits: ["click"],
 };
 </script>

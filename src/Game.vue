@@ -8,8 +8,11 @@
         <Party></Party>
       </div>
     </div>
-    <div class="d-flex align-items-center w-40">
-      <Map />
+    <div class="d-flex flex-column align-items-center w-40">
+      <div id="map">
+        <Map />
+      </div>
+      <Controls />
     </div>
     <div class="d-flex flex-column w-30">
       <div class="h-40">
@@ -26,9 +29,9 @@
 </template>
 
 <script>
-import views from "./views";
+import components from "./views";
 export default {
-  components: views,
+  components,
 };
 </script>
 
@@ -43,5 +46,9 @@ export default {
   > * {
     flex-grow: 1;
   }
+}
+#map {
+  height: calc(100% - 3rem);
+  width: 100%;
 }
 </style>

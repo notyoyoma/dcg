@@ -1,8 +1,8 @@
 import { createApp } from "vue";
 
-import Main from "./Main";
-import store from "./admin/store";
-import game from "./game";
+import Main from "@/Main";
+import store from "@/admin/store";
+import game from "@/game";
 
 import "./admin/icons";
 

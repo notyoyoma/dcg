@@ -3,7 +3,7 @@ import { createApp } from "vue";
 import Main from "./Main";
 import store from "./store";
 
-import "./icons";
+import "./utils/icons";
 
 const app = createApp(Main);
 

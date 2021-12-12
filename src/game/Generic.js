@@ -15,7 +15,13 @@ export default class GenericLogic {
 
   // TODO debounce by game loop duration, and queue all changes during game loop for single update
   update(value) {
-    this.context.commit("setState", value);
+    if (typeof value === "string") {
+      this.context.commit("setState", { [value]: this.data[value] });
+    } else if (typeof value === "object") {
+      this.context.commit("setState", value);
+    } else if (!value) {
+      this.context.commit("setState", this.data);
+    }
   }
 
   save() {

@@ -14,10 +14,10 @@
   </symbol>
   <symbol id="pitTrap" viewBox="0 0 15 15">
     <rect
-      x="0.5"
-      y="0.5"
-      width="14px"
-      height="14px"
+      x="1.5"
+      y="1.5"
+      width="13px"
+      height="13px"
       stroke="#fff"
       fill="transparent"
     />
