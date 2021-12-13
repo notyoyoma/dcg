@@ -10,7 +10,6 @@ export default class Party extends GenericLogic {
   }
 
   moveForward() {
-    console.log(game);
     // get the party's location and direction facing
     const { x, y, z } = this.data.location;
     const { facing } = this.data;

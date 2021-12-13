@@ -1,3 +1,5 @@
+import game from "@/game";
+
 const party = game.party;
 
 test("teleport", () => {
@@ -8,5 +10,5 @@ test("teleport", () => {
 
 test("move", () => {
   party.moveForward();
-  expect(party.data.location).toMatchObject(pos1);
+  expect(party.data.location).toMatchObject({ x: 1, y: 2, z: 0 });
 });

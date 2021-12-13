@@ -2,32 +2,31 @@
 process.on("unhandledRejection", () => {});
 
 import { create } from "vuex-mock-context";
-import { initializeOrder } from "./src/store/modules.js";
-import logicClasses from "./src/game/modules";
 import gameData from "./data";
 import { capitalize } from "@/utils/string";
 
-const { Game } = jest.requireActual("@/game/index.js");
+const Game = jest.requireActual("@/game").Game;
+const game = new Game();
+global.game = game;
 
-global.resetGame = function () {
-  const game = new Game();
-  initializeOrder.forEach((moduleName) => {
-    const vuexMockContext = create();
-    const logicClassName = capitalize(moduleName);
-    const instance = new logicClasses[logicClassName](
-      vuexMockContext,
-      moduleName,
-      gameData[moduleName]
-    );
-    game._addModule(moduleName, instance);
-  });
-  global.game = game;
-};
+jest.doMock("@/game", () => {
+  return {
+    __esModule: true,
+    default: global.game,
+    Game,
+  };
+});
 
-resetGame();
+const initializeOrder = require("./src/store/modules.js").initializeOrder;
 
-jest.setMock("@/game", {
-  __esModule: true,
-  default: global.game,
-  Game,
+initializeOrder.forEach((moduleName) => {
+  const vuexMockContext = create();
+  const logicClasses = require("@/game/modules").default;
+  const logicClassName = capitalize(moduleName);
+  const instance = new logicClasses[logicClassName](
+    vuexMockContext,
+    moduleName,
+    gameData[moduleName]
+  );
+  game._addModule(moduleName, instance);
 });
