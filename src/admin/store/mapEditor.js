@@ -61,6 +61,10 @@ export default {
     },
     setValueAtPath(state, { path, value }) {
       set(state.floors, path, value);
+      game.map.data.floors = cloneDeep(state.floors);
+      game.map.update({
+        currentFloor: state.floors[state.currentFloorIndex],
+      });
     },
   },
   actions: {
@@ -93,6 +97,10 @@ export default {
       await dispatch("map/loadModuleData", null, { root: true });
       dispatch("initializeModule");
       console.log("Saved to file");
+    },
+    async refreshFromFile({ dispatch }) {
+      await dispatch("map/loadModuleData", null, { root: true });
+      dispatch("initializeModule");
     },
   },
 };
