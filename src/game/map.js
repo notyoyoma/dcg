@@ -38,7 +38,7 @@ export default class Map extends GenericLogic {
     // check if floor is deeper than map goes
     if (z > this.data.floors.length - 1) return true;
     // check if coords are larger than map
-    if (y > this.height || x > this.width) return true;
+    if (y > this.height - 1 || x > this.width - 1) return true;
     return false;
   }
 }
