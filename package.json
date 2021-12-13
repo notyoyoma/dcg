@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build && cp -r data dist",
+    "deploy": ". ./deploy.sh",
+    "serve:prod": "yarn build && cd dist && http-server",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "vue-cli-service lint"
@@ -38,6 +40,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
+    "http-server": "^14.0.0",
     "prettier": "^2.2.1",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",

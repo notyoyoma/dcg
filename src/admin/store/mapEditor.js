@@ -89,7 +89,7 @@ export default {
         width: 40,
         height: 40,
       };
-      await axios.post("/data/map", data).catch(console.log);
+      await axios.post("/data/map.json", data).catch(console.log);
       await dispatch("map/loadModuleData", null, { root: true });
       dispatch("initializeModule");
       console.log("Saved to file");

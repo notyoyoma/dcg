@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   props: ["id", "tools"],
@@ -48,7 +48,7 @@ export default {
     },
   }),
   computed: {
-    ...mapGetters("mapEditor", ["currentFloor"]),
+    ...mapState("map", ["currentFloor"]),
   },
 };
 </script>

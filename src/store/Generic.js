@@ -34,7 +34,7 @@ export default class GenericStore {
 
     return {
       async loadModuleData(moduleContext) {
-        const { data } = await axios.get(`/data/${moduleName}`);
+        const { data } = await axios.get(`/data/${moduleName}.json`);
         self.instance = new logicClass(moduleContext, moduleName, data);
         game._addModule(moduleName, self.instance);
       },

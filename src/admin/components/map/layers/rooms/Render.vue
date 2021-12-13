@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import roomIDColors from "./RoomIDColors";
 
 export default {
@@ -25,7 +25,7 @@ export default {
     roomIDColors,
   }),
   computed: {
-    ...mapGetters("mapEditor", ["currentFloor"]),
+    ...mapState("map", ["currentFloor"]),
   },
 };
 </script>

@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const isDevEnv = process.env.NODE_ENV === "development";
 
 module.exports = {
+  publicPath: "/",
   css: {
     loaderOptions: {
       sass: {
@@ -22,7 +23,7 @@ module.exports = {
         // handle READ from data
         app.get("/data/*", (req, res) => {
           const filename = path.basename(req.url);
-          fs.readFile(`./data/${filename}.json`, (_, json) => {
+          fs.readFile(`./data/${filename}`, (_, json) => {
             let obj = JSON.parse(json);
             res.json(obj);
           });
@@ -32,7 +33,7 @@ module.exports = {
         app.post("/data/*", (req, res, next) => {
           const filename = path.basename(req.url);
           fs.writeFile(
-            `./data/${filename}.json`,
+            `./data/${filename}`,
             JSON.stringify(req.body, null, 2),
             "utf8",
             (err) => {

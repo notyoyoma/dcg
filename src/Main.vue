@@ -1,11 +1,15 @@
 <template>
   <LoadingAnimation v-if="loading" />
-  <router-view v-else />
-  <admin-nav v-if="isDevEnv" />
+  <template v-else-if="isDevEnv">
+    <router-view />
+    <admin-nav />
+  </template>
+  <Game v-else />
 </template>
 
 <script>
 import { mapState } from "vuex";
+import Game from "./Game";
 
 import LoadingAnimation from "./components/misc/LoadingAnimation";
 
@@ -13,6 +17,7 @@ export default {
   computed: mapState(["loading", "isDevEnv"]),
   components: {
     LoadingAnimation,
+    Game,
   },
 };
 </script>
