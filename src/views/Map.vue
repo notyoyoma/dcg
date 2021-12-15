@@ -58,9 +58,9 @@
 import { mapState } from "vuex";
 // import keymage from "keymage";
 
-import layers from "@/admin/components/map/layers";
-import WallDefs from "@/admin/components/map/layers/walls/Defs";
-import TileDefs from "@/admin/components/map/layers/genericTile/Defs";
+import layers from "@/components/map/layers";
+import WallDefs from "@/components/map/layers/walls/Defs";
+import TileDefs from "@/components/map/layers/genericTile/Defs";
 
 const visibleLayers = ["walls", "floors"];
 
@@ -73,8 +73,8 @@ export default {
     ...mapState("map", ["width", "height"]),
     ...mapState("party", ["location", "facing"]),
     positionMapTransform() {
-      const transformX = (this.location.x - 20) * -15;
-      const transformY = (this.location.y - 20) * -15;
+      const transformX = (this.location.x - 20) * -15 - 7;
+      const transformY = (this.location.y - 20) * -15 - 7;
       return {
         transform: `translate(${transformX}px, ${transformY}px)`,
       };

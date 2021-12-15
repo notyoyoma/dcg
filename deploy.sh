@@ -3,6 +3,7 @@
 # abort on errors
 set -e
 
+rm -rf dist
 yarn build
 cd dist
 echo 'dcg.martynaselli.com' > CNAME

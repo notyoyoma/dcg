@@ -69,9 +69,9 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 // import keymage from "keymage";
 
-import layers, { renderOrder } from "./layers";
-import WallDefs from "./layers/walls/Defs";
-import TileDefs from "./layers/genericTile/Defs";
+import layers, { renderOrder } from "@/components/map/layers";
+import WallDefs from "@/components/map/layers/walls/Defs";
+import TileDefs from "@/components/map/layers/genericTile/Defs";
 
 export default {
   components: { WallDefs, TileDefs },

@@ -1,8 +1,6 @@
-import cloneDeep from "lodash/cloneDeep";
-import unset from "lodash/unset";
 import set from "lodash/set";
 import { shouldInteract, interactWithLayer } from "./layerLogic";
-import { emptyFloor } from "@/admin/components/map/layers";
+import { emptyFloor } from "@/components/map/layers";
 import game from "@/game";
 import axios from "axios";
 
@@ -37,16 +35,6 @@ export default {
     setFloor(state, floorIndex) {
       state.currentFloorIndex = floorIndex;
     },
-    setMapData(state, { path, val, layerKey }) {
-      let newFloors = [...state.floors];
-      const setPath = [state.currentFloorIndex, layerKey, ...path];
-      if (val === 0) {
-        unset(newFloors, setPath);
-      } else {
-        set(newFloors, setPath, val);
-      }
-      state.floors = newFloors;
-    },
     setMouseHeldDown(state, mouseHeldDown) {
       state.mouseHeldDown = mouseHeldDown;
       if (!mouseHeldDown) {
@@ -60,16 +48,22 @@ export default {
       state.layerValueBin = value;
     },
     setValueAtPath(state, { path, value }) {
-      set(state.floors, path, value);
-      game.map.data.floors = cloneDeep(state.floors);
+      set(game.map.data.floors, path, value);
+      state.floors = [...game.map.data.floors];
       game.map.update({
-        currentFloor: state.floors[state.currentFloorIndex],
+        currentFloor: game.map.data.floors[state.currentFloorIndex],
+      });
+    },
+    updateFromGameData(state) {
+      state.floors = [...game.map.data.floors];
+      game.map.update({
+        currentFloor: game.map.data.floors[state.currentFloorIndex],
       });
     },
   },
   actions: {
-    initializeModule({ state }) {
-      state.floors = cloneDeep(game.map.data.floors);
+    initializeModule({ commit }) {
+      commit("updateFromGameData");
     },
     toggleVisible({ state }, id) {
       const isHidden = state.hideLayers.includes(id);
@@ -84,8 +78,9 @@ export default {
       if (!shouldInteract(event, currentLayerKey, mouseHeldDown)) return;
       interactWithLayer({ event, ...state });
     },
-    addFloor({ rootState }) {
-      rootState.map.floors.push({ ...emptyFloor });
+    addFloor({ dispatch }) {
+      game.map.data.floors.push({ ...emptyFloor });
+      dispatch("initializeModule");
     },
     async writeToFile({ dispatch, state }) {
       const data = {

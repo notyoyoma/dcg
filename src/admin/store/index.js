@@ -22,6 +22,7 @@ const moduleLoadingPromises = Object.keys(gameModules).map((moduleName) =>
 // once all modules have loaded data, initialize them in order
 const adminModules = [...initializeOrder, "mapEditor"];
 Promise.all(moduleLoadingPromises).then(async () => {
+  console.log("ADMIN INITIALIZIATION...");
   const initializePromises = adminModules.map((moduleName) =>
     store.dispatch(`${moduleName}/initializeModule`)
   );

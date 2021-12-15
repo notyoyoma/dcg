@@ -20,6 +20,7 @@ const moduleLoadingPromises = Object.keys(modules).map((moduleName) =>
 
 // once all modules have loaded data, initialize them in order
 Promise.all(moduleLoadingPromises).then(async () => {
+  console.log("INITIALIZING MODULES...");
   const initializePromises = initializeOrder.map((moduleName) =>
     store.dispatch(`${moduleName}/initializeModule`)
   );

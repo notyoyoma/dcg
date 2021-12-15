@@ -7,6 +7,7 @@ export default class Party extends GenericLogic {
     if (game.map.isOutOfBounds(location)) return;
     this.data.location = { ...location };
     this.update("location");
+    this.emit("move");
   }
 
   moveForward() {
@@ -41,6 +42,7 @@ export default class Party extends GenericLogic {
     if (game.map.isOutOfBounds(location)) return;
     this.data.location = location;
     this.update("location");
+    this.emit("move");
   }
 
   turn(delta) {

@@ -38,8 +38,8 @@ export default class GenericStore {
         self.instance = new logicClass(moduleContext, moduleName, data);
         game._addModule(moduleName, self.instance);
       },
-      async initializeModule() {
-        await self.instance.initialize();
+      initializeModule() {
+        self.instance.initialize();
       },
     };
   }

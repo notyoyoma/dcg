@@ -38,7 +38,7 @@ import ChangeFloor from "./ChangeFloor";
 import Layer from "./LayerHandle";
 import Tools from "./Tools";
 
-import layers, { sidebarLayers } from "./layers";
+import layers, { sidebarLayers } from "@/components/map/layers";
 
 export default {
   components: {
@@ -55,14 +55,14 @@ export default {
   },
   methods: {
     ...mapMutations("mapEditor", ["setCurrentLayer"]),
-    ...mapActions("mapEditor", ["writeToFile", "initializeModule"]),
+    ...mapActions("mapEditor", ["writeToFile", "refreshFromFile"]),
     save(e) {
       if (e && e.preventDefault) e.preventDefault();
       this.writeToFile();
     },
     refresh(e) {
       if (e && e.preventDefault) e.preventDefault();
-      this.initializeModule();
+      this.refreshFromFile();
     },
   },
 };
