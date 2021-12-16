@@ -5,6 +5,7 @@ import map from "./map";
 import monsters from "./monsters";
 import npcs from "./npcs";
 import party from "./party";
+import encounter from "./encounter";
 
 export default {
   characters,
@@ -13,12 +14,14 @@ export default {
   monsters,
   npcs,
   party,
+  encounter,
 };
 
 export const initializeOrder = [
   "characters",
   "party",
   "npcs",
+  "encounter",
   "items",
   "monsters",
   "map",

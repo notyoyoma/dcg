@@ -1,3 +1,3 @@
-import GenericLogic from "./Generic";
+import LogicModule from "./LogicModule";
 
-export default class Items extends GenericLogic {}
+export default class Items extends LogicModule {}

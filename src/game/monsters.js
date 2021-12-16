@@ -1,3 +1,3 @@
-import GenericLogic from "./Generic";
+import LogicModule from "./LogicModule";
 
-export default class Monsters extends GenericLogic {}
+export default class Monsters extends LogicModule {}

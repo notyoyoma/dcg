@@ -33,7 +33,7 @@ import game from "@/game";
 export default {
   methods: {
     moveForward() {
-      game.party.moveForward();
+      game.party.move();
     },
     turn(delta) {
       game.party.turn(delta);

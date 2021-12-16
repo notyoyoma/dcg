@@ -4,6 +4,7 @@ import Map from "./map";
 import Monsters from "./monsters";
 import Npcs from "./npcs";
 import Party from "./party";
+import Encounter from "./encounter";
 
 export default {
   Characters,
@@ -12,4 +13,5 @@ export default {
   Monsters,
   Npcs,
   Party,
+  Encounter,
 };

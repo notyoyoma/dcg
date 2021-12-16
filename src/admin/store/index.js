@@ -1,6 +1,7 @@
 import Vuex from "vuex";
 import gameModules, { initializeOrder } from "@/store/modules";
 import mapEditor from "./mapEditor";
+import game from "@/game";
 
 const store = new Vuex.Store({
   state: () => ({
@@ -22,13 +23,14 @@ const moduleLoadingPromises = Object.keys(gameModules).map((moduleName) =>
 // once all modules have loaded data, initialize them in order
 const adminModules = [...initializeOrder, "mapEditor"];
 Promise.all(moduleLoadingPromises).then(async () => {
-  console.log("ADMIN INITIALIZIATION...");
+  console.log("ADMIN INITIALIZING (this should never appear in prod)");
   const initializePromises = adminModules.map((moduleName) =>
     store.dispatch(`${moduleName}/initializeModule`)
   );
   await Promise.all(initializePromises);
 
   // done loading. display UI
+  game.bindCoreEvents();
   store.commit("setLoading");
 });
 

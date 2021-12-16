@@ -1,16 +1,17 @@
-import GenericLogic from "./Generic";
-import game from "@/game";
+import LogicModule from "./LogicModule";
+import game, { event } from "@/game";
 import get from "lodash/get";
 
-export default class Party extends GenericLogic {
+export default class Party extends LogicModule {
   teleport(location) {
     if (game.map.isOutOfBounds(location)) return;
     this.data.location = { ...location };
     this.update("location");
-    this.emit("move");
+    this.emit("Party.after.move");
   }
 
-  moveForward() {
+  @event
+  move() {
     // get the party's location and direction facing
     const { x, y, z } = this.data.location;
     const { facing } = this.data;
@@ -42,7 +43,6 @@ export default class Party extends GenericLogic {
     if (game.map.isOutOfBounds(location)) return;
     this.data.location = location;
     this.update("location");
-    this.emit("move");
   }
 
   turn(delta) {

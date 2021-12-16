@@ -96,6 +96,7 @@ export default {
     async refreshFromFile({ dispatch }) {
       await dispatch("map/loadModuleData", null, { root: true });
       dispatch("initializeModule");
+      console.log("Reloaded from file");
     },
   },
 };

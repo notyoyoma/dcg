@@ -1,8 +1,8 @@
 import set from "lodash/set";
-import GenericLogic from "./Generic";
+import LogicModule from "./LogicModule";
 import game from "./index.js";
 
-export default class Map extends GenericLogic {
+export default class Map extends LogicModule {
   width = 40;
   height = 40;
 

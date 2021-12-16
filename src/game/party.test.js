@@ -5,6 +5,6 @@ test("teleport", () => {
 });
 
 test("move", () => {
-  game.party.moveForward();
+  game.party.move();
   expect(game.party.data.location).toMatchObject({ x: 1, y: 2, z: 0 });
 });
