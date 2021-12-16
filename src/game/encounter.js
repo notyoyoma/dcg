@@ -25,7 +25,8 @@ export class activeEncounter {
   }
 
   spawn() {
-    this.monsters = []; // TODO - rng spawn
+    const { roomId, floor } = this;
+    this.monsters = game.monsters.spawn({ roomId, floor });
     this.hostility = 1; // TODO - rng
     this.log = []; // TODO flavor text based on above
     this.spawned = format(new Date(), dtf);

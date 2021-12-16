@@ -3,27 +3,29 @@
     {
       "name": "tyke",
       "stats": {
-        "maxHp": 10,
+        "hp": 10,
         "attack": 3,
         "defence": 0,
         "loot": 150
       },
+      "maxSpawn": 2,
       "alignments": ["neutral", "good"]
     },
     {
       "name": "kobold",
       "stats": {
-        "maxHp": 15,
+        "hp": 15,
         "attack": 5,
         "defence": 2,
         "loot": 350
       },
+      "maxSpawn": 7,
       "alignments": ["neutral", "good"]
     },
     {
       "name": "giantSpider",
       "stats": {
-        "maxHp": 8,
+        "hp": 8,
         "attack": 3,
         "defence": 0,
         "loot": 250
@@ -32,12 +34,13 @@
         "potential": 0.5,
         "strength": 1
       },
-      "alignments": "evil"
+      "maxSpawn": 5,
+      "alignments": ["evil"]
     },
     {
       "name": "aboleth",
       "stats": {
-        "maxHp": 30,
+        "hp": 30,
         "attack": 3,
         "defence": 0,
         "loot": 5000
@@ -46,7 +49,17 @@
         "potential": 0.8,
         "strength": 5
       },
-      "alignments": "evil"
+      "maxSpawn": 3,
+      "alignments": ["evil"]
     }
-  ]
+  ],
+  "monsterParties": {
+    "tyke": ["tyke"],
+    "2tykes": ["tyke", "tyke"],
+    "3tykes": ["tyke", "tyke", "tyke"],
+    "giantSpider": ["giantSpider"],
+    "2giantSpiders": ["giantSpider", "giantSpider"],
+    "kobold": ["kobold"],
+    "aboleth": ["aboleth"]
+  }
 }
