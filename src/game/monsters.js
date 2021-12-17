@@ -1,26 +1,136 @@
+import get from "lodash/get";
+import zip from "lodash/zip";
+import fill from "lodash/fill";
 import game from "@/game";
 import LogicModule from "./LogicModule";
-import { roll, fairRoll, statsRoll } from "@/utils/rng";
+import { roll, fairRoll, statsRoll, rollArray } from "@/utils/rng";
+import { objectReduce } from "@/utils/object";
 
 export class Monster {
-  constructor(id, floor) {
-    const { name, stats, spells, maxSpawn, alignments } =
-      game.monsters.data.monsters[id];
+  constructor(id) {
+    this.baseMonster = game.monsters.data.monsters.find(
+      ({ name }) => name === id
+    );
+    if (!this.baseMonster) throw `monsters[name: ${id}] not found`;
+    const { name, spells } = this.baseMonster;
     this.name = name;
     this.spells = spells;
+  }
+
+  initialize(floor) {
+    const { stats, maxSpawn, alignments } = this.baseMonster;
     this.stats = statsRoll(stats, floor);
     this.count = roll(maxSpawn);
-    this.alive = true;
+    this.alive = this.count;
     this.loot = this.stats.loot * this.count;
+    this.alignment = rollArray(alignments);
+  }
+
+  load(prevObj) {
+    this.stats = prevObj.stats;
+    this.count = prevObj.count;
+    this.alive = prevObj.alive;
+    this.loot = prevObj.loot;
+    this.alignment = prevObj.alignment;
+  }
+
+  serialize() {
+    return {};
+  }
+}
+
+class BaseMonsterParty {
+  constructor() {
+    // game.on(
+    //   "Encounter.after.start",
+    //   "MonsterParty.rollInitiative",
+    //   this.rollInitiative
+    // );
+  }
+
+  // rollInitiative() {}
+
+  get areDead() {
+    return !this.party.some(({ alive }) => alive);
+  }
+
+  get textSummary() {
+    const remainingMonsters = {};
+    let dead = 0;
+    this.party.forEach(({ name, count, alive }) => {
+      const deadCount = count - alive;
+      if (deadCount) {
+        dead += deadCount;
+      }
+      if (alive) {
+        if (!remainingMonsters[name]) remainingMonsters[name] = 0;
+        remainingMonsters[name] += alive;
+      }
+    });
+
+    const alive = objectReduce(remainingMonsters, (r, v) => (r += v), 0);
+    let summary = Object.keys(remainingMonsters)
+      .map((name) => {
+        const count = remainingMonsters[name];
+        return `${count} ${name}${count > 1 ? "s" : ""}`;
+      })
+      .join(", and ");
+    if (dead)
+      summary += `${summary ? " and " : ""}${dead} dead monster${
+        dead > 1 ? "s" : ""
+      }`;
+    const areIs = alive > 1 || dead > 1 ? "are" : "is";
+    return `There ${areIs} ${summary} in the room.`;
+  }
+}
+
+export class MonsterParty extends BaseMonsterParty {
+  constructor(partyId, floor) {
+    super();
+    const monsterIds = game.monsters.data.monsterParties[partyId];
+    if (!monsterIds) throw `monsterParties[${partyId}] not found`;
+    this.party = monsterIds.map((id) => {
+      const monster = new Monster(id);
+      monster.initialize(floor);
+      return monster;
+    });
+  }
+}
+
+export class OldMonsterParty extends BaseMonsterParty {
+  constructor(previousParty) {
+    super();
+    this.party = previousParty.party.map((data) => {
+      const monster = new Monster(data.name);
+      monster.load(data);
+      return monster;
+    });
   }
 }
 
 export default class Monsters extends LogicModule {
   spawn({ roomId, floor }) {
-    const floorMonsters = game.map.data.floors[floor].monsters;
-    const roomMonsters = game.map.data.floors[floor].rooms[roomId].monsterTable;
+    const floorMonstersArr = game.map.data.floors[floor].monsters;
+    const floorMonsters = zip(
+      fill(Array(floorMonstersArr.length - 1), 1),
+      floorMonstersArr
+    );
+
+    const roomMonsters = get(
+      game.map.data.floors[floor].rooms,
+      [roomId, "monsterTable"],
+      []
+    );
     // const questMonsters = game.party.characterQuests; // TODO feature/quests
-    const monsterParty = fairRoll([...floorMonsters, ...roomMonsters]);
-    return monsterParty.map((id) => new Monster(id, floor));
+    return new MonsterParty(
+      // roll for which monster party to spawn
+      fairRoll([...floorMonsters, ...roomMonsters]),
+      // set difficulty based on floor
+      floor
+    );
+  }
+
+  respawn(previous) {
+    return new OldMonsterParty(previous);
   }
 }

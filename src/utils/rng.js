@@ -38,11 +38,24 @@ export function statsRoll(statsObj, floor) {
     const baseValue = statsObj[key];
     const halfBase = Math.round(baseValue / 2);
     const statRoll = halfBase + roll(baseValue);
-    rollResult[key] = statRoll * Math.min(1, floor);
+    rollResult[key] = statRoll * Math.max(1, floor);
   });
   return rollResult;
 }
 
+// min = 1
 export function roll(max) {
-  return Math.round(max * Math.random());
+  return Math.ceil(max * Math.random());
+}
+
+export function rollArray(arr) {
+  // because arrays are 0 indexed, use Math.floor
+  // this returns 0 - (arr.length-1),
+  // therefore, randomly picks one of the items of the array
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+export function rollObject(obj) {
+  const key = rollArray(Object.keys(obj));
+  return obj[key];
 }

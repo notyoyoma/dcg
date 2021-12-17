@@ -16,6 +16,8 @@ export class Game extends EventBus {
         this.on(eventName, `CORE.${className}.${fnName}`, fn.bind(instance));
       }
     );
+
+    this.emit("Game.loaded");
   }
 }
 
@@ -39,12 +41,25 @@ export function on(eventName) {
   return function (classProto, fnName, descriptor) {
     const className = classProto.constructor.name;
     const moduleName = className.toLowerCase();
-    game.queueCoreEventListener({
-      eventName,
-      className,
-      fnName,
-      moduleName,
-      fn: descriptor.value,
-    });
+    if (typeof eventNames === "string") {
+      game.queueCoreEventListener({
+        eventName,
+        className,
+        fnName,
+        moduleName,
+        fn: descriptor.value,
+      });
+    }
+    if (Array.isArray(eventName)) {
+      eventName.forEach((e) => {
+        game.queueCoreEventListener({
+          eventName: e,
+          className,
+          fnName,
+          moduleName,
+          fn: descriptor.value,
+        });
+      });
+    }
   };
 }

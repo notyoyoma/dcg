@@ -5,15 +5,15 @@ import { create } from "vuex-mock-context";
 import gameData from "./data";
 import { capitalize } from "@/utils/string";
 
-const Game = jest.requireActual("@/game").Game;
-const game = new Game();
+const GameModule = jest.requireActual("@/game");
+const game = new GameModule.Game();
 global.game = game;
 
 jest.doMock("@/game", () => {
   return {
     __esModule: true,
+    ...GameModule,
     default: global.game,
-    Game,
   };
 });
 

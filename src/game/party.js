@@ -7,7 +7,7 @@ export default class Party extends LogicModule {
     if (game.map.isOutOfBounds(location)) return;
     this.data.location = { ...location };
     this.update("location");
-    this.emit("Party.after.move");
+    game.emit("Party.after.move");
   }
 
   @event

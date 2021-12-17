@@ -1,6 +1,6 @@
 import { format, parse, differenceInMinutes as diff } from "date-fns";
 import LogicModule from "./LogicModule";
-import game, { on } from "@/game";
+import game, { event, on } from "@/game";
 
 const dtf = "yyyy-MM-dd:HH:mm:ss";
 
@@ -13,6 +13,8 @@ export class activeEncounter {
     this.roomId = roomId;
     this.key = `${floor},${roomId}`;
 
+    if (!roomId) return;
+
     const previous = game.encounter.data.previous[this.key];
     const now = new Date();
     if (previous && !previous.cleared) {
@@ -22,6 +24,16 @@ export class activeEncounter {
     } else {
       this.spawn();
     }
+
+    if (this.monsters.totalLoot > 5000) {
+      this.addLog = "There is a massive chest in the room!";
+    } else if (this.monsters.totalLoot > 2000) {
+      this.addLog = "There is a chest in the room!";
+    } else if (this.monsters.totalLoot > 1000) {
+      this.addLog = "There is a small chest in the room!";
+    }
+
+    this.start();
   }
 
   spawn() {
@@ -30,35 +42,50 @@ export class activeEncounter {
     this.hostility = 1; // TODO - rng
     this.log = []; // TODO flavor text based on above
     this.spawned = format(new Date(), dtf);
+    this.addLog = "You walk in the room";
   }
 
   reload(previous) {
     const { monsters, log, hostility, spawned } = previous;
-    this.monsters = monsters;
+    this.monsters = game.monsters.respawn(monsters);
     this.hostility = hostility;
     this.log = log;
     this.spawned = spawned;
-    this.log.push(""); // TODO flavor text
+    this.addLog = "You walk back in the room";
   }
 
-  serialize() {
-    const { key, hostility, monsters, spawned, log } = this;
-    return [
-      key,
-      {
-        hostility,
-        monsters,
-        spawned,
-        log: log.slice(-5), // only preserve the last 5 log messages
+  @event
+  start() {
+    this.addLog = this.monsters.textSummary;
+    if (!this.monsters.areDead) this.addLog = this.monsterBehaviorSummary;
+  }
+
+  get monsterBehaviorSummary() {
+    if (this.hostility > 0.5) return "The monsters attack!";
+    if (this.hostility < -0.9) return "The monsters offer to join!";
+    if (this.hostility > 0) return "The monsters glare at you...";
+    return "The monsters look at you warily...";
+  }
+
+  set addLog(string) {
+    this.log.push(string);
+    game.encounter.update();
+  }
+
+  get toObj() {
+    return {
+      ...this,
+      monsters: {
+        party: this.monsters.party.map((monster) => ({ ...monster })),
       },
-    ];
+    };
   }
 }
 
 export default class Encounter extends LogicModule {
   current = null;
 
-  @on("Party.after.move")
+  @on(["Game.loaded", "Party.after.move"])
   checkRoom() {
     const { x, y, z } = game.party.data.location;
     const roomId = game.map.data.floors[z].roomCoords[y][x];
@@ -84,7 +111,9 @@ export default class Encounter extends LogicModule {
   }
 
   unloadCurrentEncounter() {
-    const [key, obj] = this.current.serialize();
-    this.data.previous[key] = obj;
+    const { key } = this.current;
+    const object = this.current.toObj;
+    if (object.spawned) this.data.previous[key] = object;
+    this.current = null;
   }
 }
