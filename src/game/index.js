@@ -1,6 +1,8 @@
 import EventBus from "./EventBus";
 
 export class Game extends EventBus {
+  coreEventQueue = [];
+
   _addModule(moduleName, instance) {
     this[moduleName] = instance;
   }

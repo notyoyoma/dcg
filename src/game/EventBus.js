@@ -1,6 +1,5 @@
 export default class EventBus {
   eventListeners = {};
-  coreEventQueue = [];
 
   constructor(moduleName) {
     this.moduleName = moduleName;
