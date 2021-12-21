@@ -13,6 +13,30 @@
       "alignments": ["neutral", "good"]
     },
     {
+      "name": "skrug",
+      "stats": {
+        "hp": 10,
+        "attack": 5,
+        "defence": 3,
+        "loot": 10,
+        "intelligence": 7
+      },
+      "maxSpawn": 4,
+      "alignments": ["neutral", "evil"]
+    },
+    {
+      "name": "rat",
+      "stats": {
+        "hp": 12,
+        "attack": 6,
+        "defence": 1,
+        "loot": 200,
+        "intelligence": 7
+      },
+      "maxSpawn": 5,
+      "alignments": ["good", "evil"]
+    },
+    {
       "name": "kobold",
       "stats": {
         "hp": 15,
@@ -61,6 +85,11 @@
     "tyke": ["tyke"],
     "2tykes": ["tyke", "tyke"],
     "3tykes": ["tyke", "tyke", "tyke"],
+    "skrug": ["skrug"],
+    "2skrugs": ["skrug", "skrug"],
+    "rat": ["rat"],
+    "2rats": ["rat", "rat"],
+    "3rats": ["rat", "rat", "rat"],
     "giantSpider": ["giantSpider"],
     "2giantSpiders": ["giantSpider", "giantSpider"],
     "kobold": ["kobold"],

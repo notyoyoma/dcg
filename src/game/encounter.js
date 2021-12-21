@@ -39,11 +39,19 @@ export class ActiveEncounter {
       game.party.party
     );
     this.hostility = rand * feelings;
+    console.log(
+      `${feelings} * ${Math.round(rand * 100) / 100} = ${
+        Math.round(this.hostility * 100) / 100
+      }`
+    );
     this.log = []; // TODO flavor text based on above
     this.spawned = format(new Date(), dtf);
     this.looted = false;
   }
 
+  /**
+   * @param  {} previous = raw js object of previous encounter
+   */
   reload(previous) {
     const { monsters, log, hostility, spawned } = previous;
     this.monsters = game.monsters.respawn(monsters);
@@ -61,8 +69,14 @@ export class ActiveEncounter {
   }
 
   get monsterBehaviorSummary() {
-    if (this.hostility > 0.3) return "The monsters attack!";
-    if (this.hostility < -0.8) return "The monsters offer to join!";
+    if (this.hostility > 0.2) {
+      console.log("MONSTERS ATTACK");
+      return "The monsters attack!";
+    }
+    if (this.hostility < -0.8) {
+      console.log("MONSTERS JOIN");
+      return "The monsters offer to join!";
+    }
     if (this.hostility > 0) return "The monsters glare at you...";
     return "The monsters look at you warily...";
   }
@@ -115,16 +129,18 @@ export default class Encounter extends LogicModule {
       currentEncounter: this.current,
     });
   }
-
+  /**
+   * @param  {} floor - index to access game.map.data.floors[floor]
+   * @param  {} roomId - id to access game.map.data.floors[floor].rooms[roomId]
+   */
   loadEncounter(floor, roomId) {
     this.current = new ActiveEncounter(floor, roomId);
     this.update();
   }
 
   unloadCurrentEncounter() {
-    const { key } = this.current;
     const object = this.current.toObj;
-    if (object.spawned) this.data.previous[key] = object;
+    if (object.spawned) this.data.previous[object.key] = object;
     this.current = null;
   }
 }

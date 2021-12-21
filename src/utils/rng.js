@@ -53,6 +53,11 @@ export function randomGausian() {
   return (Math.random() + Math.random() + Math.random()) / 3;
 }
 
+// min = 1
+export function rollGausian(max) {
+  return Math.ceil(randomGausian() * max);
+}
+
 export function rollArray(arr) {
   // because arrays are 0 indexed, use Math.floor
   // this returns 0 - (arr.length-1),

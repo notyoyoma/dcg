@@ -3,7 +3,7 @@ import zip from "lodash/zip";
 import fill from "lodash/fill";
 import game from "@/game";
 import LogicModule from "./LogicModule";
-import { roll, fairRoll, statsRoll, rollArray } from "@/utils/rng";
+import { rollGausian, fairRoll, statsRoll, rollArray } from "@/utils/rng";
 import { objectReduce } from "@/utils/object";
 
 export class Monster {
@@ -20,7 +20,7 @@ export class Monster {
   initialize(floor) {
     const { stats, maxSpawn, alignments } = this.baseMonster;
     this.stats = statsRoll(stats, floor);
-    this.count = roll(maxSpawn);
+    this.count = rollGausian(maxSpawn);
     this.alive = this.count;
     this.loot = this.stats.loot * this.count;
     this.alignment = rollArray(alignments);
@@ -104,7 +104,7 @@ export default class Monsters extends LogicModule {
   spawn({ roomId, floor }) {
     const floorMonstersArr = game.map.data.floors[floor].monsters;
     const floorMonsters = zip(
-      fill(Array(floorMonstersArr.length - 1), 1),
+      fill(Array(floorMonstersArr.length), 1),
       floorMonstersArr
     );
 
