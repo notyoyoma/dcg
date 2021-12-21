@@ -13,6 +13,7 @@ export function weightedRoll(arrayOfOptions) {
   return ids[ids.length - 1];
 }
 
+// TODO rework to a class
 const fairnessHistory = {};
 export function fairRoll(arrayOfOptions, rollId) {
   // if there are fewer than 5 items, just do the weighted roll.
@@ -46,6 +47,10 @@ export function statsRoll(statsObj, floor) {
 // min = 1
 export function roll(max) {
   return Math.ceil(max * Math.random());
+}
+
+export function randomGausian() {
+  return (Math.random() + Math.random() + Math.random()) / 3;
 }
 
 export function rollArray(arr) {

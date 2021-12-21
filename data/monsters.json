@@ -6,7 +6,8 @@
         "hp": 10,
         "attack": 3,
         "defence": 0,
-        "loot": 150
+        "loot": 150,
+        "intelligence": 5
       },
       "maxSpawn": 2,
       "alignments": ["neutral", "good"]
@@ -17,7 +18,8 @@
         "hp": 15,
         "attack": 5,
         "defence": 2,
-        "loot": 350
+        "loot": 350,
+        "intelligence": 7
       },
       "maxSpawn": 7,
       "alignments": ["neutral", "good"]
@@ -28,7 +30,8 @@
         "hp": 8,
         "attack": 3,
         "defence": 0,
-        "loot": 250
+        "loot": 250,
+        "intelligence": 5
       },
       "poison": {
         "potential": 0.5,
@@ -43,7 +46,8 @@
         "hp": 30,
         "attack": 3,
         "defence": 0,
-        "loot": 5000
+        "loot": 5000,
+        "intelligence": 13
       },
       "poison": {
         "potential": 0.8,

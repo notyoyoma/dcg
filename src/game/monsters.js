@@ -40,15 +40,7 @@ export class Monster {
 }
 
 class BaseMonsterParty {
-  constructor() {
-    // game.on(
-    //   "Encounter.after.start",
-    //   "MonsterParty.rollInitiative",
-    //   this.rollInitiative
-    // );
-  }
-
-  // rollInitiative() {}
+  constructor() {}
 
   get areDead() {
     return !this.party.some(({ alive }) => alive);

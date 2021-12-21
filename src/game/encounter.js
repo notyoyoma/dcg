@@ -1,10 +1,12 @@
 import { format, parse, differenceInMinutes as diff } from "date-fns";
 import LogicModule from "./LogicModule";
 import game, { event, on } from "@/game";
+import { partyFeelsTowardParty } from "@/utils/alignment";
+import { randomGausian } from "@/utils/rng";
 
 const dtf = "yyyy-MM-dd:HH:mm:ss";
 
-export class activeEncounter {
+export class ActiveEncounter {
   log = [];
   respawn = 15; // minutes
 
@@ -25,24 +27,21 @@ export class activeEncounter {
       this.spawn();
     }
 
-    if (this.monsters.totalLoot > 5000) {
-      this.addLog = "There is a massive chest in the room!";
-    } else if (this.monsters.totalLoot > 2000) {
-      this.addLog = "There is a chest in the room!";
-    } else if (this.monsters.totalLoot > 1000) {
-      this.addLog = "There is a small chest in the room!";
-    }
-
     this.start();
   }
 
   spawn() {
     const { roomId, floor } = this;
     this.monsters = game.monsters.spawn({ roomId, floor });
-    this.hostility = 1; // TODO - rng
+    const rand = randomGausian();
+    const feelings = partyFeelsTowardParty(
+      this.monsters.party,
+      game.party.party
+    );
+    this.hostility = rand * feelings;
     this.log = []; // TODO flavor text based on above
     this.spawned = format(new Date(), dtf);
-    this.addLog = "You walk in the room";
+    this.looted = false;
   }
 
   reload(previous) {
@@ -57,14 +56,26 @@ export class activeEncounter {
   @event
   start() {
     this.addLog = this.monsters.textSummary;
+    this.lootSummary();
     if (!this.monsters.areDead) this.addLog = this.monsterBehaviorSummary;
   }
 
   get monsterBehaviorSummary() {
-    if (this.hostility > 0.5) return "The monsters attack!";
-    if (this.hostility < -0.9) return "The monsters offer to join!";
+    if (this.hostility > 0.3) return "The monsters attack!";
+    if (this.hostility < -0.8) return "The monsters offer to join!";
     if (this.hostility > 0) return "The monsters glare at you...";
     return "The monsters look at you warily...";
+  }
+
+  lootSummary() {
+    if (this.looted) return;
+    if (this.monsters.totalLoot > 5000) {
+      this.addLog = "There is a massive chest in the room!";
+    } else if (this.monsters.totalLoot > 2000) {
+      this.addLog = "There is a chest in the room!";
+    } else if (this.monsters.totalLoot > 1000) {
+      this.addLog = "There is a small chest in the room!";
+    }
   }
 
   set addLog(string) {
@@ -106,7 +117,7 @@ export default class Encounter extends LogicModule {
   }
 
   loadEncounter(floor, roomId) {
-    this.current = new activeEncounter(floor, roomId);
+    this.current = new ActiveEncounter(floor, roomId);
     this.update();
   }
 

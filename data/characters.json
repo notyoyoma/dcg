@@ -4,13 +4,21 @@
       "name": "Bjarne",
       "health": 50,
       "spellPoints": 10,
-      "currentAction": "Attack"
+      "currentAction": "Attack",
+      "alignment": "good",
+      "stats": {
+        "charisma": 10
+      }
     },
     {
       "name": "Guido",
       "health": 30,
       "spellPoints": 60,
-      "currentAction": "Cast 'Fireball'"
+      "currentAction": "Cast 'Fireball'",
+      "alignment": "good",
+      "stats": {
+        "charisma": 10
+      }
     }
   ]
 }
