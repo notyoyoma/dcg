@@ -1,6 +1,6 @@
 # dcg2
 
-[view in production](https://dcg.martynaselli.com);
+[view in production](https://dcg.martynaselli.com)
 
 ## Project setup
 
