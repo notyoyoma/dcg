@@ -1,24 +1,36 @@
 # dcg2
 
+[view in production](https://dcg.martynaselli.com);
+
 ## Project setup
+
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Dev server
+
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+### Production build
+
 ```
 yarn build
 ```
 
-### Lints and fixes files
+### Deploy to github pages
+
 ```
-yarn lint
+yarn deploy
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Run tests
+
+```
+yarn test
+
+# watch for changes and rerun tests
+yarn test:watch
+```
