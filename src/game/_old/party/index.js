@@ -33,7 +33,7 @@ export default class Party {
       this.game.store.commit("party/set", this.characters);
       this.game.store.commit("character/set", this.characters[0]);
     } else {
-      // TODO -- open character creation screen
+      // OLD -- open character creation screen
     }
   }
 
@@ -49,7 +49,7 @@ export default class Party {
       }
       this.currentCharacter = this.characters[0];
     } else {
-      //TODO - create character modal
+      //OLD - create character modal
     }
   }
 

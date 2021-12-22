@@ -43,7 +43,6 @@ export class Layer {
   setData(path, val) {
     if (get(this.data, path) != val) {
       this.setter("setMapData", { path, val, layerKey: this.id });
-      // TODO - why not add layerKey to the path here?
     }
   }
 

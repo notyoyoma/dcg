@@ -14,7 +14,7 @@ export default class Map {
   loadFloor() {
     const currentFloorId = get(this.game, "store.party.state.location.z", 0);
     this.currentFloor = get(this.floors, currentFloorId);
-    // TODO -- set to only show what the party has mapped. (will need to store that data separately)
+    // OLD -- set to only show what the party has mapped. (will need to store that data separately)
     this.game.store.commit("visibleMap/set", this.currentFloor);
   }
 

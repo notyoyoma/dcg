@@ -46,6 +46,14 @@ class BaseMonsterParty {
     return !this.party.some(({ alive }) => alive);
   }
 
+  behaviorSummary(hostility) {
+    // TODO - add flavor to monsters.json and system for rolling for it
+    if (hostility > 0.2) return "The monsters attack!";
+    if (hostility > 0) return "The monsters glare at you...";
+    if (hostility < -0.8) return "The monsters offer to join!";
+    return "The monsters look at you warily...";
+  }
+
   get textSummary() {
     const remainingMonsters = {};
     let dead = 0;

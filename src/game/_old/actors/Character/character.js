@@ -204,12 +204,12 @@ export default class Character {
     if (curGuild.exp >= curGuild.expNextLvl) {
       curGuild.lvl += 1;
       this.setExp();
-      // TODO - if guild quest for lvl, assign
-      // TODO - else probability asign random quest
-      // TODO - increase maxHP based on guild settings
-      // TODO - increase maxMana based on guild settings
-      // TODO - increase learnedStats based on guild settings
-      // TODO - add new spells from guild lvl
+      // OLD - if guild quest for lvl, assign
+      // OLD - else probability asign random quest
+      // OLD - increase maxHP based on guild settings
+      // OLD - increase maxMana based on guild settings
+      // OLD - increase learnedStats based on guild settings
+      // OLD - add new spells from guild lvl
     }
   }
 
@@ -251,7 +251,6 @@ export default class Character {
     return Math.trunc(xp);
   }
 
-  // TODO - write tests
   getInfluence(withAlignment) {
     let magnitude = Math.max(
       this.activeStats.attack,
@@ -278,7 +277,6 @@ export default class Character {
     return Math.min(50, magnitude * effect);
   }
 
-  // TODO - write tests
   getActionPriority() {
     return Math.max(this.stats.dexterity, this.stats.intelligence);
   }

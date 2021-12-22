@@ -10,7 +10,7 @@ class Logger {
     ];
     this.streams = {};
     this.maxStreamLength = 100;
-    // TODO -- find alert module
+    // OLD -- find alert module
     // this.modal = alert;
 
     for (let type of this.types) {

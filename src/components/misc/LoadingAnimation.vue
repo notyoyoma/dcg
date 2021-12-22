@@ -222,7 +222,7 @@
         </g>
       </g>
     </svg>
-    <h1 class="ms-4">Loading</h1>
+    <h1 class="ms-4">LOADING...</h1>
   </div>
 </template>
 

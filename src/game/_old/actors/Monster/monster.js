@@ -1,10 +1,9 @@
-import monsters from './monsters.json';
-import { getData } from 'App/game/world';
+import monsters from "./monsters.json";
+import { getData } from "App/game/world";
 
 const monsters = {};
-getData('monsters', ({data}) => monsters = data);
+getData("monsters", ({ data }) => (monsters = data));
 
-// TODO - write tests
 export default class Monster {
   constructor(id) {
     this.race = id;
@@ -18,7 +17,8 @@ export default class Monster {
     if (typeof race.alignments == "string") {
       this.alignment = race.alignments;
     } else {
-      this.alignment = race.alignments[ Math.floor( Math.random() * race.alignments.length) ];
+      this.alignment =
+        race.alignments[Math.floor(Math.random() * race.alignments.length)];
     }
   }
 
@@ -29,8 +29,8 @@ export default class Monster {
       let prop = race.stats[propKey];
       if (typeof prop == "number") {
         let min = prop / 2,
-            max = prop + min;
-        this.stats[propKey] = Math.floor( Math.random() * (max - min) + min );
+          max = prop + min;
+        this.stats[propKey] = Math.floor(Math.random() * (max - min) + min);
       } else {
         this.stats[propKey] = prop;
       }
@@ -50,8 +50,8 @@ export default class Monster {
     // Get a random number between 0 and 200
     // If that number minus the monster's hostility (double negative) is greater than 210
     // the creature will offer to join
-    if (this.hostility < 0 && (Math.random() * 200 - this.hostility) > 210) {
-      // TODO join modal
+    if (this.hostility < 0 && Math.random() * 200 - this.hostility > 210) {
+      // OLD join modal
     }
   }
 }

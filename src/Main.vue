@@ -67,3 +67,7 @@ h3 {
 </style>
 
 <style src="@/styles/main.scss" lang="scss"></style>
+
+<style lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Abel&family=Fondamento:ital@0;1&display=swap");
+</style>

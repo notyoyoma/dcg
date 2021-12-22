@@ -9,7 +9,6 @@ import compact from "lodash/compact";
 import flatten from "lodash/flatten";
 import difference from "lodash/difference";
 
-// TODO - This is not final code, move this into game module
 class Room {
   constructor(data) {
     Object.assign(this, { ...this.defaults, ...data });

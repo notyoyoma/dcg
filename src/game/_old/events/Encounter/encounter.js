@@ -9,7 +9,7 @@ const settings = {
   actionRoundTime: 1000,
 };
 
-// TODO - write tests
+// OLD - write tests
 export default class Encounter {
   constructor(zone, party) {
     this.zone = zone;
@@ -48,9 +48,9 @@ export default class Encounter {
    *
    */
   actionRound() {
-    // TODO - calculate which actors act first
-    // TODO - run actors actions
-    // TODO - remove dead actors
+    // OLD - calculate which actors act first
+    // OLD - run actors actions
+    // OLD - remove dead actors
     if (!encounterOver()) {
       this.triggerNextRound();
     }

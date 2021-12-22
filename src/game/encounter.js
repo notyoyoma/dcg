@@ -42,6 +42,7 @@ export class ActiveEncounter {
     this.log = []; // TODO flavor text based on above
     this.spawned = format(new Date(), dtf);
     this.looted = false;
+    this.addLog = this.monsters.textSummary;
   }
 
   /**
@@ -58,24 +59,13 @@ export class ActiveEncounter {
 
   @event // ActiveEncounter.before.start ActiveEncounter.before.start
   start() {
-    this.addLog = this.monsters.textSummary;
-    this.lootSummary();
-    if (!this.monsters.areDead) this.addLog = this.monsterBehaviorSummary;
+    if (!this.looted) this.lootSummary();
+    if (!this.monsters.areDead)
+      this.addLog = this.monsters.behaviorSummary(this.hostility);
   }
 
   @event // ActiveEncounter.before.end, ActiveEncounter.after.end
   end() {}
-
-  get monsterBehaviorSummary() {
-    if (this.hostility > 0.2) {
-      return "The monsters attack!";
-    }
-    if (this.hostility < -0.8) {
-      return "The monsters offer to join!";
-    }
-    if (this.hostility > 0) return "The monsters glare at you...";
-    return "The monsters look at you warily...";
-  }
 
   lootSummary() {
     if (this.looted) return;
