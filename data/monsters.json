@@ -85,6 +85,7 @@
     "tyke": ["tyke"],
     "2tykes": ["tyke", "tyke"],
     "3tykes": ["tyke", "tyke", "tyke"],
+    "4tykes": ["tyke", "tyke", "tyke", "tyke"],
     "skrug": ["skrug"],
     "2skrugs": ["skrug", "skrug"],
     "rat": ["rat"],

@@ -5,6 +5,7 @@ import game from "@/game";
 import LogicModule from "./LogicModule";
 import { rollGausian, statsRoll, rollArray, FairRoll } from "@/utils/rng";
 import { objectReduce } from "@/utils/object";
+import pluralize from "pluralize";
 
 export class Monster {
   constructor(id) {
@@ -72,7 +73,7 @@ class BaseMonsterParty {
     let summary = Object.keys(remainingMonsters)
       .map((name) => {
         const count = remainingMonsters[name];
-        return `${count} ${name}${count > 1 ? "s" : ""}`;
+        return `${count} ${pluralize(name, count)}`;
       })
       .join(", and ");
     if (dead)

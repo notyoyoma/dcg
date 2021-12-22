@@ -2992,7 +2992,7 @@
           "lootTable": []
         }
       },
-      "monsters": ["tyke", "skrug", "rat"]
+      "monsters": ["tyke", "skrug", "rat", "4tykes"]
     },
     {
       "floors": [[]],

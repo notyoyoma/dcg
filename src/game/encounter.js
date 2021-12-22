@@ -84,7 +84,6 @@ export class ActiveEncounter {
   }
 
   get toObj() {
-    this.end();
     return {
       ...this,
       monsters: {
@@ -114,7 +113,7 @@ export default class Encounter extends LogicModule {
 
   update() {
     this.context.commit("setState", {
-      currentEncounter: this.current,
+      currentEncounter: this.current ? this.current.toObj : {},
     });
   }
   /**
@@ -128,6 +127,7 @@ export default class Encounter extends LogicModule {
 
   unloadCurrentEncounter() {
     const object = this.current.toObj;
+    this.current.end();
     if (object.spawned) this.data.previous[object.key] = object;
     this.current = null;
   }
