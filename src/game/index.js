@@ -43,7 +43,7 @@ export function on(eventName) {
   return function (classProto, fnName, descriptor) {
     const className = classProto.constructor.name;
     const moduleName = className.toLowerCase();
-    if (typeof eventNames === "string") {
+    if (typeof eventName === "string") {
       game.queueCoreEventListener({
         eventName,
         className,

@@ -39,11 +39,6 @@ export class ActiveEncounter {
       game.party.party
     );
     this.hostility = rand * feelings;
-    console.log(
-      `${feelings} * ${Math.round(rand * 100) / 100} = ${
-        Math.round(this.hostility * 100) / 100
-      }`
-    );
     this.log = []; // TODO flavor text based on above
     this.spawned = format(new Date(), dtf);
     this.looted = false;
@@ -61,20 +56,21 @@ export class ActiveEncounter {
     this.addLog = "You walk back in the room";
   }
 
-  @event
+  @event // ActiveEncounter.before.start ActiveEncounter.before.start
   start() {
     this.addLog = this.monsters.textSummary;
     this.lootSummary();
     if (!this.monsters.areDead) this.addLog = this.monsterBehaviorSummary;
   }
 
+  @event // ActiveEncounter.before.end, ActiveEncounter.after.end
+  end() {}
+
   get monsterBehaviorSummary() {
     if (this.hostility > 0.2) {
-      console.log("MONSTERS ATTACK");
       return "The monsters attack!";
     }
     if (this.hostility < -0.8) {
-      console.log("MONSTERS JOIN");
       return "The monsters offer to join!";
     }
     if (this.hostility > 0) return "The monsters glare at you...";
@@ -98,6 +94,7 @@ export class ActiveEncounter {
   }
 
   get toObj() {
+    this.end();
     return {
       ...this,
       monsters: {
@@ -109,6 +106,7 @@ export class ActiveEncounter {
 
 export default class Encounter extends LogicModule {
   current = null;
+  tickInterval = 0;
 
   @on(["Game.loaded", "Party.after.move"])
   checkRoom() {
@@ -142,5 +140,35 @@ export default class Encounter extends LogicModule {
     const object = this.current.toObj;
     if (object.spawned) this.data.previous[object.key] = object;
     this.current = null;
+  }
+
+  @on("ActiveEncounter.after.start")
+  startTick() {
+    this.tickInterval = setInterval(this.tick, this.data.turnSpeed);
+  }
+
+  @on("ActiveEncounter.after.end")
+  stopTick() {
+    clearInterval(this.tickInterval);
+    this.tickInterval = 0;
+  }
+
+  setSpeed(newSpeed) {
+    this.stopTick();
+    this.data.turnSpeed = newSpeed;
+    this.startTick();
+  }
+
+  @event
+  tick() {
+    console.log("tick");
+    /*
+     * TODO
+     * get array of monster actions
+     * get array of party actions
+     * actions = ^.concat
+     * actTime = this.data.turnSpeed actions.length
+     * each actTime triggers the action for one character
+     */
   }
 }

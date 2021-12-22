@@ -1,6 +1,9 @@
 import set from "lodash/set";
 import LogicModule from "./LogicModule";
 import game from "./index.js";
+import { getLSD, setLSD } from "@/utils/localStorage";
+
+const mapExploredKey = "Map.explored";
 
 export default class Map extends LogicModule {
   width = 40;
@@ -8,12 +11,7 @@ export default class Map extends LogicModule {
 
   constructor(...args) {
     super(...args);
-    const savedExploredData = localStorage.getItem("map.explored");
-    if (savedExploredData) {
-      this.exploredData = JSON.parse(savedExploredData);
-    } else {
-      this.exploredData = [];
-    }
+    this.exploredData = getLSD(mapExploredKey) || [];
   }
 
   initialize() {
@@ -29,8 +27,9 @@ export default class Map extends LogicModule {
     set(this.exploredData, [z, y, x], true);
   }
 
-  saveExplored() {
-    localStorage.setItem("map.explored", JSON.stringify(this.exploredData));
+  save() {
+    // do not call super, no reason to store map data in localstorage
+    setLSD(mapExploredKey, this.exploredData);
   }
 
   isOutOfBounds({ x, y, z }) {

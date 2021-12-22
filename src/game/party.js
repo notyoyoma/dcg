@@ -57,6 +57,11 @@ export default class Party extends LogicModule {
     this.update("facing");
   }
 
+  update(arg) {
+    super.update(arg);
+    this.save();
+  }
+
   get party() {
     return this.data.characters.map((charName) =>
       game.characters.find(charName)

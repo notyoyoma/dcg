@@ -1,3 +1,5 @@
+import { getLSD, setLSD } from "@/utils/localStorage";
+
 export default class LogicModule {
   data = {};
 
@@ -5,12 +7,7 @@ export default class LogicModule {
     this.moduleName = moduleName;
     this.context = context;
 
-    const LSData = localStorage.getItem(this.moduleName);
-    if (LSData) {
-      this.data = JSON.parse(LSData);
-    } else {
-      this.data = data;
-    }
+    this.data = getLSD(this.moduleName) || data;
   }
 
   // TODO debounce by game loop duration, and queue all changes during game loop for single update
@@ -25,7 +22,7 @@ export default class LogicModule {
   }
 
   save() {
-    localStorage.setItem(this.moduleName, this.data);
+    setLSD(this.moduleName, this.data);
   }
 
   initialize() {

@@ -1,5 +1,12 @@
 import unzip from "lodash/unzip";
-
+import { getLSD, setLSD } from "./localStorage";
+/**
+ * @param  {[[weight: number, id: string]]} arrayOfOptions
+ * @example
+ * // returns "a" twice as often as "b"
+ * weightedRoll([[2, "a"], [1, "b"]])
+ * @returns {string} id of random item from the array
+ */
 export function weightedRoll(arrayOfOptions) {
   const [weights, ids] = unzip(arrayOfOptions);
   const totalWeights = weights.reduce((r, i) => r + i, 0);
@@ -13,24 +20,45 @@ export function weightedRoll(arrayOfOptions) {
   return ids[ids.length - 1];
 }
 
-// TODO rework to a class
-const fairnessHistory = {};
-export function fairRoll(arrayOfOptions, rollId) {
-  // if there are fewer than 5 items, just do the weighted roll.
-  if (arrayOfOptions.length < 5) return weightedRoll(arrayOfOptions);
-  if (!fairnessHistory[rollId]) fairnessHistory[rollId] = [];
-  const previousRolls = fairnessHistory[rollId];
-  const filteredOptions = arrayOfOptions.filter(
-    (option) => !previousRolls.includes(option.id)
-  );
-  const rolledId = weightedRoll(filteredOptions);
-  previousRolls.push(rolledId);
+export class FairRoll {
+  id = "";
+  history = [];
+  maxHistory = 5;
 
-  // if there are >5 previous roles, remove all but 5
-  if (previousRolls.length > 5) {
-    previousRolls.splice(0, previousRolls.length - 5);
+  /**
+   * @param  {string} rollId The ID used to store/retrieve localStorage data
+   */
+  constructor(rollId) {
+    this.id = `FairRoll.${rollId}`;
+    this.history = getLSD(this.id) || [];
   }
-  return rolledId;
+
+  /**
+   * @param  {[[weight: number, id: string]]} options
+   */
+  roll(options) {
+    // update maxHistory in case the array changed since last roll
+    this.maxHistory = options.length / 3;
+
+    // if there are fewer than 5 items, just do the weighted roll.
+    if (options.length < 5) return weightedRoll(options);
+
+    // filter options by history
+    const filteredOptions = options.filter(
+      ([_, id]) => !this.history.includes(id) // eslint-disable-line
+    );
+    const rolledId = weightedRoll(filteredOptions);
+    this.updateHistory(rolledId);
+    return rolledId;
+  }
+
+  updateHistory(id) {
+    this.history.push(id);
+    if (this.history.length > this.maxHistory) {
+      this.history.splice(0, this.history.length - this.maxHistory);
+    }
+    setLSD(this.id, this.history);
+  }
 }
 
 export function statsRoll(statsObj, floor) {

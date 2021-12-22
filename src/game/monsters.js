@@ -3,7 +3,7 @@ import zip from "lodash/zip";
 import fill from "lodash/fill";
 import game from "@/game";
 import LogicModule from "./LogicModule";
-import { rollGausian, fairRoll, statsRoll, rollArray } from "@/utils/rng";
+import { rollGausian, statsRoll, rollArray, FairRoll } from "@/utils/rng";
 import { objectReduce } from "@/utils/object";
 
 export class Monster {
@@ -101,6 +101,8 @@ export class OldMonsterParty extends BaseMonsterParty {
 }
 
 export default class Monsters extends LogicModule {
+  fairSpawn = new FairRoll("monsters.fairSpawn");
+
   spawn({ roomId, floor }) {
     const floorMonstersArr = game.map.data.floors[floor].monsters;
     const floorMonsters = zip(
@@ -116,7 +118,7 @@ export default class Monsters extends LogicModule {
     // const questMonsters = game.party.characterQuests; // TODO feature/quests
     return new MonsterParty(
       // roll for which monster party to spawn
-      fairRoll([...floorMonsters, ...roomMonsters]),
+      this.fairSpawn.roll([...floorMonsters, ...roomMonsters]),
       // set difficulty based on floor
       floor
     );
