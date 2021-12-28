@@ -39,7 +39,7 @@ export class ActiveEncounter {
       game.party.party
     );
     this.hostility = rand * feelings;
-    this.log = []; // TODO flavor text based on above
+    this.log = []; // TODO monster flavor text
     this.spawned = format(new Date(), dtf);
     this.looted = false;
     this.addLog = this.monsters.textSummary;
@@ -153,7 +153,7 @@ export default class Encounter extends LogicModule {
   tick() {
     console.log("tick");
     /*
-     * TODO
+     * TODO encounter tick
      * get array of monster actions
      * get array of party actions
      * actions = ^.concat

@@ -44,7 +44,7 @@ class BaseMonsterParty {
   }
 
   behaviorSummary(hostility) {
-    // TODO - add flavor to monsters.json and system for rolling for it
+    // TODO monster flavor text - add flavor to monsters.json and system for rolling for it
     if (hostility > 0.2) return "The monsters attack!";
     if (hostility > 0) return "The monsters glare at you...";
     if (hostility < -0.8) return "The monsters offer to join!";
