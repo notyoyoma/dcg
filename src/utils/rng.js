@@ -1,5 +1,7 @@
 import unzip from "lodash/unzip";
 import { getLSD, setLSD } from "./localStorage";
+import { objectReduce } from "./object";
+
 /**
  * @param  {[[weight: number, id: string]]} arrayOfOptions
  * @example
@@ -62,14 +64,16 @@ export class FairRoll {
 }
 
 export function statsRoll(statsObj, floor) {
-  const rollResult = {};
-  Object.keys(statsObj).forEach((key) => {
-    const baseValue = statsObj[key];
-    const halfBase = Math.round(baseValue / 2);
-    const statRoll = halfBase + roll(baseValue);
-    rollResult[key] = statRoll * Math.max(1, floor);
-  });
-  return rollResult;
+  const roll = randomGausian();
+  return objectReduce(
+    statsObj,
+    (result, value, key) => {
+      const statValue = value / 2 + value * roll;
+      result[key] = Math.round(statValue * Math.max(1, floor));
+      return result;
+    },
+    {}
+  );
 }
 
 // min = 1

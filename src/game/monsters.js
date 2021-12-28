@@ -34,10 +34,6 @@ export class Monster {
     this.loot = prevObj.loot;
     this.alignment = prevObj.alignment;
   }
-
-  serialize() {
-    return {};
-  }
 }
 
 class BaseMonsterParty {

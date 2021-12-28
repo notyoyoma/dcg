@@ -6,7 +6,7 @@
         "hp": 10,
         "attack": 3,
         "defence": 0,
-        "loot": 150,
+        "loot": 50,
         "intelligence": 5
       },
       "maxSpawn": 2,
@@ -18,7 +18,7 @@
         "hp": 10,
         "attack": 5,
         "defence": 3,
-        "loot": 10,
+        "loot": 100,
         "intelligence": 7
       },
       "maxSpawn": 4,
@@ -30,7 +30,7 @@
         "hp": 12,
         "attack": 6,
         "defence": 1,
-        "loot": 200,
+        "loot": 75,
         "intelligence": 7
       },
       "maxSpawn": 5,

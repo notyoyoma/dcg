@@ -8,7 +8,7 @@ export default {
   ...base.properties,
   state() {
     // this should mirror the structure of /data/encounter.json
-    return { log: [], currentEncounter: {} };
+    return { log: [], currentEncounter: {}, turnSpeed: 2000 };
   },
   mutations: {
     ...base.mutations,
