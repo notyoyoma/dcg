@@ -9,6 +9,15 @@ export default class EventBus {
     if (!this.eventListeners[eventName]) {
       this.eventListeners[eventName] = [];
     }
+
+    // do not allow listeners with duplicate IDs
+    const oldListener = this.eventListeners[eventName].find(
+      ({ id }) => listenerId === id
+    );
+    if (oldListener) {
+      this.off(eventName, listenerId);
+    }
+
     const newListener = { id: listenerId, fn };
     if (beforeId) {
       const index = this.eventListeners[eventName].findIndex(

@@ -1,16 +1,17 @@
 import { format, parse, differenceInMinutes as diff } from "date-fns";
 import LogicModule from "./LogicModule";
-import game, { event, on } from "@/game";
+import game, { event, on, Bindable } from "@/game";
 import { partyFeelsTowardParty } from "@/utils/alignment";
 import { randomGausian } from "@/utils/rng";
 
 const dtf = "yyyy-MM-dd:HH:mm:ss";
 
-export class ActiveEncounter {
+export class ActiveEncounter extends Bindable {
   log = [];
   respawn = 15; // minutes
 
   constructor(floor, roomId) {
+    super();
     this.floor = floor;
     this.roomId = roomId;
     this.key = `${floor},${roomId}`;
@@ -57,15 +58,19 @@ export class ActiveEncounter {
     this.addLog = "You walk back in the room";
   }
 
-  @event // ActiveEncounter.before.start ActiveEncounter.before.start
+  @event // ActiveEncounter.before.start ActiveEncounter.after.start
   start() {
     if (!this.looted) this.lootSummary();
-    if (!this.monsters.areDead)
+    if (!this.monsters.areDead) {
       this.addLog = this.monsters.behaviorSummary(this.hostility);
+      this.bind("Party.before.move", this.monstersAreBlocking);
+    }
   }
 
   @event // ActiveEncounter.before.end, ActiveEncounter.after.end
-  end() {}
+  end() {
+    this.unbind();
+  }
 
   lootSummary() {
     if (this.looted) return;
@@ -75,6 +80,15 @@ export class ActiveEncounter {
       this.addLog = "There is a chest in the room!";
     } else if (this.monsters.totalLoot > 1000) {
       this.addLog = "There is a small chest in the room!";
+    }
+  }
+
+  monstersAreBlocking() {
+    const { strength: monsterStrength = 0 } = this.monsters.statsSummary;
+    const { strength: partyStrength = 0 } = game.party.statsSummary;
+    if (this.hostility > 0.2 && monsterStrength > partyStrength) {
+      this.addLog = "The monsters block you!";
+      return false;
     }
   }
 
@@ -112,9 +126,18 @@ export default class Encounter extends LogicModule {
   }
 
   update() {
-    this.context.commit("setState", {
-      currentEncounter: this.current ? this.current.toObj : {},
-    });
+    if (this.current)
+      super.update({
+        currentEncounter: this.current.toObj,
+        log: this.current.log,
+        tickInterval: this.tickInterval,
+      });
+    else
+      super.update({
+        currentEncounter: {},
+        log: [],
+        tickInterval: this.tickInterval,
+      });
   }
   /**
    * @param  {} floor - index to access game.map.data.floors[floor]
@@ -151,7 +174,7 @@ export default class Encounter extends LogicModule {
 
   @event
   tick() {
-    console.log("tick");
+    console.debug("tick");
     /*
      * TODO encounter tick
      * get array of monster actions

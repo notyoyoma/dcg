@@ -1,5 +1,5 @@
 <template>
-  <Log :items="currentEncounter.log" />
+  <Log :items="log" />
 </template>
 
 <script>
@@ -8,6 +8,6 @@ import Log from "@/components/Log";
 
 export default {
   components: { Log },
-  computed: mapState("encounter", ["currentEncounter"]),
+  computed: mapState("encounter", ["log"]),
 };
 </script>

@@ -51,6 +51,16 @@ class BaseMonsterParty {
     return "The monsters look at you warily...";
   }
 
+  get statsSummary() {
+    return this.party.reduce((r, { stats }) => {
+      Object.keys(stats).forEach((k) => {
+        if (r[k] === undefined) r[k] = stats[k];
+        else r[k] += stats[k];
+      });
+      return r;
+    }, {});
+  }
+
   get textSummary() {
     const remainingMonsters = {};
     let dead = 0;

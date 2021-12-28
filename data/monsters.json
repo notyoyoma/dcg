@@ -1,25 +1,27 @@
 {
   "monsters": [
     {
-      "name": "tyke",
+      "name": "jakal",
       "stats": {
         "hp": 10,
         "attack": 3,
         "defence": 0,
         "loot": 50,
-        "intelligence": 5
+        "intelligence": 5,
+        "strength": 3
       },
       "maxSpawn": 2,
       "alignments": ["neutral", "good"]
     },
     {
-      "name": "skrug",
+      "name": "goblin",
       "stats": {
         "hp": 10,
         "attack": 5,
         "defence": 3,
         "loot": 100,
-        "intelligence": 7
+        "intelligence": 7,
+        "strength": 7
       },
       "maxSpawn": 4,
       "alignments": ["neutral", "evil"]
@@ -31,31 +33,34 @@
         "attack": 6,
         "defence": 1,
         "loot": 75,
-        "intelligence": 7
+        "intelligence": 7,
+        "strength": 5
       },
       "maxSpawn": 5,
       "alignments": ["good", "evil"]
     },
     {
-      "name": "kobold",
+      "name": "bandit",
       "stats": {
         "hp": 15,
         "attack": 5,
         "defence": 2,
         "loot": 350,
-        "intelligence": 7
+        "intelligence": 7,
+        "strength": 10
       },
       "maxSpawn": 7,
-      "alignments": ["neutral", "good"]
+      "alignments": ["neutral", "good", "evil"]
     },
     {
-      "name": "giantSpider",
+      "name": "spider",
       "stats": {
         "hp": 8,
         "attack": 3,
         "defence": 0,
         "loot": 250,
-        "intelligence": 5
+        "intelligence": 5,
+        "strength": 4
       },
       "poison": {
         "potential": 0.5,
@@ -65,13 +70,14 @@
       "alignments": ["evil"]
     },
     {
-      "name": "aboleth",
+      "name": "dragon",
       "stats": {
         "hp": 30,
         "attack": 3,
         "defence": 0,
         "loot": 5000,
-        "intelligence": 13
+        "intelligence": 13,
+        "strength": 12
       },
       "poison": {
         "potential": 0.8,
@@ -82,18 +88,20 @@
     }
   ],
   "monsterParties": {
-    "tyke": ["tyke"],
-    "2tykes": ["tyke", "tyke"],
-    "3tykes": ["tyke", "tyke", "tyke"],
-    "4tykes": ["tyke", "tyke", "tyke", "tyke"],
-    "skrug": ["skrug"],
-    "2skrugs": ["skrug", "skrug"],
+    "jakal": ["jakal"],
+    "2jakals": ["jakal", "jakal"],
+    "3jakals": ["jakal", "jakal", "jakal"],
+    "4jakals": ["jakal", "jakal", "jakal", "jakal"],
+    "goblin": ["goblin"],
+    "2goblins": ["goblin", "goblin"],
     "rat": ["rat"],
     "2rats": ["rat", "rat"],
     "3rats": ["rat", "rat", "rat"],
-    "giantSpider": ["giantSpider"],
-    "2giantSpiders": ["giantSpider", "giantSpider"],
-    "kobold": ["kobold"],
-    "aboleth": ["aboleth"]
+    "spider": ["spider"],
+    "2spiders": ["spider", "spider"],
+    "bandit": ["bandit"],
+    "2bandits": ["bandit", "bandit"],
+    "3bandits": ["bandit", "bandit", "bandit"],
+    "dragon": ["dragon"]
   }
 }

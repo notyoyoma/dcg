@@ -2992,7 +2992,15 @@
           "lootTable": []
         }
       },
-      "monsters": ["tyke", "skrug", "rat", "4tykes"]
+      "monsters": [
+        "jakal",
+        "2jakals",
+        "3jakals",
+        "4jakals",
+        "rat",
+        "2rats",
+        "3rats"
+      ]
     },
     {
       "floors": [[]],
@@ -3000,7 +3008,7 @@
       "walls": [[[]]],
       "roomCoords": [[]],
       "rooms": {},
-      "monsters": ["tyke", "kobold"]
+      "monsters": []
     },
     {
       "floors": [[]],

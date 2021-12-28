@@ -1,7 +1,6 @@
 {
   "previous": {},
-  "currentEncounter": {
-    "log": []
-  },
+  "log": [],
+  "currentEncounter": {},
   "turnSpeed": 2000
 }

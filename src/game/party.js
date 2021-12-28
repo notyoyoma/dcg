@@ -67,4 +67,14 @@ export default class Party extends LogicModule {
       game.characters.find(charName)
     );
   }
+
+  get statsSummary() {
+    return this.party.reduce((r, { stats }) => {
+      Object.keys(stats).forEach((k) => {
+        if (r[k] === undefined) r[k] = stats[k];
+        else r[k] += stats[k];
+      });
+      return r;
+    }, {});
+  }
 }

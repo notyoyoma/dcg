@@ -7,7 +7,8 @@
       "currentAction": "Attack",
       "alignment": "good",
       "stats": {
-        "charisma": 10
+        "charisma": 10,
+        "strength": 10
       }
     },
     {
@@ -17,7 +18,8 @@
       "currentAction": "Cast 'Fireball'",
       "alignment": "good",
       "stats": {
-        "charisma": 10
+        "charisma": 10,
+        "strength": 10
       }
     }
   ]

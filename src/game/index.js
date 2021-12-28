@@ -21,6 +21,19 @@ export class Game extends EventBus {
 
     this.emit("Game.loaded");
   }
+  /**
+   * @param  {string} eventName Name of event to listen for
+   * @param  {function} fn function to trigger
+   * @param  {object} self instance of the class that is binding
+   * @param  {string} beforeId=null ID to insert listener ahead of
+   * @returns {function} Function for unbinding the event
+   */
+  bind(eventName, fn, self, beforeId = null) {
+    const className = self.constructor.name;
+    const listenerId = `${className}.${fn.name}`;
+    this.on(eventName, listenerId, fn.bind(self), beforeId);
+    return () => this.off(eventName, listenerId);
+  }
 }
 
 const game = new Game();
@@ -64,4 +77,16 @@ export function on(eventName) {
       });
     }
   };
+}
+
+export class Bindable {
+  unbinds = [];
+
+  bind(eventName, fn) {
+    this.unbinds.push = game.bind(eventName, fn, this);
+  }
+
+  unbind() {
+    this.unbinds.forEach((unbind) => unbind());
+  }
 }
