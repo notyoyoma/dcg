@@ -3,6 +3,7 @@ import LogicModule from "./LogicModule";
 import game, { event, on, Bindable } from "@/game";
 import { partyFeelsTowardParty } from "@/utils/alignment";
 import { randomGausian, roll, rollArray } from "@/utils/rng";
+import { getLSD, setLSD } from "@/utils/localStorage";
 
 const dtf = "yyyy-MM-dd:HH:mm:ss";
 
@@ -18,7 +19,7 @@ export class ActiveEncounter extends Bindable {
 
     if (!roomId) return;
 
-    const previous = game.encounter.data.previous[this.key];
+    const previous = game.encounter.previous[this.key];
     const now = new Date();
     if (previous && !previous.cleared) {
       const minutesSinceSpawn = diff(now, parse(previous.spawned, dtf, now));
@@ -128,6 +129,12 @@ export class ActiveEncounter extends Bindable {
 export default class Encounter extends LogicModule {
   current = null;
   tickInterval = 0;
+  previousLSDKey = "encounter.previous";
+
+  constructor(...args) {
+    super(...args);
+    this.previous = getLSD(this.previousLSDKey) || {};
+  }
 
   @on(["Game.loaded", "Party.after.move"])
   checkRoom() {
@@ -157,6 +164,12 @@ export default class Encounter extends LogicModule {
         tickInterval: this.tickInterval,
       });
   }
+
+  save() {
+    super.save();
+    setLSD(this.previousLSDKey, this.previous);
+  }
+
   /**
    * @param  {} floor - index to access game.map.data.floors[floor]
    * @param  {} roomId - id to access game.map.data.floors[floor].rooms[roomId]
@@ -169,8 +182,9 @@ export default class Encounter extends LogicModule {
   unloadCurrentEncounter() {
     const object = this.current.toObj;
     this.current.end();
-    if (object.spawned) this.data.previous[object.key] = object;
+    if (object.spawned) this.previous[object.key] = object;
     this.current = null;
+    this.save();
   }
 
   @on("ActiveEncounter.after.start")
