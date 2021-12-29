@@ -78,4 +78,8 @@ export default class Party extends LogicModule {
       return r;
     }, {});
   }
+
+  get actions() {
+    return this.party.map((m) => [m.currentAction, m]);
+  }
 }

@@ -119,6 +119,10 @@ export class ActiveEncounter extends Bindable {
       },
     };
   }
+
+  get actions() {
+    return [...game.party.actions, ...this.monsters.actions(this.hostility)];
+  }
 }
 
 export default class Encounter extends LogicModule {
@@ -171,7 +175,7 @@ export default class Encounter extends LogicModule {
 
   @on("ActiveEncounter.after.start")
   startTick() {
-    this.tickInterval = setInterval(this.tick, this.data.turnSpeed);
+    this.tickInterval = setInterval(this.tick.bind(this), this.data.turnSpeed);
   }
 
   @on("ActiveEncounter.after.end")
@@ -188,7 +192,8 @@ export default class Encounter extends LogicModule {
 
   @event // Encounter.tick
   tick() {
-    console.debug("tick");
+    if (!this.current) return;
+    super.update({ actions: this.current.actions });
     /*
      * TODO encounter tick
      * get array of monster actions

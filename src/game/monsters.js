@@ -36,6 +36,10 @@ export class Monster {
     this.alignment = prevObj.alignment;
     this.hp = prevObj.hp;
   }
+
+  get fight() {
+    return "fight";
+  }
 }
 
 class BaseMonsterParty {
@@ -50,6 +54,11 @@ class BaseMonsterParty {
     if (hostility > 0) return "The monsters glare at you...";
     if (hostility < -0.8) return "The monsters offer to join!";
     return "The monsters look at you warily...";
+  }
+
+  actions(hostility) {
+    if (hostility < 0.2) return [];
+    return this.aliveMonsters.map((m) => ["fight", m]);
   }
 
   get statsSummary() {

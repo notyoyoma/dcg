@@ -7,8 +7,12 @@ const base = new GenericStore({
 export default {
   ...base.properties,
   state() {
-    // this should mirror the structure of /data/encounter.json
-    return { currentEncounter: {}, turnSpeed: 2000 };
+    return {
+      turnSpeed: 2000,
+      log: [],
+      currentEncounter: {},
+      actions: [],
+    };
   },
   mutations: {
     ...base.mutations,
