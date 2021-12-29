@@ -2,10 +2,10 @@
   <div class="game-layout d-flex">
     <div class="d-flex flex-column w-30">
       <div class="h-60">
-        <Character></Character>
+        <h3>TODO -- character Sheet</h3>
       </div>
       <div class="h-40">
-        <Party></Party>
+        <GameLog />
       </div>
     </div>
     <div class="d-flex flex-column align-items-center w-40">
@@ -22,7 +22,7 @@
         <EncounterFeed />
       </div>
       <div class="h-40">
-        <GameLog />
+        <Party />
       </div>
     </div>
   </div>

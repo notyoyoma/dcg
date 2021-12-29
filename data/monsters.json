@@ -11,7 +11,13 @@
         "strength": 3
       },
       "maxSpawn": 2,
-      "alignments": ["neutral", "good"]
+      "alignments": ["neutral", "good"],
+      "flavorText": {
+        "-0.8": "sniffs you excitedly",
+        "0": "smells the air nervously",
+        "0.2": "raises his hackles",
+        "1": "growls menacingly"
+      }
     },
     {
       "name": "goblin",
@@ -37,7 +43,13 @@
         "strength": 5
       },
       "maxSpawn": 5,
-      "alignments": ["good", "evil"]
+      "alignments": ["good", "evil"],
+      "flavorText": {
+        "-0.8": "scurries towards you",
+        "0": "sniffs the air",
+        "0.2": "scurries away from you",
+        "1": "hisses at you"
+      }
     },
     {
       "name": "bandit",

@@ -2,7 +2,7 @@ import { format, parse, differenceInMinutes as diff } from "date-fns";
 import LogicModule from "./LogicModule";
 import game, { event, on, Bindable } from "@/game";
 import { partyFeelsTowardParty } from "@/utils/alignment";
-import { randomGausian } from "@/utils/rng";
+import { randomGausian, roll, rollArray } from "@/utils/rng";
 
 const dtf = "yyyy-MM-dd:HH:mm:ss";
 
@@ -64,6 +64,7 @@ export class ActiveEncounter extends Bindable {
     if (!this.monsters.areDead) {
       this.addLog = this.monsters.behaviorSummary(this.hostility);
       this.bind("Party.before.move", this.monstersAreBlocking);
+      this.bind("Encounter.before.tick", this.monsterFlavorText);
     }
   }
 
@@ -90,6 +91,19 @@ export class ActiveEncounter extends Bindable {
       this.addLog = "The monsters block you!";
       return false;
     }
+  }
+
+  monsterFlavorText() {
+    // only do flavor text every 1/8 ticks
+    if (roll(8) > 1) return;
+    const randMonster = rollArray(this.monsters.party);
+    const flavorText = randMonster.baseMonster.flavorText || {};
+    let flavor = "stares at you blankly.";
+    if (this.hostility < -0.8) flavor = flavorText["-0.8"];
+    if (this.hostility < 0) flavor = flavorText["0"];
+    if (this.hostility < 0.2) flavor = flavorText["0.2"];
+    if (this.hostility >= 0.2) flavor = flavorText["1"];
+    this.addLog = `A ${randMonster.name} ${flavor}`;
   }
 
   set addLog(string) {
@@ -172,7 +186,7 @@ export default class Encounter extends LogicModule {
     this.startTick();
   }
 
-  @event
+  @event // Encounter.tick
   tick() {
     console.debug("tick");
     /*

@@ -12,6 +12,7 @@
           :src="`/assets/${monster.name}.svg`"
         />
       </div>
+      <HealthBar :current="monster.hp" :max="monster.stats.hp" />
     </div>
   </div>
 </template>
@@ -20,8 +21,10 @@
 import { mapState } from "vuex";
 import get from "lodash/get";
 import pluralize from "pluralize";
+import HealthBar from "@/components/misc/HealthBar";
 
 export default {
+  components: { HealthBar },
   computed: {
     ...mapState("encounter", ["currentEncounter"]),
     monsterParty() {
@@ -46,11 +49,19 @@ export default {
   padding-bottom: 20px;
   padding-right: 20px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: space-between;
   justify-content: center;
+  box-sizing: border-box;
 
   .liner {
     position: relative;
+    justify-self: center;
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
   }
 
   img:first-child {

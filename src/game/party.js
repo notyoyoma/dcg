@@ -59,6 +59,7 @@ export default class Party extends LogicModule {
 
   update(arg) {
     super.update(arg);
+    super.update({ party: this.party });
     this.save();
   }
 

@@ -2,7 +2,8 @@
   "characters": [
     {
       "name": "Bjarne",
-      "health": 50,
+      "maxHp": 50,
+      "currentHp": 49,
       "spellPoints": 10,
       "currentAction": "fight",
       "alignment": "good",
@@ -14,7 +15,8 @@
     },
     {
       "name": "Guido",
-      "health": 30,
+      "maxHp": 50,
+      "currentHp": 45,
       "spellPoints": 60,
       "currentAction": "Cast 'Fireball'",
       "alignment": "good",

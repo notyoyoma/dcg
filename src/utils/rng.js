@@ -81,6 +81,10 @@ export function roll(max) {
   return Math.ceil(max * Math.random());
 }
 
+export function rollBetween(min, max) {
+  return Math.round(Math.random() * (max - min) + min);
+}
+
 export function randomGausian() {
   return (Math.random() + Math.random() + Math.random()) / 3;
 }

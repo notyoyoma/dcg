@@ -21,6 +21,7 @@ export class Monster {
   initialize(floor) {
     const { stats, maxSpawn, alignments } = this.baseMonster;
     this.stats = statsRoll(stats, floor);
+    this.hp = this.stats.hp;
     this.count = rollGausian(maxSpawn);
     this.alive = this.count;
     this.loot = this.stats.loot * this.count;
@@ -33,6 +34,7 @@ export class Monster {
     this.alive = prevObj.alive;
     this.loot = prevObj.loot;
     this.alignment = prevObj.alignment;
+    this.hp = prevObj.hp;
   }
 }
 
@@ -44,7 +46,6 @@ class BaseMonsterParty {
   }
 
   behaviorSummary(hostility) {
-    // TODO monster flavor text - add flavor to monsters.json and system for rolling for it
     if (hostility > 0.2) return "The monsters attack!";
     if (hostility > 0) return "The monsters glare at you...";
     if (hostility < -0.8) return "The monsters offer to join!";
@@ -88,6 +89,10 @@ class BaseMonsterParty {
       }`;
     const areIs = alive > 1 || dead > 1 ? "are" : "is";
     return `There ${areIs} ${summary} in the room.`;
+  }
+
+  get aliveMonsters() {
+    return this.party.filter(({ alive }) => alive > 0);
   }
 }
 

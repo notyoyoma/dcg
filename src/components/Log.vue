@@ -19,6 +19,7 @@ export default {
   background: #eee;
   padding: 2px;
   height: 100%;
+  box-sizing: border-box;
   color: #333;
 
   display: flex;

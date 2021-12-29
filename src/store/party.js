@@ -17,6 +17,7 @@ export default {
       },
       facing: 0,
       selectedCharacter: 0,
+      party: [], // THIS IS NOT IN data/party.json
     };
   },
   getters: {
