@@ -1,7 +1,7 @@
 {
   "monsters": [
     {
-      "name": "jakal",
+      "name": "jackal",
       "stats": {
         "hp": 10,
         "attack": 3,
@@ -88,10 +88,10 @@
     }
   ],
   "monsterParties": {
-    "jakal": ["jakal"],
-    "2jakals": ["jakal", "jakal"],
-    "3jakals": ["jakal", "jakal", "jakal"],
-    "4jakals": ["jakal", "jakal", "jakal", "jakal"],
+    "jackal": ["jackal"],
+    "2jackals": ["jackal", "jackal"],
+    "3jackals": ["jackal", "jackal", "jackal"],
+    "4jackals": ["jackal", "jackal", "jackal", "jackal"],
     "goblin": ["goblin"],
     "2goblins": ["goblin", "goblin"],
     "rat": ["rat"],

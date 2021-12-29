@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build && cp -r data dist",
+    "build": "vue-cli-service build && cp -r data dist && cp -r assets dist",
     "deploy": ". ./deploy.sh",
     "serve:prod": "yarn build && cd dist && http-server",
     "test": "jest",

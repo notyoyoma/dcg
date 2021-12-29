@@ -4,12 +4,13 @@
       "name": "Bjarne",
       "health": 50,
       "spellPoints": 10,
-      "currentAction": "Attack",
+      "currentAction": "fight",
       "alignment": "good",
       "stats": {
         "charisma": 10,
         "strength": 10
-      }
+      },
+      "image": "man1"
     },
     {
       "name": "Guido",
@@ -20,7 +21,32 @@
       "stats": {
         "charisma": 10,
         "strength": 10
-      }
+      },
+      "image": "man2"
+    },
+    {
+      "name": "Meredith",
+      "health": 30,
+      "spellPoints": 60,
+      "currentAction": "fight",
+      "alignment": "good",
+      "stats": {
+        "charisma": 10,
+        "strength": 10
+      },
+      "image": "woman1"
+    },
+    {
+      "name": "Meredith",
+      "health": 30,
+      "spellPoints": 60,
+      "currentAction": "fight",
+      "alignment": "good",
+      "stats": {
+        "charisma": 10,
+        "strength": 10
+      },
+      "image": "woman2"
     }
   ]
 }

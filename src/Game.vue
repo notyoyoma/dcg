@@ -16,13 +16,13 @@
     </div>
     <div class="d-flex flex-column w-30">
       <div class="h-40">
-        <Encounter></Encounter>
+        <MonsterParty />
       </div>
       <div class="h-20">
-        <EncounterFeed></EncounterFeed>
+        <EncounterFeed />
       </div>
       <div class="h-40">
-        <GameLog></GameLog>
+        <GameLog />
       </div>
     </div>
   </div>

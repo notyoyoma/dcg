@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const bodyParser = require("body-parser");
+const express = require("express");
 
 const isDevEnv = process.env.NODE_ENV === "development";
 
@@ -25,14 +26,11 @@ module.exports = {
         before: (app) => {
           app.use(bodyParser.json());
 
+          // handle read from assets
+          app.use("/assets", express.static(path.join(__dirname, "assets")));
+
           // handle READ from data
-          app.get("/data/*", (req, res) => {
-            const filename = path.basename(req.url);
-            fs.readFile(`./data/${filename}`, (_, json) => {
-              let obj = JSON.parse(json);
-              res.json(obj);
-            });
-          });
+          app.use("/data", express.static(path.join(__dirname, "data")));
 
           // handle WRITE to data
           app.post("/data/*", (req, res, next) => {
