@@ -1,4 +1,4 @@
-import { MonsterParty } from "./monsters";
+import { MonsterParty } from "./Monsters";
 
 test("textSummary", () => {
   const oneJackal = new MonsterParty("jackal", 1);

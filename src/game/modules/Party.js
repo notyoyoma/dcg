@@ -1,10 +1,24 @@
-import LogicModule from "./LogicModule";
-import game, { event } from "@/game";
+import BaseModule from "./BaseModule";
+import game from "@/game";
+import { event } from "@/game/events";
 import get from "lodash/get";
 
-export default class Party extends LogicModule {
+export default class Party extends BaseModule {
+  moduleName = "party";
+  initialState = {
+    characters: [],
+    location: {
+      x: 0,
+      y: 0,
+      z: 0,
+    },
+    facing: 0,
+    selectedCharacter: 0,
+    party: [],
+  };
+
   teleport(location) {
-    if (game.map.isOutOfBounds(location)) return;
+    if (game.Map.isOutOfBounds(location)) return;
     this.data.location = { ...location };
     this.update("location");
     game.emit("Party.after.move");
@@ -21,7 +35,7 @@ export default class Party extends LogicModule {
     // if the party is facing up or down, check the top tile, else left
     const wallIndex = facing % 2 == 0 ? 0 : 1;
     const path = ["floors", z, "walls", y + yD, x + xD, wallIndex];
-    const wallValue = get(game.map.data, path);
+    const wallValue = get(game.Map.data, path);
 
     // is a wall in the way?
     if (wallValue === 1) return;
@@ -40,7 +54,7 @@ export default class Party extends LogicModule {
         location.x -= 1;
         break;
     }
-    if (game.map.isOutOfBounds(location)) return;
+    if (game.Map.isOutOfBounds(location)) return;
     this.data.location = location;
     this.update("location");
   }
@@ -65,7 +79,7 @@ export default class Party extends LogicModule {
 
   get party() {
     return this.data.characters.map((charName) =>
-      game.characters.find(charName)
+      game.Characters.find(charName)
     );
   }
 

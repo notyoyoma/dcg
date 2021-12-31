@@ -1,13 +1,21 @@
+import axios from "axios";
 import { getLSD, setLSD } from "@/utils/localStorage";
+import { Listener } from "../events";
 
-export default class LogicModule {
+export default class BaseModule extends Listener {
   data = {};
 
-  constructor(context, moduleName, data) {
-    this.moduleName = moduleName;
-    this.context = context;
+  async loadData() {
+    const lsd = getLSD(this.moduleName);
+    if (lsd) this.data = lsd;
+    else {
+      const { data } = await axios.get(`/data/${this.moduleName}.json`);
+      this.data = data;
+    }
+  }
 
-    this.data = getLSD(this.moduleName) || data;
+  injectData(data) {
+    this.data = data;
   }
 
   // TODO debounce by game loop duration, and queue all changes during game loop for single update
@@ -25,7 +33,13 @@ export default class LogicModule {
     setLSD(this.moduleName, this.data);
   }
 
-  initialize() {
-    this.update(this.data);
+  get vuexActions() {
+    const self = this;
+    return {
+      initialize(context) {
+        self.context = context;
+        self.update();
+      },
+    };
   }
 }

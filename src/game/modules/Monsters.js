@@ -2,14 +2,14 @@ import get from "lodash/get";
 import zip from "lodash/zip";
 import fill from "lodash/fill";
 import game from "@/game";
-import LogicModule from "./LogicModule";
+import BaseModule from "./BaseModule";
 import { rollGausian, statsRoll, rollArray, FairRoll } from "@/utils/rng";
 import { objectReduce } from "@/utils/object";
 import pluralize from "pluralize";
 
 export class Monster {
   constructor(id) {
-    this.baseMonster = game.monsters.data.monsters.find(
+    this.baseMonster = game.Monsters.data.monsters.find(
       ({ name }) => name === id
     );
     if (!this.baseMonster) throw `monsters[name: ${id}] not found`;
@@ -108,7 +108,7 @@ class BaseMonsterParty {
 export class MonsterParty extends BaseMonsterParty {
   constructor(partyId, floor) {
     super();
-    const monsterIds = game.monsters.data.monsterParties[partyId];
+    const monsterIds = game.Monsters.data.monsterParties[partyId];
     if (!monsterIds) throw `monsterParties[${partyId}] not found`;
     this.party = monsterIds.map((id) => {
       const monster = new Monster(id);
@@ -129,22 +129,23 @@ export class OldMonsterParty extends BaseMonsterParty {
   }
 }
 
-export default class Monsters extends LogicModule {
+export default class Monsters extends BaseModule {
+  moduleName = "monsters";
   fairSpawn = new FairRoll("monsters.fairSpawn");
 
   spawn({ roomId, floor }) {
-    const floorMonstersArr = game.map.data.floors[floor].monsters;
+    const floorMonstersArr = game.Map.data.floors[floor].monsters;
     const floorMonsters = zip(
       fill(Array(floorMonstersArr.length), 1),
       floorMonstersArr
     );
 
     const roomMonsters = get(
-      game.map.data.floors[floor].rooms,
+      game.Map.data.floors[floor].rooms,
       [roomId, "monsterTable"],
       []
     );
-    // const questMonsters = game.party.characterQuests; // TODO feature/quests
+    // const questMonsters = game.Party.characterQuests; // TODO feature/quests
     return new MonsterParty(
       // roll for which monster party to spawn
       this.fairSpawn.roll([...floorMonsters, ...roomMonsters]),

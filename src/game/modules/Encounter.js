@@ -1,25 +1,25 @@
 import { format, parse, differenceInMinutes as diff } from "date-fns";
-import LogicModule from "./LogicModule";
-import game, { event, on, Bindable } from "@/game";
+import BaseModule from "./BaseModule";
+import game from "@/game";
+import { event, listen } from "@/game/events";
 import { partyFeelsTowardParty } from "@/utils/alignment";
 import { randomGausian, roll, rollArray } from "@/utils/rng";
 import { getLSD, setLSD } from "@/utils/localStorage";
 
 const dtf = "yyyy-MM-dd:HH:mm:ss";
 
-export class ActiveEncounter extends Bindable {
+export class ActiveEncounter {
   log = [];
   respawn = 15; // minutes
 
   constructor(floor, roomId) {
-    super();
     this.floor = floor;
     this.roomId = roomId;
     this.key = `${floor},${roomId}`;
 
     if (!roomId) return;
 
-    const previous = game.encounter.previous[this.key];
+    const previous = game.Encounter.previous[this.key];
     const now = new Date();
     if (previous && !previous.cleared) {
       const minutesSinceSpawn = diff(now, parse(previous.spawned, dtf, now));
@@ -34,11 +34,11 @@ export class ActiveEncounter extends Bindable {
 
   spawn() {
     const { roomId, floor } = this;
-    this.monsters = game.monsters.spawn({ roomId, floor });
+    this.monsters = game.Monsters.spawn({ roomId, floor });
     const rand = randomGausian();
     const feelings = partyFeelsTowardParty(
       this.monsters.party,
-      game.party.party
+      game.Party.party
     );
     this.hostility = rand * feelings;
     this.log = []; // TODO monster flavor text
@@ -52,7 +52,7 @@ export class ActiveEncounter extends Bindable {
    */
   reload(previous) {
     const { monsters, log, hostility, spawned } = previous;
-    this.monsters = game.monsters.respawn(monsters);
+    this.monsters = game.Monsters.respawn(monsters);
     this.hostility = hostility;
     this.log = log;
     this.spawned = spawned;
@@ -87,7 +87,7 @@ export class ActiveEncounter extends Bindable {
 
   monstersAreBlocking() {
     const { strength: monsterStrength = 0 } = this.monsters.statsSummary;
-    const { strength: partyStrength = 0 } = game.party.statsSummary;
+    const { strength: partyStrength = 0 } = game.Party.statsSummary;
     if (this.hostility > 0.2 && monsterStrength > partyStrength) {
       this.addLog = "The monsters block you!";
       return false;
@@ -109,7 +109,7 @@ export class ActiveEncounter extends Bindable {
 
   set addLog(string) {
     this.log.push(string);
-    game.encounter.update();
+    game.Encounter.update();
   }
 
   get toObj() {
@@ -122,24 +122,32 @@ export class ActiveEncounter extends Bindable {
   }
 
   get actions() {
-    return [...game.party.actions, ...this.monsters.actions(this.hostility)];
+    return [...game.Party.actions, ...this.monsters.actions(this.hostility)];
   }
 }
 
-export default class Encounter extends LogicModule {
+export default class Encounter extends BaseModule {
+  moduleName = "encounter";
+  initialState = {
+    turnSpeed: 2000,
+    log: [],
+    currentEncounter: {},
+    actions: [],
+  };
   current = null;
   tickInterval = 0;
   previousLSDKey = "encounter.previous";
 
-  constructor(...args) {
-    super(...args);
+  constructor() {
+    super();
+    console.log(this.queuedListeners);
     this.previous = getLSD(this.previousLSDKey) || {};
   }
 
-  @on(["Game.loaded", "Party.after.move"])
+  @listen(["Game.loaded", "after:Party.move"])
   checkRoom() {
-    const { x, y, z } = game.party.data.location;
-    const roomId = game.map.data.floors[z].roomCoords[y][x];
+    const { x, y, z } = game.Party.data.location;
+    const roomId = game.Map.data.floors[z].roomCoords[y][x];
     if (this.current && this.current.roomId != roomId) {
       this.unloadCurrentEncounter();
     }
@@ -187,12 +195,12 @@ export default class Encounter extends LogicModule {
     this.save();
   }
 
-  @on("ActiveEncounter.after.start")
+  @listen("ActiveEncounter.after.start")
   startTick() {
     this.tickInterval = setInterval(this.tick.bind(this), this.data.turnSpeed);
   }
 
-  @on("ActiveEncounter.after.end")
+  @listen("ActiveEncounter.after.end")
   stopTick() {
     clearInterval(this.tickInterval);
     this.tickInterval = 0;

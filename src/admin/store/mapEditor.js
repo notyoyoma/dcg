@@ -48,21 +48,21 @@ export default {
       state.layerValueBin = value;
     },
     setValueAtPath(state, { path, value }) {
-      set(game.map.data.floors, path, value);
-      state.floors = [...game.map.data.floors];
-      game.map.update({
-        currentFloor: game.map.data.floors[state.currentFloorIndex],
+      set(game.Map.data.floors, path, value);
+      state.floors = [...game.Map.data.floors];
+      game.Map.update({
+        currentFloor: game.Map.data.floors[state.currentFloorIndex],
       });
     },
     updateFromGameData(state) {
-      state.floors = [...game.map.data.floors];
-      game.map.update({
-        currentFloor: game.map.data.floors[state.currentFloorIndex],
+      state.floors = [...game.Map.data.floors];
+      game.Map.update({
+        currentFloor: game.Map.data.floors[state.currentFloorIndex],
       });
     },
   },
   actions: {
-    initializeModule({ commit }) {
+    initialize({ commit }) {
       commit("updateFromGameData");
     },
     toggleVisible({ state }, id) {
@@ -79,7 +79,7 @@ export default {
       interactWithLayer({ event, ...state });
     },
     addFloor({ dispatch }) {
-      game.map.data.floors.push({ ...emptyFloor });
+      game.Map.data.floors.push({ ...emptyFloor });
       dispatch("initializeModule");
     },
     async writeToFile({ dispatch, state }) {

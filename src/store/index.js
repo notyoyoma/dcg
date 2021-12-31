@@ -1,5 +1,5 @@
 import Vuex from "vuex";
-import modules, { initializeOrder } from "./modules";
+import modules from "./modules";
 import game from "@/game";
 
 const store = new Vuex.Store({
@@ -15,17 +15,15 @@ const store = new Vuex.Store({
   modules,
 });
 
-const moduleLoadingPromises = Object.keys(modules).map((moduleName) =>
-  store.dispatch(`${moduleName}/loadModuleData`)
-);
+const loadDataPromises = game.modules.map((module) => module.loadData());
 
 // once all modules have loaded data, initialize them in order
-Promise.all(moduleLoadingPromises).then(async () => {
-  const initializePromises = initializeOrder.map((moduleName) =>
-    store.dispatch(`${moduleName}/initializeModule`)
-  );
-  await Promise.all(initializePromises);
-  game.bindCoreEvents();
+Promise.all(loadDataPromises).then(() => {
+  Object.keys(modules).forEach((key) => {
+    store.dispatch(`${key}/initialize`);
+  });
+
+  game.emit("Game.loaded");
   store.commit("setLoading");
 });
 

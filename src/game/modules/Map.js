@@ -1,21 +1,29 @@
 import set from "lodash/set";
-import LogicModule from "./LogicModule";
-import game from "./index.js";
+import BaseModule from "./BaseModule";
+import game from "@/game";
 import { getLSD, setLSD } from "@/utils/localStorage";
 
 const mapExploredKey = "Map.explored";
 
-export default class Map extends LogicModule {
+export default class Map extends BaseModule {
+  moduleName = "map";
+  initialState = {
+    currentFloorIndex: 0,
+    currentFloor: {},
+    currentFloorExplored: [],
+    width: 40,
+    height: 40,
+  };
   width = 40;
   height = 40;
 
-  constructor(...args) {
-    super(...args);
+  constructor() {
+    super();
     this.exploredData = getLSD(mapExploredKey) || [];
   }
 
   initialize() {
-    const currentFloorIndex = game.party.data.location.z;
+    const currentFloorIndex = game.Party.data.location.z;
     this.update({
       currentFloorIndex,
       currentFloor: this.data.floors[currentFloorIndex],
@@ -28,7 +36,7 @@ export default class Map extends LogicModule {
   }
 
   save() {
-    // do not call super, no reason to store map data in localstorage
+    super.save();
     setLSD(mapExploredKey, this.exploredData);
   }
 

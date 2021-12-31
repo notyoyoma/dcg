@@ -1,4 +1,4 @@
-import LogicModule from "./LogicModule";
+import BaseModule from "./BaseModule";
 
 class Character {
   constructor(savedObj) {
@@ -6,7 +6,8 @@ class Character {
   }
 }
 
-export default class Characters extends LogicModule {
+export default class Characters extends BaseModule {
+  moduleName = "characters";
   all = {};
 
   charactersInCurrentRoom() {
@@ -14,7 +15,9 @@ export default class Characters extends LogicModule {
     return [];
   }
 
-  initialize() {
+  async loadData() {
+    await super.loadData();
+
     this.data.characters.forEach((obj) => {
       this.all[obj.name] = new Character(obj);
     });
