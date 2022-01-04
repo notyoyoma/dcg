@@ -22,9 +22,9 @@ export default class Map extends BaseModule {
     this.exploredData = getLSD(mapExploredKey) || [];
   }
 
-  initialize() {
+  update() {
     const currentFloorIndex = game.Party.data.location.z;
-    this.update({
+    super.update({
       currentFloorIndex,
       currentFloor: this.data.floors[currentFloorIndex],
       currentFloorExplored: this.exploredData[currentFloorIndex],
@@ -33,6 +33,10 @@ export default class Map extends BaseModule {
 
   setExplored(z, y, x) {
     set(this.exploredData, [z, y, x], true);
+    super.update({
+      currentFloorExplored: this.exploredData[currentFloorIndex],
+    });
+    this.save();
   }
 
   save() {
