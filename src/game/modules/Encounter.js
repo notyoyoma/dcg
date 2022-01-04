@@ -140,7 +140,6 @@ export default class Encounter extends BaseModule {
 
   constructor() {
     super();
-    console.log(this.queuedListeners);
     this.previous = getLSD(this.previousLSDKey) || {};
   }
 
@@ -195,12 +194,12 @@ export default class Encounter extends BaseModule {
     this.save();
   }
 
-  @listen("ActiveEncounter.after.start")
+  // @listen("ActiveEncounter.after.start")
   startTick() {
     this.tickInterval = setInterval(this.tick.bind(this), this.data.turnSpeed);
   }
 
-  @listen("ActiveEncounter.after.end")
+  // @listen("ActiveEncounter.after.end")
   stopTick() {
     clearInterval(this.tickInterval);
     this.tickInterval = 0;

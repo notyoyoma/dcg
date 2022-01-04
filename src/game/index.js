@@ -35,6 +35,11 @@ export class Game extends EventBus {
       this.Map,
     ];
   }
+
+  initialize() {
+    // emit loaded
+    this.emit("Game.loaded");
+  }
 }
 
 const game = new Game();

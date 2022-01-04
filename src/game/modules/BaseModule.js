@@ -1,8 +1,7 @@
 import axios from "axios";
 import { getLSD, setLSD } from "@/utils/localStorage";
-import { Listener } from "../events";
 
-export default class BaseModule extends Listener {
+export default class BaseModule {
   data = {};
 
   async loadData() {

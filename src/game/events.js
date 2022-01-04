@@ -1,4 +1,6 @@
 import game from "@/game";
+import { BindApplicator } from "lodash-decorators/applicators";
+import { DecoratorFactory, DecoratorConfig } from "lodash-decorators";
 
 export class EventBus {
   eventListeners = {};
@@ -43,29 +45,9 @@ export class EventBus {
   }
 
   emit(eventName, payload = {}) {
+    if (process.env.NODE_ENV !== "production") console.debug(eventName);
     if (!this.eventListeners[eventName]) return [];
     return this.eventListeners[eventName].map(({ fn }) => fn(payload));
-  }
-}
-
-export class Listener {
-  queuedListeners = [];
-  unbinds = [];
-
-  constructor() {
-    this.queuedListeners.forEach(([...args]) => this.bind(...args));
-  }
-
-  bind(eventName, fn) {
-    const bindId = `${this.constructor.name}.${fn.name}`;
-    game.on(eventName, bindId, fn.bind(this));
-    const unbind = () => game.off(eventName, bindId);
-    this.unbinds.push = unbind;
-    return unbind;
-  }
-
-  destructor() {
-    this.unbinds.forEach((unbind) => unbind());
   }
 }
 
@@ -83,20 +65,26 @@ export function event(classProto, fnName, descriptor) {
   };
 }
 
+class ListenerApplicator extends BindApplicator {
+  constructor(...args) {
+    super(...args);
+    this.listeners = [];
+  }
+}
+
+function addListenerToInstance(boundFn, self, eventName) {
+  if (self) {
+    const id = `${self.constructor.name}.${boundFn.name}`;
+    game.on(eventName, id, boundFn);
+  } else {
+    throw "fuck you";
+  }
+}
+
+const listenDecorator = DecoratorFactory.createInstanceDecorator(
+  new DecoratorConfig(addListenerToInstance, new ListenerApplicator())
+);
+
 export function listen(eventName) {
-  return function (classProto, fnName, descriptor) {
-    // Make sure the classProto is a child of Listener
-    if (classProto.queuedListeners === undefined)
-      classProto.queuedListeners = [];
-
-    // @listen("Game.loaded")
-    if (typeof eventName === "string")
-      classProto.queuedListeners.push([eventName, descriptor.value]);
-
-    // @listen(["Game.loaded", "before:Party.move"])
-    if (Array.isArray(eventName))
-      classProto.queuedListeners.push(
-        ...eventName.map((eN) => [eN, descriptor.value])
-      );
-  };
+  return listenDecorator(eventName);
 }

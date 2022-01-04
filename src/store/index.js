@@ -23,7 +23,7 @@ Promise.all(loadDataPromises).then(() => {
     store.dispatch(`${key}/initialize`);
   });
 
-  game.emit("Game.loaded");
+  game.initialize();
   store.commit("setLoading");
 });
 
