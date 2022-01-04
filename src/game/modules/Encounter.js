@@ -65,8 +65,8 @@ export class ActiveEncounter extends Listener {
     if (!this.looted) this.lootSummary();
     if (!this.monsters.areDead) {
       this.addLog = this.monsters.behaviorSummary(this.hostility);
-      this.bind("Party.before.move", this.monstersAreBlocking);
-      this.bind("Encounter.before.tick", this.monsterFlavorText);
+      this.bind("before:Party.move", this.monstersAreBlocking);
+      this.bind("before:Encounter.tick", this.monsterFlavorText);
     }
   }
 
