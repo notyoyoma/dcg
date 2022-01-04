@@ -74,13 +74,13 @@ export class Listener {
   bind(eventName, fn) {
     const listenerId = `${this.constructor.name}.${fn.name}`;
     game.on(eventName, listenerId, fn.bind(this));
-    this.unbinds.push([eventName, listenerId]);
+    const unbind = () => game.off(eventName, listenerId);
+    this.unbinds.push(unbind);
+    return unbind;
   }
 
   unbind() {
-    this.unbinds.forEach(([eventName, listenerId]) =>
-      game.off(eventName, listenerId)
-    );
+    this.unbinds.forEach((unbind) => unbind());
   }
 }
 
