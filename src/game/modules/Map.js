@@ -33,6 +33,7 @@ export default class Map extends BaseModule {
 
   setExplored(z, y, x) {
     set(this.exploredData, [z, y, x], true);
+    const currentFloorIndex = game.Party.data.location.z;
     super.update({
       currentFloorExplored: this.exploredData[currentFloorIndex],
     });
