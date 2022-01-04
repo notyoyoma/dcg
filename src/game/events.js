@@ -1,6 +1,4 @@
 import game from "@/game";
-import { BindApplicator } from "lodash-decorators/applicators";
-import { DecoratorFactory, DecoratorConfig } from "lodash-decorators";
 
 export class EventBus {
   eventListeners = {};
@@ -65,26 +63,37 @@ export function event(classProto, fnName, descriptor) {
   };
 }
 
-class ListenerApplicator extends BindApplicator {
-  constructor(...args) {
-    super(...args);
-    this.listeners = [];
+export class Listener {
+  unbinds = [];
+
+  bind(eventName, fn) {
+    const listenerId = `${this.constructor.name}.${fn.name}`;
+    game.on(eventName, listenerId, fn.bind(this));
+    this.unbinds.push([eventName, listenerId]);
+  }
+
+  unbind() {
+    this.unbinds.forEach(([eventName, listenerId]) =>
+      game.off(eventName, listenerId)
+    );
   }
 }
 
-function addListenerToInstance(boundFn, self, eventName) {
-  if (self) {
-    const id = `${self.constructor.name}.${boundFn.name}`;
-    game.on(eventName, id, boundFn);
-  } else {
-    throw "fuck you";
-  }
-}
-
-const listenDecorator = DecoratorFactory.createInstanceDecorator(
-  new DecoratorConfig(addListenerToInstance, new ListenerApplicator())
-);
+export const coreListeners = {};
 
 export function listen(eventName) {
-  return listenDecorator(eventName);
+  return (target, fnName, descriptor) => {
+    const className = target.constructor.name;
+    if (!coreListeners[className]) {
+      coreListeners[className] = [];
+    }
+
+    if (typeof eventName === "string")
+      coreListeners[className].push([eventName, descriptor.value]);
+
+    if (Array.isArray(eventName))
+      coreListeners[className].push(
+        ...eventName.map((eN) => [eN, descriptor.value])
+      );
+  };
 }

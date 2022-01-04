@@ -1,4 +1,4 @@
-import { EventBus } from "./events";
+import { EventBus, coreListeners } from "./events";
 import Characters from "./modules/Characters";
 import Items from "./modules/Items";
 import Map from "./modules/Map";
@@ -36,7 +36,18 @@ export class Game extends EventBus {
     ];
   }
 
+  initializeModule(instance) {
+    const className = instance.constructor.name;
+    const moduleListeners = coreListeners[className];
+    if (moduleListeners)
+      moduleListeners.forEach(([eventName, fn]) => {
+        const listenerId = `${className}.${fn.name}`;
+        this.on(eventName, listenerId, fn.bind(instance));
+      });
+  }
+
   initialize() {
+    this.modules.forEach(this.initializeModule.bind(this));
     // emit loaded
     this.emit("Game.loaded");
   }

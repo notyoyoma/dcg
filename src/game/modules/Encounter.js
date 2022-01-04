@@ -1,18 +1,19 @@
 import { format, parse, differenceInMinutes as diff } from "date-fns";
 import BaseModule from "./BaseModule";
 import game from "@/game";
-import { event, listen } from "@/game/events";
+import { event, listen, Listener } from "@/game/events";
 import { partyFeelsTowardParty } from "@/utils/alignment";
 import { randomGausian, roll, rollArray } from "@/utils/rng";
 import { getLSD, setLSD } from "@/utils/localStorage";
 
 const dtf = "yyyy-MM-dd:HH:mm:ss";
 
-export class ActiveEncounter {
+export class ActiveEncounter extends Listener {
   log = [];
   respawn = 15; // minutes
 
   constructor(floor, roomId) {
+    super();
     this.floor = floor;
     this.roomId = roomId;
     this.key = `${floor},${roomId}`;
