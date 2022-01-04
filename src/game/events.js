@@ -43,9 +43,14 @@ export class EventBus {
   }
 
   emit(eventName, payload = {}) {
-    if (process.env.NODE_ENV !== "production") console.debug(eventName);
-    if (!this.eventListeners[eventName]) return [];
-    return this.eventListeners[eventName].map(({ fn }) => fn(payload));
+    const listeners = this.eventListeners[eventName];
+    if (process.env.NODE_ENV !== "production")
+      console.debug([
+        eventName,
+        listeners && listeners.length ? listeners : "no listeners",
+      ]);
+    if (!listeners) return [];
+    return listeners.map(({ fn }) => fn(payload));
   }
 }
 
