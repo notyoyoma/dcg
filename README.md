@@ -1,4 +1,4 @@
-# dcg2
+# dcg
 
 [play the current state your browser](https://dcg.martynaselli.com)
 
