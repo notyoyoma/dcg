@@ -163,13 +163,11 @@ export default class Encounter extends BaseModule {
       super.update({
         currentEncounter: this.current.toObj,
         log: this.current.log,
-        tickInterval: this.tickInterval,
       });
     else
       super.update({
         currentEncounter: {},
         log: [],
-        tickInterval: this.tickInterval,
       });
   }
 
@@ -195,12 +193,12 @@ export default class Encounter extends BaseModule {
     this.save();
   }
 
-  // @listen("ActiveEncounter.after.start")
+  @listen("after:ActiveEncounter.start")
   startTick() {
     this.tickInterval = setInterval(this.tick.bind(this), this.data.turnSpeed);
   }
 
-  // @listen("ActiveEncounter.after.end")
+  @listen("after:ActiveEncounter.end")
   stopTick() {
     clearInterval(this.tickInterval);
     this.tickInterval = 0;
@@ -209,11 +207,13 @@ export default class Encounter extends BaseModule {
   setSpeed(newSpeed) {
     this.stopTick();
     this.data.turnSpeed = newSpeed;
+    super.update({ turnSpeed: newSpeed });
     this.startTick();
   }
 
   @event // Encounter.tick
   tick() {
+    console.debug("tick");
     if (!this.current) return;
     super.update({ actions: this.current.actions });
     /*

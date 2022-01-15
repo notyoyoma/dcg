@@ -49,6 +49,15 @@ $utilities: (
     class: h,
     values: $dimensions,
   ),
+  "flex": (
+    responsive: true,
+    property: flex,
+    values: (
+      fill: 1 1 auto,
+      "1": 1,
+      "2": 2,
+    ),
+  ),
 );
 
 @import "~bootstrap/scss/variables";

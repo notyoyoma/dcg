@@ -15,13 +15,14 @@
       <Controls />
     </div>
     <div class="d-flex flex-column w-30">
-      <div class="h-40">
+      <div class="flex-2">
         <MonsterParty />
       </div>
-      <div class="h-20">
+      <div class="h-20 flex-1">
         <EncounterFeed />
       </div>
-      <div class="h-40">
+      <EncounterLoop />
+      <div class="flex-2">
         <Party />
       </div>
     </div>
