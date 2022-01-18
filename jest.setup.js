@@ -3,11 +3,14 @@ process.on("unhandledRejection", () => {});
 
 import { create } from "vuex-mock-context";
 import gameData from "./data";
-import { capitalize } from "@/utils/string";
 
 const GameModule = jest.requireActual("@/game");
-const game = new GameModule.Game();
+const game = new GameModule.Game(gameData);
 global.game = game;
+
+game.modules.forEach((module) => {
+  module.context = create();
+});
 
 jest.doMock("@/game", () => {
   return {
@@ -15,18 +18,4 @@ jest.doMock("@/game", () => {
     ...GameModule,
     default: global.game,
   };
-});
-
-const initializeOrder = require("./src/store/modules.js").initializeOrder;
-
-initializeOrder.forEach((moduleName) => {
-  const vuexMockContext = create();
-  const logicClasses = require("@/game/modules").default;
-  const logicClassName = capitalize(moduleName);
-  const instance = new logicClasses[logicClassName](
-    vuexMockContext,
-    moduleName,
-    gameData[moduleName]
-  );
-  game._addModule(moduleName, instance);
 });
