@@ -1,6 +1,6 @@
 import set from "lodash/set";
 import BaseModule from "./BaseModule";
-import game from "@/game";
+import { Party } from ".";
 import { getLSD, setLSD } from "@/utils/localStorage";
 
 const mapExploredKey = "Map.explored";
@@ -23,7 +23,7 @@ export default class Map extends BaseModule {
   }
 
   update() {
-    const currentFloorIndex = game.Party.data.location.z;
+    const currentFloorIndex = Party.data.location.z;
     super.update({
       currentFloorIndex,
       currentFloor: this.data.floors[currentFloorIndex],
@@ -33,7 +33,7 @@ export default class Map extends BaseModule {
 
   setExplored(z, y, x) {
     set(this.exploredData, [z, y, x], true);
-    const currentFloorIndex = game.Party.data.location.z;
+    const currentFloorIndex = Party.data.location.z;
     super.update({
       currentFloorExplored: this.exploredData[currentFloorIndex],
     });

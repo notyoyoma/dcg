@@ -1,10 +1,11 @@
 import { format, parse, differenceInMinutes as diff } from "date-fns";
 import BaseModule from "./BaseModule";
-import game from "@/game";
 import { event, listen, Listener } from "@/game/events";
 import { partyFeelsTowardParty } from "@/utils/alignment";
 import { randomGausian, roll, rollArray } from "@/utils/rng";
 import { getLSD, setLSD } from "@/utils/localStorage";
+
+import { Monsters, Party } from ".";
 
 const dtf = "yyyy-MM-dd:HH:mm:ss";
 
@@ -20,7 +21,7 @@ export class ActiveEncounter extends Listener {
 
     if (!roomId) return;
 
-    const previous = game.Encounter.previous[this.key];
+    const previous = Encounter.instance.previous[this.key];
     const now = new Date();
     if (previous && !previous.cleared) {
       const minutesSinceSpawn = diff(now, parse(previous.spawned, dtf, now));
@@ -35,12 +36,9 @@ export class ActiveEncounter extends Listener {
 
   spawn() {
     const { roomId, floor } = this;
-    this.monsters = game.Monsters.spawn({ roomId, floor });
+    this.monsters = Monsters.spawn({ roomId, floor });
     const rand = randomGausian();
-    const feelings = partyFeelsTowardParty(
-      this.monsters.party,
-      game.Party.party
-    );
+    const feelings = partyFeelsTowardParty(this.monsters.party, Party.party);
     this.hostility = rand * feelings;
     this.log = []; // TODO monster flavor text
     this.spawned = format(new Date(), dtf);
@@ -53,7 +51,7 @@ export class ActiveEncounter extends Listener {
    */
   reload(previous) {
     const { monsters, log, hostility, spawned } = previous;
-    this.monsters = game.Monsters.respawn(monsters);
+    this.monsters = Monsters.respawn(monsters);
     this.hostility = hostility;
     this.log = log;
     this.spawned = spawned;
@@ -88,7 +86,7 @@ export class ActiveEncounter extends Listener {
 
   monstersAreBlocking() {
     const { strength: monsterStrength = 0 } = this.monsters.statsSummary;
-    const { strength: partyStrength = 0 } = game.Party.statsSummary;
+    const { strength: partyStrength = 0 } = Party.statsSummary;
     if (this.hostility > 0.2 && monsterStrength > partyStrength) {
       this.addLog = "The monsters block you!";
       return false;
@@ -110,7 +108,7 @@ export class ActiveEncounter extends Listener {
 
   set addLog(string) {
     this.log.push(string);
-    game.Encounter.update();
+    Encounter.instance.update();
   }
 
   get toObj() {
@@ -123,7 +121,7 @@ export class ActiveEncounter extends Listener {
   }
 
   get actions() {
-    return [...game.Party.actions, ...this.monsters.actions(this.hostility)];
+    return [...Party.actions, ...this.monsters.actions(this.hostility)];
   }
 }
 
@@ -146,8 +144,8 @@ export default class Encounter extends BaseModule {
 
   @listen(["Game.loaded", "after:Party.move"])
   checkRoom() {
-    const { x, y, z } = game.Party.data.location;
-    const roomId = game.Map.data.floors[z].roomCoords[y][x];
+    const { x, y, z } = Party.data.location;
+    const roomId = Map.data.floors[z].roomCoords[y][x];
     if (this.current && this.current.roomId != roomId) {
       this.unloadCurrentEncounter();
     }
@@ -177,8 +175,8 @@ export default class Encounter extends BaseModule {
   }
 
   /**
-   * @param  {} floor - index to access game.map.data.floors[floor]
-   * @param  {} roomId - id to access game.map.data.floors[floor].rooms[roomId]
+   * @param  {} floor - index to access Map.data.floors[floor]
+   * @param  {} roomId - id to access Map.data.floors[floor].rooms[roomId]
    */
   loadEncounter(floor, roomId) {
     this.current = new ActiveEncounter(floor, roomId);

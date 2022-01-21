@@ -1,39 +1,20 @@
-import { EventBus, coreListeners } from "./events";
-import Characters from "./modules/Characters";
-import Items from "./modules/Items";
-import Map from "./modules/Map";
-import Monsters from "./modules/Monsters";
-import Npcs from "./modules/Npcs";
-import Party from "./modules/Party";
-import Encounter from "./modules/Encounter";
+import EventBus from "./EventBus";
+import modules from "./modules";
 
 export class Game extends EventBus {
   coreEventQueue = [];
+  _moduleKeys = [];
 
   constructor() {
     super();
 
-    // Setup Modules
-    this.Characters = new Characters();
-    this.Items = new Items();
-    this.Map = new Map();
-    this.Monsters = new Monsters();
-    this.Npcs = new Npcs();
-    this.Party = new Party();
-    this.Encounter = new Encounter();
+    Object.assign(this, modules);
+    this._moduleKeys = Object.keys(modules);
   }
 
   // Initialize these in order?
   get modules() {
-    return [
-      this.Characters,
-      this.Party,
-      this.Npcs,
-      this.Encounter,
-      this.Items,
-      this.Monsters,
-      this.Map,
-    ];
+    return this._moduleKeys.map((key) => this[key]);
   }
 
   initializeModule(instance) {

@@ -1,5 +1,5 @@
 import BaseModule from "./BaseModule";
-import game from "@/game";
+import { Map, Characters } from ".";
 import { event } from "@/game/events";
 import get from "lodash/get";
 
@@ -18,10 +18,11 @@ export default class Party extends BaseModule {
   };
 
   teleport(location) {
-    if (game.Map.isOutOfBounds(location)) return;
+    if (Map.isOutOfBounds(location)) return;
     this.data.location = { ...location };
     this.update("location");
-    game.emit("Party.after.move");
+    // TODO - new decorator
+    // needs to emit("after:Party.move");
   }
 
   @event
@@ -35,7 +36,7 @@ export default class Party extends BaseModule {
     // if the party is facing up or down, check the top tile, else left
     const wallIndex = facing % 2 == 0 ? 0 : 1;
     const path = ["floors", z, "walls", y + yD, x + xD, wallIndex];
-    const wallValue = get(game.Map.data, path);
+    const wallValue = get(Map.data, path);
 
     // is a wall in the way?
     if (wallValue === 1) return;
@@ -54,7 +55,7 @@ export default class Party extends BaseModule {
         location.x -= 1;
         break;
     }
-    if (game.Map.isOutOfBounds(location)) return;
+    if (Map.isOutOfBounds(location)) return;
     this.data.location = location;
     this.update("location");
   }
@@ -78,9 +79,7 @@ export default class Party extends BaseModule {
   }
 
   get party() {
-    return this.data.characters.map((charName) =>
-      game.Characters.find(charName)
-    );
+    return this.data.characters.map((charName) => Characters.find(charName));
   }
 
   get statsSummary() {

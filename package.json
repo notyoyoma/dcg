@@ -7,8 +7,8 @@
     "build": "vue-cli-service build && cp -r data dist && cp -r assets dist",
     "deploy": ". ./deploy.sh",
     "serve:prod": "yarn build && cd dist && http-server",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
+    "@babel/node": "^7.16.8",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",

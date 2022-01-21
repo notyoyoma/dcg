@@ -1,7 +1,7 @@
 import get from "lodash/get";
 import zip from "lodash/zip";
 import fill from "lodash/fill";
-import game from "@/game";
+import { Map } from ".";
 import BaseModule from "./BaseModule";
 import { rollGausian, statsRoll, rollArray, FairRoll } from "@/utils/rng";
 import { objectReduce } from "@/utils/object";
@@ -9,7 +9,7 @@ import pluralize from "pluralize";
 
 export class Monster {
   constructor(id) {
-    this.baseMonster = game.Monsters.data.monsters.find(
+    this.baseMonster = Monsters.instance.data.monsters.find(
       ({ name }) => name === id
     );
     if (!this.baseMonster) throw `monsters[name: ${id}] not found`;
@@ -108,7 +108,7 @@ class BaseMonsterParty {
 export class MonsterParty extends BaseMonsterParty {
   constructor(partyId, floor) {
     super();
-    const monsterIds = game.Monsters.data.monsterParties[partyId];
+    const monsterIds = Monsters.instance.data.monsterParties[partyId];
     if (!monsterIds) throw `monsterParties[${partyId}] not found`;
     this.party = monsterIds.map((id) => {
       const monster = new Monster(id);
@@ -134,18 +134,18 @@ export default class Monsters extends BaseModule {
   fairSpawn = new FairRoll("monsters.fairSpawn");
 
   spawn({ roomId, floor }) {
-    const floorMonstersArr = game.Map.data.floors[floor].monsters;
+    const floorMonstersArr = Map.data.floors[floor].monsters;
     const floorMonsters = zip(
       fill(Array(floorMonstersArr.length), 1),
       floorMonstersArr
     );
 
     const roomMonsters = get(
-      game.Map.data.floors[floor].rooms,
+      Map.data.floors[floor].rooms,
       [roomId, "monsterTable"],
       []
     );
-    // const questMonsters = game.Party.characterQuests; // TODO feature/quests
+    // const questMonsters = Party.characterQuests; // TODO feature/quests
     return new MonsterParty(
       // roll for which monster party to spawn
       this.fairSpawn.roll([...floorMonsters, ...roomMonsters]),
