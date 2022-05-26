@@ -4,7 +4,7 @@ import compact from "lodash/compact";
 import flatten from "lodash/flatten";
 import { wallCoordInteraction } from "./layerLogic";
 import { emptyFloor } from "@/components/map/layers";
-import game from "@/game";
+import { map } from "@/game/modules";
 import axios from "axios";
 
 const layerCoordMappers = {
@@ -171,16 +171,16 @@ export default {
       state.layerValueBin = value;
     },
     setValueAtPath(state, { path, value }) {
-      set(game.map.data.floors, path, value);
-      state.floors = [...game.map.data.floors];
-      game.map.update({
-        currentFloor: game.map.data.floors[state.currentFloorIndex],
+      set(map.data.floors, path, value);
+      state.floors = [...map.data.floors];
+      map.update({
+        currentFloor: map.data.floors[state.currentFloorIndex],
       });
     },
     updateFromGameData(state) {
-      state.floors = [...game.map.data.floors];
-      game.map.update({
-        currentFloor: game.map.data.floors[state.currentFloorIndex],
+      state.floors = [...map.data.floors];
+      map.update({
+        currentFloor: map.data.floors[state.currentFloorIndex],
       });
     },
   },
@@ -197,24 +197,24 @@ export default {
       }
     },
     interact,
-    addFloor({ dispatch }) {
-      game.map.data.floors.push({ ...emptyFloor });
-      dispatch("initializeModule");
+    addFloor({ commit }) {
+      map.data.floors.push({ ...emptyFloor });
+      commit("updateFromGameData");
     },
-    async writeToFile({ dispatch, state }) {
+    async writeToFile({ state, commit }) {
       const data = {
         floors: state.floors,
         width: 40,
         height: 40,
       };
       await axios.post("/data/map.json", data).catch(console.log);
-      await dispatch("map/loadModuleData", null, { root: true });
-      dispatch("initializeModule");
+      await map.loadData(false).catch(console.log);
+      commit("updateFromGameData");
       console.log("Saved to file");
     },
-    async refreshFromFile({ dispatch }) {
-      await dispatch("map/loadModuleData", null, { root: true });
-      dispatch("initializeModule");
+    async refreshFromFile({ commit }) {
+      await map.loadData(false).catch(console.log);
+      commit("updateFromGameData");
       console.log("Reloaded from file");
     },
   },

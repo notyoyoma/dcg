@@ -26,7 +26,9 @@ export default {
     ...mapActions("mapEditor", ["addFloor"]),
     changeFloor(delta) {
       const newFloorIndex = Math.max(0, this.currentFloorIndex + delta);
-      if (newFloorIndex >= this.floorCount) this.addFloor();
+      if (newFloorIndex >= this.floorCount) {
+        this.addFloor();
+      }
       this.setFloor(newFloorIndex);
     },
   },

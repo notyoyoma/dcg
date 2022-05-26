@@ -4,9 +4,9 @@ import { getLSD, setLSD } from "@/utils/localStorage";
 export default class BaseModule {
   data = {};
 
-  async loadData() {
+  async loadData(allowCache = true) {
     const lsd = getLSD(this.moduleName);
-    if (lsd) this.data = lsd;
+    if (allowCache && lsd) this.data = lsd;
     else {
       const { data } = await axios.get(`/data/${this.moduleName}.json`);
       this.data = data;
