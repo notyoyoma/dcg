@@ -14,6 +14,21 @@ export function event(classProto, fnName, descriptor) {
   };
 }
 
+export function listen(eventName) {
+  return (target, fnName, descriptor) => {
+    const className = target.constructor.name;
+
+    const fn = descriptor.value;
+    if (typeof eventName === "string")
+      game.addCoreEvent({ className, eventName, fn });
+
+    if (Array.isArray(eventName))
+      eventName.forEach((eventName) => {
+        game.addCoreEvent({ className, eventName, fn });
+      });
+  };
+}
+
 export class Listener {
   unbinds = [];
 
@@ -28,23 +43,4 @@ export class Listener {
   unbind() {
     this.unbinds.forEach((unbind) => unbind());
   }
-}
-
-export const coreListeners = {};
-
-export function listen(eventName) {
-  return (target, fnName, descriptor) => {
-    const className = target.constructor.name;
-    if (!coreListeners[className]) {
-      coreListeners[className] = [];
-    }
-
-    if (typeof eventName === "string")
-      coreListeners[className].push([eventName, descriptor.value]);
-
-    if (Array.isArray(eventName))
-      coreListeners[className].push(
-        ...eventName.map((eN) => [eN, descriptor.value])
-      );
-  };
 }

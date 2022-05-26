@@ -1,4 +1,4 @@
-import game from "@/game";
+import { map } from "@/game/modules";
 import { properties, mutations } from "./baseModule";
 
 export default {
@@ -6,7 +6,7 @@ export default {
   mutations,
 
   state() {
-    return game.Map.initialState;
+    return map.initialState;
   },
-  actions: game.Map.vuexActions,
+  actions: map.vuexActions,
 };

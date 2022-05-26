@@ -1,4 +1,4 @@
-import game from "@/game";
+import { party } from "@/game/modules";
 import { properties, mutations } from "./baseModule";
 
 export default {
@@ -6,9 +6,9 @@ export default {
   mutations,
 
   state() {
-    return game.Party.initialState;
+    return party.initialState;
   },
-  actions: game.Party.vuexActions,
+  actions: party.vuexActions,
 
   getters: {
     selectedCharacter(state) {

@@ -1,34 +1,40 @@
 import EventBus from "./EventBus";
-import modules from "./modules";
 
 export class Game extends EventBus {
-  coreEventQueue = [];
+  _coreEventQueue = [];
   _moduleKeys = [];
 
-  constructor() {
-    super();
-
-    Object.assign(this, modules);
+  addModules(modules) {
     this._moduleKeys = Object.keys(modules);
+    this._moduleKeys.forEach((key) => {
+      this[key] = modules[key];
+    });
   }
 
-  // Initialize these in order?
   get modules() {
     return this._moduleKeys.map((key) => this[key]);
   }
 
-  initializeModule(instance) {
-    const className = instance.constructor.name;
-    const moduleListeners = coreListeners[className];
-    if (moduleListeners)
-      moduleListeners.forEach(([eventName, fn]) => {
-        const listenerId = `${className}.${fn.name}`;
+  addCoreEvent(event) {
+    this._coreEventQueue.push(event);
+  }
+
+  initializeModule(moduleKey) {
+    const module = this[moduleKey];
+    const moduleClassName = module.constructor.name;
+    const events = this._coreEventQueue.filter(
+      ({ className }) => className === moduleClassName
+    );
+    if (events.length)
+      events.forEach(({ eventName, fn }) => {
+        const instance = this[moduleKey];
+        const listenerId = `${moduleKey}.${fn.name}_CORE`;
         this.on(eventName, listenerId, fn.bind(instance));
       });
   }
 
   initialize() {
-    this.modules.forEach(this.initializeModule.bind(this));
+    this._moduleKeys.forEach(this.initializeModule.bind(this));
     // emit loaded
     this.emit("Game.loaded");
   }

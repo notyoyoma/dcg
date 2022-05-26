@@ -1,9 +1,9 @@
 import BaseModule from "./BaseModule";
-import { Map, Characters } from ".";
+import { map, characters } from ".";
 import { event } from "@/game/events";
 import get from "lodash/get";
 
-export default class Party extends BaseModule {
+export class Party extends BaseModule {
   moduleName = "party";
   initialState = {
     characters: [],
@@ -18,7 +18,7 @@ export default class Party extends BaseModule {
   };
 
   teleport(location) {
-    if (Map.isOutOfBounds(location)) return;
+    if (map.isOutOfBounds(location)) return;
     this.data.location = { ...location };
     this.update("location");
     // TODO - new decorator
@@ -36,7 +36,7 @@ export default class Party extends BaseModule {
     // if the party is facing up or down, check the top tile, else left
     const wallIndex = facing % 2 == 0 ? 0 : 1;
     const path = ["floors", z, "walls", y + yD, x + xD, wallIndex];
-    const wallValue = get(Map.data, path);
+    const wallValue = get(map.data, path);
 
     // is a wall in the way?
     if (wallValue === 1) return;
@@ -55,7 +55,7 @@ export default class Party extends BaseModule {
         location.x -= 1;
         break;
     }
-    if (Map.isOutOfBounds(location)) return;
+    if (map.isOutOfBounds(location)) return;
     this.data.location = location;
     this.update("location");
   }
@@ -79,7 +79,7 @@ export default class Party extends BaseModule {
   }
 
   get party() {
-    return this.data.characters.map((charName) => Characters.find(charName));
+    return this.data.characters.map((charName) => characters.find(charName));
   }
 
   get statsSummary() {
@@ -96,3 +96,5 @@ export default class Party extends BaseModule {
     return this.party.map((m) => [m.currentAction, m]);
   }
 }
+
+export const party = new Party();

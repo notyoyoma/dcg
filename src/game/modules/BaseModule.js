@@ -2,19 +2,7 @@ import axios from "axios";
 import { getLSD, setLSD } from "@/utils/localStorage";
 
 export default class BaseModule {
-  _instance = null;
   data = {};
-
-  constructor() {
-    this._instance = this;
-  }
-
-  get instance() {
-    if (this._instance === null) {
-      this._instance = new this.constructor();
-    }
-    return this._instance;
-  }
 
   async loadData() {
     const lsd = getLSD(this.moduleName);
@@ -23,10 +11,6 @@ export default class BaseModule {
       const { data } = await axios.get(`/data/${this.moduleName}.json`);
       this.data = data;
     }
-  }
-
-  injectData(data) {
-    this.data = data;
   }
 
   // TODO debounce by game loop duration, and queue all changes during game loop for single update

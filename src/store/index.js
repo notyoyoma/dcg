@@ -1,6 +1,5 @@
 import Vuex from "vuex";
 import modules from "./modules";
-import game from "@/game";
 
 const store = new Vuex.Store({
   state: () => ({
@@ -15,7 +14,13 @@ const store = new Vuex.Store({
   modules,
 });
 
-const loadDataPromises = game.modules.map((module) => module.loadData());
+import game from "@/game";
+import * as gameModules from "@/game/modules";
+game.addModules(gameModules);
+
+const loadDataPromises = Object.keys(gameModules).map((key) =>
+  gameModules[key].loadData()
+);
 
 // once all modules have loaded data, initialize them in order
 Promise.all(loadDataPromises).then(() => {

@@ -1,10 +1,8 @@
-import modules from ".";
+import { monsters } from ".";
 import { MonsterParty } from "./Monsters";
 
-const { Monsters } = modules;
-
 test("Monsters.data", () => {
-  expect(Object.keys(Monsters.data).length).not.toBe(0);
+  expect(Object.keys(monsters.data).length).not.toBe(0);
 });
 
 test("textSummary", () => {

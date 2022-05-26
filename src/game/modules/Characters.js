@@ -6,7 +6,7 @@ class Character {
   }
 }
 
-export default class Characters extends BaseModule {
+export class Characters extends BaseModule {
   moduleName = "characters";
   all = {};
 
@@ -27,3 +27,5 @@ export default class Characters extends BaseModule {
     return this.all[nameToFind];
   }
 }
+
+export const characters = new Characters();

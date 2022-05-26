@@ -1,8 +1,131 @@
 import set from "lodash/set";
-import { shouldInteract, interactWithLayer } from "./layerLogic";
+import uniq from "lodash/uniq";
+import compact from "lodash/compact";
+import flatten from "lodash/flatten";
+import { wallCoordInteraction } from "./layerLogic";
 import { emptyFloor } from "@/components/map/layers";
 import game from "@/game";
 import axios from "axios";
+
+const layerCoordMappers = {
+  default: ({ offsetX: x, offsetY: y }) => [
+    Math.floor(y / 15),
+    Math.floor(x / 15),
+  ],
+  walls({ offsetX: x, offsetY: y }) {
+    const { triangle, xI, yI } = wallCoordInteraction(x, y);
+
+    switch (triangle) {
+      case "a":
+        return [yI, xI, 0];
+      case "b":
+        return [yI, xI, 1];
+      case "c":
+        return [yI, xI + 1, 1];
+      case "d":
+        return [yI + 1, xI, 0];
+    }
+  },
+};
+
+const layerActChecks = {
+  default: ({ type }, mouseHeldDown) => mouseHeldDown || type === "mouseup",
+  walls({ offsetX: x, offsetY: y, type }, mouseHeldDown) {
+    // only accept mousedown and drag
+    if (type !== "mousedown" && !(type === "mousemove" && mouseHeldDown))
+      return false;
+
+    // out of bounds
+    if (x < 0 || y < 0 || x > 600 || y > 600) return false;
+
+    // get interaction coords
+    const { triangle, xM, yM, xI, yI } = wallCoordInteraction(x, y);
+
+    // disable walls against edges
+    if (xI === 0 && triangle === "b") return false;
+    if (xI === 14 && triangle === "c") return false;
+    if (yI === 0 && triangle === "a") return false;
+    if (yI === 4 && triangle === "d") return false;
+
+    //dead zones for dragging
+    if (
+      type !== "mousedown" &&
+      ((xM < 2 && yM < 2) ||
+        (xM < 2 && yM > 12) ||
+        (xM > 12 && yM < 2) ||
+        (xM > 12 && yM > 12) ||
+        (xM > 5 && xM < 9 && yM > 5 && yM < 9))
+    )
+      return false;
+
+    return true;
+  },
+};
+
+function shouldInteract(event, layerKey, mouseHeldDown) {
+  const actCheck = layerActChecks[layerKey] || layerActChecks.default;
+  return actCheck(event, mouseHeldDown);
+}
+
+function interact({ state, commit, getters }, event) {
+  const { currentLayerKey, mouseHeldDown, dragCoordPaths } = state;
+  if (!shouldInteract(event, currentLayerKey, mouseHeldDown)) return;
+
+  const interactions = {
+    default(
+      { currentToolIndex, currentLayerKey, currentFloorIndex },
+      coordPath
+    ) {
+      const value = currentToolIndex === 0 ? null : currentToolIndex;
+      const path = [currentFloorIndex, currentLayerKey, ...coordPath];
+      commit("setValueAtPath", { path, value });
+    },
+    rooms({ currentToolIndex, currentFloorIndex, layerValueBin }, coordPath) {
+      const path = [currentFloorIndex, "roomCoords", ...coordPath];
+      if (currentToolIndex === 0) {
+        // erase acts like the default
+        commit("setValueAtPath", { path, value: null });
+      } else if (currentToolIndex === 1) {
+        const { roomCoords } = getters["currentFloor"];
+        const roomIds = uniq(compact(flatten(roomCoords))).sort(
+          (a, b) => a - b
+        );
+        for (let i = 1; i < roomIds.length; i++) {
+          if (i !== roomIds[i - 1]) {
+            return i;
+          }
+        }
+        const nextRoomId = roomIds.length + 1;
+        commit("setLayerValueBin", nextRoomId);
+        commit("setValueAtPath", {
+          path,
+          value: nextRoomId,
+        });
+        commit("setCurrentTool", 2); // set tool to edit
+      } else if (currentToolIndex === 2) {
+        commit("setValueAtPath", {
+          path,
+          value: layerValueBin,
+        });
+      } else if (currentToolIndex === 3) {
+        const { roomCoords } = getters["currentFloor"];
+        const clickedRoomId = roomCoords[path[2]][path[3]];
+        commit("setLayerValueBin", clickedRoomId);
+        commit("setCurrentTool", 2); // set tool to edit
+      }
+    },
+  };
+
+  const interaction = interactions[currentLayerKey] || interactions.default;
+  const coordMapper =
+    layerCoordMappers[currentLayerKey] || layerCoordMappers.default;
+  const coordPath = coordMapper(event);
+  const coordPathStr = JSON.stringify(coordPath);
+  if (!dragCoordPaths.includes(coordPathStr)) {
+    interaction(state, coordPath);
+    commit("addDragCoordPath", coordPathStr);
+  }
+}
 
 export default {
   namespaced: true,
@@ -48,16 +171,16 @@ export default {
       state.layerValueBin = value;
     },
     setValueAtPath(state, { path, value }) {
-      set(game.Map.data.floors, path, value);
-      state.floors = [...game.Map.data.floors];
-      game.Map.update({
-        currentFloor: game.Map.data.floors[state.currentFloorIndex],
+      set(game.map.data.floors, path, value);
+      state.floors = [...game.map.data.floors];
+      game.map.update({
+        currentFloor: game.map.data.floors[state.currentFloorIndex],
       });
     },
     updateFromGameData(state) {
-      state.floors = [...game.Map.data.floors];
-      game.Map.update({
-        currentFloor: game.Map.data.floors[state.currentFloorIndex],
+      state.floors = [...game.map.data.floors];
+      game.map.update({
+        currentFloor: game.map.data.floors[state.currentFloorIndex],
       });
     },
   },
@@ -73,13 +196,9 @@ export default {
         state.hideLayers.push(id);
       }
     },
-    interact({ state }, event) {
-      const { currentLayerKey, mouseHeldDown } = state;
-      if (!shouldInteract(event, currentLayerKey, mouseHeldDown)) return;
-      interactWithLayer({ event, ...state });
-    },
+    interact,
     addFloor({ dispatch }) {
-      game.Map.data.floors.push({ ...emptyFloor });
+      game.map.data.floors.push({ ...emptyFloor });
       dispatch("initializeModule");
     },
     async writeToFile({ dispatch, state }) {

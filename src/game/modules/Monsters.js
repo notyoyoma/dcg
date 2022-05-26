@@ -1,7 +1,7 @@
 import get from "lodash/get";
 import zip from "lodash/zip";
 import fill from "lodash/fill";
-import { Map } from ".";
+import { map } from ".";
 import BaseModule from "./BaseModule";
 import { rollGausian, statsRoll, rollArray, FairRoll } from "@/utils/rng";
 import { objectReduce } from "@/utils/object";
@@ -9,9 +9,7 @@ import pluralize from "pluralize";
 
 export class Monster {
   constructor(id) {
-    this.baseMonster = Monsters.instance.data.monsters.find(
-      ({ name }) => name === id
-    );
+    this.baseMonster = monsters.data.monsters.find(({ name }) => name === id);
     if (!this.baseMonster) throw `monsters[name: ${id}] not found`;
     const { name, spells } = this.baseMonster;
     this.name = name;
@@ -108,7 +106,7 @@ class BaseMonsterParty {
 export class MonsterParty extends BaseMonsterParty {
   constructor(partyId, floor) {
     super();
-    const monsterIds = Monsters.instance.data.monsterParties[partyId];
+    const monsterIds = monsters.data.monsterParties[partyId];
     if (!monsterIds) throw `monsterParties[${partyId}] not found`;
     this.party = monsterIds.map((id) => {
       const monster = new Monster(id);
@@ -129,19 +127,19 @@ export class OldMonsterParty extends BaseMonsterParty {
   }
 }
 
-export default class Monsters extends BaseModule {
+export class Monsters extends BaseModule {
   moduleName = "monsters";
   fairSpawn = new FairRoll("monsters.fairSpawn");
 
   spawn({ roomId, floor }) {
-    const floorMonstersArr = Map.data.floors[floor].monsters;
+    const floorMonstersArr = map.data.floors[floor].monsters;
     const floorMonsters = zip(
       fill(Array(floorMonstersArr.length), 1),
       floorMonstersArr
     );
 
     const roomMonsters = get(
-      Map.data.floors[floor].rooms,
+      map.data.floors[floor].rooms,
       [roomId, "monsterTable"],
       []
     );
@@ -158,3 +156,5 @@ export default class Monsters extends BaseModule {
     return new OldMonsterParty(previous);
   }
 }
+
+export const monsters = new Monsters();

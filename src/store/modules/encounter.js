@@ -1,4 +1,4 @@
-import game from "@/game";
+import { encounter } from "@/game/modules";
 import { properties, mutations } from "./baseModule";
 
 export default {
@@ -6,7 +6,7 @@ export default {
   mutations,
 
   state() {
-    return game.Encounter.initialState;
+    return encounter.initialState;
   },
-  actions: game.Encounter.vuexActions,
+  actions: encounter.vuexActions,
 };
