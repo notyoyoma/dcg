@@ -15,18 +15,18 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
+import { map } from "@/game/modules";
 
 export default {
   computed: {
     ...mapState("mapEditor", ["currentFloorIndex"]),
-    ...mapState("map", { floorCount: (state) => state.floors.length }),
   },
   methods: {
     ...mapMutations("mapEditor", ["setFloor"]),
     ...mapActions("mapEditor", ["addFloor"]),
     changeFloor(delta) {
       const newFloorIndex = Math.max(0, this.currentFloorIndex + delta);
-      if (newFloorIndex >= this.floorCount) {
+      if (newFloorIndex >= map.data.floors.length) {
         this.addFloor();
       }
       this.setFloor(newFloorIndex);

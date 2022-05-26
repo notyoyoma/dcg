@@ -4,7 +4,7 @@ import compact from "lodash/compact";
 import flatten from "lodash/flatten";
 import { wallCoordInteraction } from "./layerLogic";
 import { emptyFloor } from "@/components/map/layers";
-import { map } from "@/game/modules";
+import { map, party } from "@/game/modules";
 import axios from "axios";
 
 const layerCoordMappers = {
@@ -157,6 +157,8 @@ export default {
     },
     setFloor(state, floorIndex) {
       state.currentFloorIndex = floorIndex;
+      party.data.location.z = floorIndex;
+      map.update();
     },
     setMouseHeldDown(state, mouseHeldDown) {
       state.mouseHeldDown = mouseHeldDown;
@@ -173,15 +175,11 @@ export default {
     setValueAtPath(state, { path, value }) {
       set(map.data.floors, path, value);
       state.floors = [...map.data.floors];
-      map.update({
-        currentFloor: map.data.floors[state.currentFloorIndex],
-      });
+      map.update();
     },
     updateFromGameData(state) {
       state.floors = [...map.data.floors];
-      map.update({
-        currentFloor: map.data.floors[state.currentFloorIndex],
-      });
+      map.update();
     },
   },
   actions: {
@@ -201,6 +199,7 @@ export default {
       map.data.floors.push({ ...emptyFloor });
       commit("updateFromGameData");
     },
+    changeFloor() {},
     async writeToFile({ state, commit }) {
       const data = {
         floors: state.floors,
