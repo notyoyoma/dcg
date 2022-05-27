@@ -14,6 +14,7 @@ export function event(classProto, fnName, descriptor) {
   };
 }
 
+// can only be used in @/game/modules singletons
 export function listen(eventName) {
   return (target, fnName, descriptor) => {
     const className = target.constructor.name;

@@ -28,15 +28,15 @@
 </template>
 
 <script>
-import game from "@/game";
+import { party } from "@/game/modules";
 
 export default {
   methods: {
     moveForward() {
-      game.party.move();
+      party.move();
     },
     turn(delta) {
-      game.party.turn(delta);
+      party.turn(delta);
     },
   },
 };

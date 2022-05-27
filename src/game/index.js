@@ -27,14 +27,13 @@ export class Game extends EventBus {
     );
     if (events.length)
       events.forEach(({ eventName, fn }) => {
-        const instance = this[moduleKey];
         const listenerId = `${moduleKey}.${fn.name}_CORE`;
-        this.on(eventName, listenerId, fn.bind(instance));
+        this.on(eventName, listenerId, fn.bind(module));
       });
   }
 
   initialize() {
-    this._moduleKeys.forEach(this.initializeModule.bind(this));
+    this._moduleKeys.forEach(this.initializeModule, this);
     // emit loaded
     this.emit("Game.loaded");
   }
