@@ -2,6 +2,7 @@ import { createApp } from "vue";
 
 import Main from "./Main";
 import store from "./store";
+import { mixin as eventMixin } from "@/game/events";
 
 import "./utils/icons";
 
@@ -15,6 +16,7 @@ import KeyButton from "@/components/interaction/KeyButton";
 app.component("i-fa", FontAwesomeIcon);
 app.component("KeyPress", KeyPress);
 app.component("KeyButton", KeyButton);
+app.mixin(eventMixin);
 
 app.use(store);
 import router from "./router";

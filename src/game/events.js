@@ -45,3 +45,25 @@ export class Listener {
     this.unbinds.forEach((unbind) => unbind());
   }
 }
+
+export const mixin = {
+  data: () => ({
+    unbinds: [],
+  }),
+  methods: {
+    $bind(eventName, fn) {
+      const componentName = this.$options.name;
+      if (!componentName)
+        throw `You must define component name in ${this.$options.__file}`;
+      const fnName = fn.name.match(/[^\s]+$/)[0];
+      const listenerId = `${componentName}.${fnName}`;
+      game.on(eventName, listenerId, fn);
+      const unbind = () => game.off(eventName, listenerId);
+      this.unbinds.push(unbind);
+      return unbind;
+    },
+  },
+  beforeDestroy() {
+    this.unbinds.forEach((unbind) => unbind());
+  },
+};

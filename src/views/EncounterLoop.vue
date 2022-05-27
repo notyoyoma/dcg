@@ -6,32 +6,28 @@
 
 <script>
 import { mapState } from "vuex";
-import game from "@/game";
-
 import { delay } from "@/utils/async";
 
 export default {
+  name: "EncounterLoop",
   computed: {
     ...mapState("encounter", ["turnSpeed", "actions"]),
   },
   methods: {
-    async beforeEncounterTick() {
+    async startLoop() {
       const el = this.$refs.progress;
       el.style.animationDuration = `${this.turnSpeed}ms`;
       el.classList.add("running");
       await delay(this.turnSpeed * 0.98);
       el.classList.remove("running");
     },
+    async stopLoop() {
+      this.$refs.progress.classList.remove("running");
+    },
   },
   mounted() {
-    game.on(
-      "before:Encounter.tick",
-      "EncounterLoop.beforeTick",
-      this.beforeEncounterTick.bind(this)
-    );
-  },
-  beforeUnmount() {
-    game.off("before:Encounter.tick", "EncounterLoop.beforeTick");
+    this.$bind("before:Encounter.tick", this.startLoop);
+    this.$bind("after:Encounter.end", this.stopLoop);
   },
 };
 </script>

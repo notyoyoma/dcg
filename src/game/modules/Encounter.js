@@ -154,6 +154,7 @@ export class Encounter extends BaseModule {
     } else {
       this.update();
     }
+    this.save();
   }
 
   update() {
