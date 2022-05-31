@@ -1,6 +1,6 @@
 import { format, parse, differenceInMinutes as diff } from "date-fns";
 import GameModule from "./GameModule";
-import { event, listen, Listener } from "@/game/events";
+import { event, listen, GameSingleton } from "@/game/events";
 import { partyFeelsTowardParty } from "@/utils/alignment";
 import { randomGausian, roll, rollArray } from "@/utils/rng";
 import { getLSD, setLSD } from "@/utils/localStorage";
@@ -9,7 +9,7 @@ import { monsters, party, map } from ".";
 
 const dtf = "yyyy-MM-dd:HH:mm:ss";
 
-export class ActiveEncounter extends Listener {
+export class ActiveEncounter extends GameSingleton {
   log = [];
   respawn = 15; // minutes
 

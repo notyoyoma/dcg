@@ -31,22 +31,6 @@ export function listen(eventName) {
   };
 }
 
-export class Listener {
-  unbinds = [];
-
-  bind(eventName, fn) {
-    const listenerId = `${this.constructor.name}.${fn.name}`;
-    game.on(eventName, listenerId, fn.bind(this));
-    const unbind = () => game.off(eventName, listenerId);
-    this.unbinds.push(unbind);
-    return unbind;
-  }
-
-  unbind() {
-    this.unbinds.forEach((unbind) => unbind());
-  }
-}
-
 export const mixin = {
   data: () => ({
     unbinds: [],
@@ -68,3 +52,32 @@ export const mixin = {
     this.unbinds.forEach((unbind) => unbind());
   },
 };
+
+export class Listener {
+  unbinds = [];
+
+  bind(eventName, fn) {
+    const listenerId = `${this.constructor.name}.${fn.name}`;
+    game.on(eventName, listenerId, fn.bind(this));
+    const unbind = () => game.off(eventName, listenerId);
+    this.unbinds.push(unbind);
+    return unbind;
+  }
+
+  unbind() {
+    this.unbinds.forEach((unbind) => unbind());
+  }
+}
+
+// a game.[module]
+export class GameSingleton extends Listener {
+  constructor() {
+    super();
+    this.moduleKey = this.constructor.name.toLowerCase();
+    game.addModule(this);
+  }
+
+  destroy() {
+    game.removeModule(this);
+  }
+}

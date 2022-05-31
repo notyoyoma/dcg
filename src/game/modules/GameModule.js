@@ -1,20 +1,6 @@
 import axios from "axios";
 import { getLSD, setLSD } from "@/utils/localStorage";
-import game from "@/game";
-import { Listener } from "@/game/events";
-
-// a game.[module]
-export class GameSingleton extends Listener {
-  constructor() {
-    super();
-    this.moduleKey = this.constructor.name.toLowerCase();
-    game.addModule(this);
-  }
-
-  destroy() {
-    game.removeModule(this);
-  }
-}
+import { GameSingleton } from "@/game/events";
 
 // A game.[module] singleton with .data and a vuex store
 export default class GameModule extends GameSingleton {

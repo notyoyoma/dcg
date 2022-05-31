@@ -11,3 +11,12 @@ export class Listener {
 
   unbind() {}
 }
+
+export class GameSingleton extends Listener {
+  constructor() {
+    super();
+    this.moduleKey = this.constructor.name.toLowerCase();
+  }
+
+  destroy() {}
+}
