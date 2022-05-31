@@ -1,4 +1,4 @@
-import BaseModule from "./BaseModule";
+import GameModule from "./GameModule";
 
 class Character {
   constructor(savedObj) {
@@ -6,8 +6,7 @@ class Character {
   }
 }
 
-export class Characters extends BaseModule {
-  moduleName = "characters";
+export class Characters extends GameModule {
   all = {};
 
   charactersInCurrentRoom() {

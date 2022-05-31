@@ -12,9 +12,9 @@ Object.keys(modules).forEach((key) => {
   const module = modules[key];
   module.data = gameData[key];
   module.context = create();
+  game.addModule(module);
 });
 
-game.addModules(modules);
 global.game = game;
 
 // jest.setMock("@/game", game);

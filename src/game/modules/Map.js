@@ -1,12 +1,11 @@
 import set from "lodash/set";
-import BaseModule from "./BaseModule";
+import GameModule from "./GameModule";
 import { party } from ".";
 import { getLSD, setLSD } from "@/utils/localStorage";
 
 const mapExploredKey = "Map.explored";
 
-export class Map extends BaseModule {
-  moduleName = "map";
+export class Map extends GameModule {
   initialState = {
     currentFloorIndex: 0,
     currentFloor: {},

@@ -14,18 +14,19 @@ export function event(classProto, fnName, descriptor) {
   };
 }
 
-// can only be used in @/game/modules singletons
+// can only be used in GameSingletons
 export function listen(eventName) {
   return (target, fnName, descriptor) => {
     const className = target.constructor.name;
+    const moduleKey = className.toLowerCase();
 
     const fn = descriptor.value;
     if (typeof eventName === "string")
-      game.addCoreEvent({ className, eventName, fn });
+      game.addListener(moduleKey, { className, eventName, fn });
 
     if (Array.isArray(eventName))
       eventName.forEach((eventName) => {
-        game.addCoreEvent({ className, eventName, fn });
+        game.addListener(moduleKey, { className, eventName, fn });
       });
   };
 }

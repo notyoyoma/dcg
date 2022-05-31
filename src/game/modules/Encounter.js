@@ -1,5 +1,5 @@
 import { format, parse, differenceInMinutes as diff } from "date-fns";
-import BaseModule from "./BaseModule";
+import GameModule from "./GameModule";
 import { event, listen, Listener } from "@/game/events";
 import { partyFeelsTowardParty } from "@/utils/alignment";
 import { randomGausian, roll, rollArray } from "@/utils/rng";
@@ -125,8 +125,7 @@ export class ActiveEncounter extends Listener {
   }
 }
 
-export class Encounter extends BaseModule {
-  moduleName = "encounter";
+export class Encounter extends GameModule {
   initialState = {
     turnSpeed: 2000,
     log: [],

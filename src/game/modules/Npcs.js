@@ -1,7 +1,5 @@
-import BaseModule from "./BaseModule";
+import GameModule from "./GameModule";
 
-export class Npcs extends BaseModule {
-  moduleName = "npcs";
-}
+export class Npcs extends GameModule {}
 
 export const npcs = new Npcs();

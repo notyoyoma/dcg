@@ -1,10 +1,9 @@
-import BaseModule from "./BaseModule";
+import GameModule from "./GameModule";
 import { map, characters } from ".";
 import { event } from "@/game/events";
 import get from "lodash/get";
 
-export class Party extends BaseModule {
-  moduleName = "party";
+export class Party extends GameModule {
   initialState = {
     characters: [],
     location: {

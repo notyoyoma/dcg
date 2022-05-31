@@ -2,7 +2,7 @@ import get from "lodash/get";
 import zip from "lodash/zip";
 import fill from "lodash/fill";
 import { map } from ".";
-import BaseModule from "./BaseModule";
+import GameModule from "./GameModule";
 import { rollGausian, statsRoll, rollArray, FairRoll } from "@/utils/rng";
 import { objectReduce } from "@/utils/object";
 import pluralize from "pluralize";
@@ -127,8 +127,7 @@ export class OldMonsterParty extends BaseMonsterParty {
   }
 }
 
-export class Monsters extends BaseModule {
-  moduleName = "monsters";
+export class Monsters extends GameModule {
   fairSpawn = new FairRoll("monsters.fairSpawn");
 
   spawn({ roomId, floor }) {

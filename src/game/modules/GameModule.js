@@ -1,14 +1,30 @@
 import axios from "axios";
 import { getLSD, setLSD } from "@/utils/localStorage";
+import game from "@/game";
+import { Listener } from "@/game/events";
 
-export default class BaseModule {
+// a game.[module]
+export class GameSingleton extends Listener {
+  constructor() {
+    super();
+    this.moduleKey = this.constructor.name.toLowerCase();
+    game.addModule(this);
+  }
+
+  destroy() {
+    game.removeModule(this);
+  }
+}
+
+// A game.[module] singleton with .data and a vuex store
+export default class GameModule extends GameSingleton {
   data = {};
 
   async loadData(allowCache = true) {
-    const lsd = getLSD(this.moduleName);
+    const lsd = getLSD(this.moduleKey);
     if (allowCache && lsd) this.data = lsd;
     else {
-      const { data } = await axios.get(`/data/${this.moduleName}.json`);
+      const { data } = await axios.get(`/data/${this.moduleKey}.json`);
       this.data = data;
     }
   }
@@ -25,7 +41,7 @@ export default class BaseModule {
   }
 
   save() {
-    setLSD(this.moduleName, this.data);
+    setLSD(this.moduleKey, this.data);
   }
 
   get vuexActions() {

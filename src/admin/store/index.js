@@ -18,11 +18,12 @@ const store = new Vuex.Store({
 
 import game from "@/game";
 import * as gameModules from "@/game/modules";
-game.addModules(gameModules);
 
-const loadDataPromises = Object.keys(gameModules).map((key) =>
-  gameModules[key].loadData()
-);
+const loadDataPromises = Object.keys(gameModules).map((key) => {
+  const module = gameModules[key];
+  game.addModule(module);
+  return module.loadData();
+});
 
 // once all modules have loaded data, initialize them in order
 Promise.all(loadDataPromises).then(() => {
