@@ -36,7 +36,6 @@ export default {
   mounted() {
     if (encounter.tickInterval) this.start();
     this.$bind("before:Encounter.tick", this.start);
-    // this.$bind("after:ActiveEncounter.end", this.reset);
   },
 };
 </script>
