@@ -1,12 +1,13 @@
 <template>
   <div class="EncounterLoop">
-    <div id="progress" ref="progress"></div>
+    <div id="progress" ref="progress" @animationend="logReset"></div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import { delay } from "@/utils/async";
+import { encounter } from "@/game/modules";
 
 export default {
   name: "EncounterLoop",
@@ -14,20 +15,28 @@ export default {
     ...mapState("encounter", ["turnSpeed", "actions"]),
   },
   methods: {
-    async startLoop() {
+    logReset() {
+      console.debug("EncounterLoop.logReset - Encounter.tick logic is slow");
+      this.reset();
+    },
+    reset() {
+      this.$refs.progress.classList.remove("running");
+    },
+    async start() {
       const el = this.$refs.progress;
+      if (el.classList.contains("running")) {
+        this.reset();
+        await this.$nextTick();
+        await delay(10);
+      }
       el.style.animationDuration = `${this.turnSpeed}ms`;
       el.classList.add("running");
-      await delay(this.turnSpeed * 0.98);
-      el.classList.remove("running");
-    },
-    async stopLoop() {
-      this.$refs.progress.classList.remove("running");
     },
   },
   mounted() {
-    this.$bind("before:Encounter.tick", this.startLoop);
-    this.$bind("after:Encounter.end", this.stopLoop);
+    if (encounter.tickInterval) this.start();
+    this.$bind("before:Encounter.tick", this.start);
+    // this.$bind("after:ActiveEncounter.end", this.reset);
   },
 };
 </script>

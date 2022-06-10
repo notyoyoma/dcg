@@ -193,6 +193,7 @@ export class Encounter extends GameModule {
 
   @listen("after:ActiveEncounter.start")
   startTick() {
+    this.tick();
     this.tickInterval = setInterval(this.tick.bind(this), this.data.turnSpeed);
   }
 
@@ -213,7 +214,8 @@ export class Encounter extends GameModule {
   tick() {
     console.debug("tick");
     if (!this.current) return;
-    super.update({ actions: this.current.actions });
+    const actions = this.current.actions;
+    super.update({ actions });
     /*
      * TODO encounter tick
      * get array of monster actions
