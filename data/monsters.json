@@ -1,0 +1,119 @@
+{
+  "monsters": [
+    {
+      "name": "jackal",
+      "stats": {
+        "hp": 10,
+        "attack": 3,
+        "defence": 0,
+        "loot": 50,
+        "intelligence": 5,
+        "strength": 3
+      },
+      "maxSpawn": 2,
+      "alignments": ["neutral", "good"],
+      "flavorText": {
+        "-0.8": "sniffs you excitedly",
+        "0": "smells the air nervously",
+        "0.2": "raises his hackles",
+        "1": "growls menacingly"
+      }
+    },
+    {
+      "name": "goblin",
+      "stats": {
+        "hp": 10,
+        "attack": 5,
+        "defence": 3,
+        "loot": 100,
+        "intelligence": 7,
+        "strength": 7
+      },
+      "maxSpawn": 4,
+      "alignments": ["neutral", "evil"]
+    },
+    {
+      "name": "rat",
+      "stats": {
+        "hp": 12,
+        "attack": 6,
+        "defence": 1,
+        "loot": 75,
+        "intelligence": 7,
+        "strength": 5
+      },
+      "maxSpawn": 5,
+      "alignments": ["good", "evil"],
+      "flavorText": {
+        "-0.8": "scurries towards you",
+        "0": "sniffs the air",
+        "0.2": "scurries away from you",
+        "1": "hisses at you"
+      }
+    },
+    {
+      "name": "bandit",
+      "stats": {
+        "hp": 15,
+        "attack": 5,
+        "defence": 2,
+        "loot": 350,
+        "intelligence": 7,
+        "strength": 10
+      },
+      "maxSpawn": 7,
+      "alignments": ["neutral", "good", "evil"]
+    },
+    {
+      "name": "spider",
+      "stats": {
+        "hp": 8,
+        "attack": 3,
+        "defence": 0,
+        "loot": 250,
+        "intelligence": 5,
+        "strength": 4
+      },
+      "poison": {
+        "potential": 0.5,
+        "strength": 1
+      },
+      "maxSpawn": 5,
+      "alignments": ["evil"]
+    },
+    {
+      "name": "dragon",
+      "stats": {
+        "hp": 30,
+        "attack": 3,
+        "defence": 0,
+        "loot": 5000,
+        "intelligence": 13,
+        "strength": 12
+      },
+      "poison": {
+        "potential": 0.8,
+        "strength": 5
+      },
+      "maxSpawn": 3,
+      "alignments": ["evil"]
+    }
+  ],
+  "monsterParties": {
+    "jackal": ["jackal"],
+    "2jackals": ["jackal", "jackal"],
+    "3jackals": ["jackal", "jackal", "jackal"],
+    "4jackals": ["jackal", "jackal", "jackal", "jackal"],
+    "goblin": ["goblin"],
+    "2goblins": ["goblin", "goblin"],
+    "rat": ["rat"],
+    "2rats": ["rat", "rat"],
+    "3rats": ["rat", "rat", "rat"],
+    "spider": ["spider"],
+    "2spiders": ["spider", "spider"],
+    "bandit": ["bandit"],
+    "2bandits": ["bandit", "bandit"],
+    "3bandits": ["bandit", "bandit", "bandit"],
+    "dragon": ["dragon"]
+  }
+}

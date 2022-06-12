@@ -1,0 +1,54 @@
+{
+  "characters": [
+    {
+      "name": "Bjarne",
+      "maxHp": 50,
+      "currentHp": 49,
+      "spellPoints": 10,
+      "currentAction": "fight",
+      "alignment": "good",
+      "stats": {
+        "charisma": 10,
+        "strength": 10
+      },
+      "image": "man1"
+    },
+    {
+      "name": "Guido",
+      "maxHp": 50,
+      "currentHp": 45,
+      "spellPoints": 60,
+      "currentAction": "cast 'Fireball'",
+      "alignment": "good",
+      "stats": {
+        "charisma": 10,
+        "strength": 10
+      },
+      "image": "man2"
+    },
+    {
+      "name": "Meredith",
+      "health": 30,
+      "spellPoints": 60,
+      "currentAction": "fight",
+      "alignment": "good",
+      "stats": {
+        "charisma": 10,
+        "strength": 10
+      },
+      "image": "woman1"
+    },
+    {
+      "name": "Meredith",
+      "health": 30,
+      "spellPoints": 60,
+      "currentAction": "fight",
+      "alignment": "good",
+      "stats": {
+        "charisma": 10,
+        "strength": 10
+      },
+      "image": "woman2"
+    }
+  ]
+}
