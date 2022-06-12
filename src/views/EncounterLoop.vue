@@ -4,11 +4,11 @@
     <div class="actions">
       <div
         class="action"
-        v-for="([action, actor], index) in actions"
+        v-for="({ actor }, index) in actions"
         :key="`action-${index}`"
       >
         <img :src="`/assets/${actor.image}.svg`" />
-        <Action :action="action" />
+        <Action :action="actor.currentAction" />
       </div>
     </div>
   </div>
@@ -92,6 +92,7 @@ export default {
     position: relative;
     img {
       max-height: 100%;
+      max-width: 40px;
     }
     .Action {
       position: absolute;

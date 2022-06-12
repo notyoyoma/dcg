@@ -92,7 +92,11 @@ export class Party extends GameModule {
   }
 
   get actions() {
-    return this.party.map((m) => [m.currentAction, m]);
+    const actions = [];
+    this.party.forEach((m) => {
+      actions.push(...m.actions);
+    });
+    return actions;
   }
 }
 

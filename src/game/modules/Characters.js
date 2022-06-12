@@ -4,6 +4,21 @@ class Character {
   constructor(savedObj) {
     Object.assign(this, savedObj);
   }
+
+  act() {
+    console.info(`${this.name} acted!`);
+    // TODO split out to fight/cast/etc
+  }
+
+  get actions() {
+    // TODO multiple swings generate multiple actions
+    return [
+      {
+        actor: this,
+        execute: this.act.bind(this),
+      },
+    ];
+  }
 }
 
 export class Characters extends GameModule {

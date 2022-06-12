@@ -6,11 +6,15 @@ import GameModule from "./GameModule";
 import { rollGausian, statsRoll, rollArray, FairRoll } from "@/utils/rng";
 import { objectReduce } from "@/utils/object";
 import pluralize from "pluralize";
+import { encounter } from "@/game/modules";
+
+const shouldFight = () => encounter.get("current.hostility") > 0.2;
 
 export class Monster {
   constructor(id) {
     this.baseMonster = monsters.data.monsters.find(({ name }) => name === id);
     if (!this.baseMonster) throw `monsters[name: ${id}] not found`;
+    this.image = this.baseMonster.name;
     const { name, spells } = this.baseMonster;
     this.name = name;
     this.spells = spells;
@@ -24,6 +28,7 @@ export class Monster {
     this.alive = this.count;
     this.loot = this.stats.loot * this.count;
     this.alignment = rollArray(alignments);
+    this.currentAction = shouldFight() ? "fight" : "none";
   }
 
   load(prevObj) {
@@ -33,10 +38,22 @@ export class Monster {
     this.loot = prevObj.loot;
     this.alignment = prevObj.alignment;
     this.hp = prevObj.hp;
+    this.currentAction = prevObj.currentAction;
   }
 
-  get fight() {
-    return "fight";
+  act() {
+    console.info(`${this.baseMonster.name} acted!`);
+    // TODO choose fight/cast, and act
+  }
+
+  get actions() {
+    // TODO if monster is boss, can act multiple times
+    return [
+      {
+        actor: this,
+        execute: this.act.bind(this),
+      },
+    ];
   }
 }
 
@@ -47,16 +64,24 @@ class BaseMonsterParty {
     return !this.party.some(({ alive }) => alive);
   }
 
-  behaviorSummary(hostility) {
+  behaviorSummary() {
+    const hostility = encounter.get("current.hostility");
     if (hostility > 0.2) return "The monsters attack!";
     if (hostility > 0) return "The monsters glare at you...";
     if (hostility < -0.8) return "The monsters offer to join!";
     return "The monsters look at you warily...";
   }
 
-  actions(hostility) {
-    if (hostility < 0.2) return [];
-    return this.aliveMonsters.map((m) => ["fight", m]);
+  get actions() {
+    const hostility = encounter.get("current.hostility");
+    const actions = [];
+    // TODO tiered hostility -> actions
+    if (hostility > 0.2) {
+      this.aliveMonsters.forEach((m) => {
+        actions.push(...m.actions);
+      });
+    }
+    return actions;
   }
 
   get statsSummary() {
@@ -114,6 +139,8 @@ export class MonsterParty extends BaseMonsterParty {
       return monster;
     });
   }
+
+  initialize() {}
 }
 
 export class OldMonsterParty extends BaseMonsterParty {
@@ -124,6 +151,10 @@ export class OldMonsterParty extends BaseMonsterParty {
       monster.load(data);
       return monster;
     });
+  }
+
+  initialize() {
+    // when loading, the
   }
 }
 

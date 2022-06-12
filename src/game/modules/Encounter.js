@@ -37,9 +37,9 @@ export class ActiveEncounter extends GameSingleton {
   spawn() {
     const { roomId, floor } = this;
     this.monsters = monsters.spawn({ roomId, floor });
-    const rand = randomGausian();
     const feelings = partyFeelsTowardParty(this.monsters.party, party.party);
-    this.hostility = rand * feelings;
+    this.hostility = randomGausian() * feelings;
+    this.monsters.initialize();
     this.log = []; // TODO monster flavor text
     this.spawned = format(new Date(), dtf);
     this.looted = false;
@@ -121,7 +121,7 @@ export class ActiveEncounter extends GameSingleton {
   }
 
   get actions() {
-    return [...party.actions, ...this.monsters.actions(this.hostility)];
+    return [...party.actions, ...this.monsters.actions];
   }
 }
 
@@ -134,6 +134,7 @@ export class Encounter extends GameModule {
   };
   current = null;
   tickInterval = 0;
+  actionIntervals = [];
   previousLSDKey = "encounter.previous";
 
   constructor() {
@@ -193,7 +194,8 @@ export class Encounter extends GameModule {
 
   @listen("after:ActiveEncounter.start")
   startTick() {
-    this.tick();
+    // delay first tick by 5ms to give time for update() to propagate
+    setTimeout(this.tick.bind(this), 5);
     this.tickInterval = setInterval(this.tick.bind(this), this.data.turnSpeed);
   }
 
@@ -201,6 +203,8 @@ export class Encounter extends GameModule {
   stopTick() {
     clearInterval(this.tickInterval);
     this.tickInterval = 0;
+    this.actionIntervals.forEach(clearInterval);
+    this.actionIntervals = [];
   }
 
   setSpeed(newSpeed) {
@@ -215,15 +219,13 @@ export class Encounter extends GameModule {
     console.debug("tick");
     if (!this.current) return;
     const actions = this.current.actions;
+    // TODO - sort actions by character speed
     super.update({ actions });
-    /*
-     * TODO encounter tick
-     * get array of monster actions
-     * get array of party actions
-     * actions = ^.concat
-     * actTime = this.data.turnSpeed actions.length
-     * each actTime triggers the action for one character
-     */
+    const actionTime = Math.floor(this.data.turnSpeed / (actions.length + 1));
+    for (let i = 0; i < actions.length; i++) {
+      const { execute } = actions[i];
+      this.actionIntervals.push(setTimeout(execute, actionTime * (i + 1)));
+    }
   }
 }
 

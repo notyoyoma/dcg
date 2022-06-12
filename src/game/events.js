@@ -1,4 +1,5 @@
 import game from "@/game";
+import { get } from "@/utils/object";
 
 const areFalse = (result) => result === false;
 
@@ -79,5 +80,9 @@ export class GameSingleton extends Listener {
 
   destroy() {
     game.removeModule(this);
+  }
+
+  get(...args) {
+    return get(this, ...args);
   }
 }
