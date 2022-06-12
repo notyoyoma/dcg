@@ -18,7 +18,7 @@
       "maxHp": 50,
       "currentHp": 45,
       "spellPoints": 60,
-      "currentAction": "Cast 'Fireball'",
+      "currentAction": "cast 'Fireball'",
       "alignment": "good",
       "stats": {
         "charisma": 10,

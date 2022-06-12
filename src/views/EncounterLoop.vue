@@ -1,6 +1,16 @@
 <template>
   <div class="EncounterLoop">
     <div id="progress" ref="progress" @animationend="logReset"></div>
+    <div class="actions">
+      <div
+        class="action"
+        v-for="([action, actor], index) in actions"
+        :key="`action-${index}`"
+      >
+        <img :src="`/assets/${actor.image}.svg`" />
+        <Action :action="action" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -8,9 +18,11 @@
 import { mapState } from "vuex";
 import { delay } from "@/utils/async";
 import { encounter } from "@/game/modules";
+import Action from "@/components/interaction/Action";
 
 export default {
   name: "EncounterLoop",
+  components: { Action },
   computed: {
     ...mapState("encounter", ["turnSpeed", "actions"]),
   },
@@ -66,6 +78,27 @@ export default {
 
   &.running {
     animation-name: progress-bar-fill;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+
+  .action {
+    position: relative;
+    img {
+      max-height: 100%;
+    }
+    .Action {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+    }
   }
 }
 </style>
